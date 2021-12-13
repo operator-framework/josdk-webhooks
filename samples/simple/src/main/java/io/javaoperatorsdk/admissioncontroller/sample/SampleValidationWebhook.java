@@ -8,16 +8,15 @@ public class SampleValidationWebhook {
 
 
 
+  public AdmissionReview validate(AdmissionReview request) {
 
-    public AdmissionReview validate(AdmissionReview request) {
 
+    return null;
+  }
 
-        return null;
-    }
-
-    private AdmissionResponse validate(AdmissionRequest admissionRequest) {
-        return null;
-    }
+  private AdmissionResponse validate(AdmissionRequest admissionRequest) {
+    return null;
+  }
 
 
 }
