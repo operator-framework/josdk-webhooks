@@ -14,7 +14,7 @@
   <packaging>pom</packaging>
 
   <modules>
-    <module>simple</module>
+    <module>spring-boot-sample</module>
   </modules>
 
 </project>

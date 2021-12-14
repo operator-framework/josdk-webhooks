@@ -20,10 +20,7 @@ public class AdmissionUtils {
       NotAllowedException notAllowedException) {
     AdmissionResponse admissionResponse = new AdmissionResponse();
     admissionResponse.setAllowed(false);
-    Status status = new Status();
-    status.setCode(notAllowedException.getCode());
-    status.setMessage(notAllowedException.getMessage());
-    admissionResponse.setStatus(status);
+    admissionResponse.setStatus(notAllowedException.getStatus());
     return admissionResponse;
   }
 
