@@ -2,9 +2,13 @@ package io.javaoperatorsdk.admissioncontroller;
 
 public class NotAllowedException extends AdmissionControllerException {
 
-  private int code;
+  private int code = 403;
 
   public NotAllowedException() {}
+
+  public NotAllowedException(String message) {
+    super(message);
+  }
 
   public NotAllowedException(int code) {
     this.code = code;

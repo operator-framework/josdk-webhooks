@@ -41,8 +41,7 @@ public class AdmissionUtils {
     var mutatedResNode = mapper.valueToTree(mutatedResource);
 
     var diff = JsonDiff.asJson(originalResNode, mutatedResNode);
-    String base64Diff =
-            Base64.getEncoder().encodeToString(diff.textValue().getBytes(StandardCharsets.UTF_8));
+    String base64Diff = Base64.getEncoder().encodeToString(diff.toString().getBytes(StandardCharsets.UTF_8));
     admissionResponse.setPatch(base64Diff);
     return admissionResponse;
   }
