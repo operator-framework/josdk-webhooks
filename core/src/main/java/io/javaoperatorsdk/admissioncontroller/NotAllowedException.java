@@ -26,6 +26,7 @@ public class NotAllowedException extends AdmissionControllerException {
 
   public NotAllowedException(String message) {
     super(message);
+    this.status.setMessage(message);
     this.status.setCode(403);
   }
 
