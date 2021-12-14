@@ -1,14 +1,15 @@
 package io.javaoperatorsdk.admissioncontroller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
+
 import io.fabric8.kubernetes.api.model.KubernetesResource;
 import io.fabric8.kubernetes.api.model.Status;
 import io.fabric8.kubernetes.api.model.admission.v1.AdmissionRequest;
 import io.fabric8.kubernetes.api.model.admission.v1.AdmissionResponse;
 import io.fabric8.zjsonpatch.JsonDiff;
 
-import java.nio.charset.StandardCharsets;
-import java.util.Base64;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class AdmissionUtils {
 
@@ -33,7 +34,7 @@ public class AdmissionUtils {
   }
 
   public static AdmissionResponse admissionResponseFromMutation(KubernetesResource originalResource,
-                                                                KubernetesResource mutatedResource) {
+      KubernetesResource mutatedResource) {
     AdmissionResponse admissionResponse = new AdmissionResponse();
     admissionResponse.setAllowed(true);
     admissionResponse.setPatchType(JSON_PATCH);
@@ -41,7 +42,8 @@ public class AdmissionUtils {
     var mutatedResNode = mapper.valueToTree(mutatedResource);
 
     var diff = JsonDiff.asJson(originalResNode, mutatedResNode);
-    String base64Diff = Base64.getEncoder().encodeToString(diff.toString().getBytes(StandardCharsets.UTF_8));
+    String base64Diff =
+        Base64.getEncoder().encodeToString(diff.toString().getBytes(StandardCharsets.UTF_8));
     admissionResponse.setPatch(base64Diff);
     return admissionResponse;
   }
