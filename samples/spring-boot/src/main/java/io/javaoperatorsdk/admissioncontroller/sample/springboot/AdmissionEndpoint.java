@@ -1,4 +1,4 @@
-package io.javaoperatorsdk.admissioncontroller.sample.springbootsample;
+package io.javaoperatorsdk.admissioncontroller.sample.springboot;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

@@ -1,4 +1,4 @@
-package io.javaoperatorsdk.admissioncontroller.sample.springbootsample;
+package io.javaoperatorsdk.admissioncontroller.sample.springboot;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

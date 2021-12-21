@@ -1,4 +1,4 @@
-package io.javaoperatorsdk.admissioncontroller.sample.springbootsample;
+package io.javaoperatorsdk.admissioncontroller.sample.springboot;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
