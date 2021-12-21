@@ -4,7 +4,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
 import io.fabric8.kubernetes.api.model.KubernetesResource;
-import io.fabric8.kubernetes.api.model.Status;
 import io.fabric8.kubernetes.api.model.admission.v1.AdmissionRequest;
 import io.fabric8.kubernetes.api.model.admission.v1.AdmissionResponse;
 import io.fabric8.zjsonpatch.JsonDiff;
@@ -35,9 +34,6 @@ public class AdmissionUtils {
     AdmissionResponse admissionResponse = new AdmissionResponse();
     admissionResponse.setAllowed(true);
     admissionResponse.setPatchType(JSON_PATCH);
-    Status status = new Status();
-    status.setCode(200);
-    admissionResponse.setStatus(status);
     var originalResNode = mapper.valueToTree(originalResource);
     var mutatedResNode = mapper.valueToTree(mutatedResource);
 

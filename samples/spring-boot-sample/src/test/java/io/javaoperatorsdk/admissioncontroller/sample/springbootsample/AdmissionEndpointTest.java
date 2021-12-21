@@ -30,16 +30,16 @@ public class AdmissionEndpointTest {
   public void testValidation() throws Exception {
     mockMvc.perform(post("/validate").contentType(MediaType.APPLICATION_JSON)
         .content(new String(Files.readAllBytes(request.getFile().toPath()))))
-        .andExpect(status().isForbidden());
+        .andExpectAll(status().isOk(), content().json("{}"));
   }
 
   @Test
   public void testMutation() throws Exception {
     mockMvc.perform(post("/mutate").contentType(MediaType.APPLICATION_JSON)
         .content(new String(Files.readAllBytes(request.getFile().toPath()))))
-        .andExpectAll(status().isOk(), content().contentType(MediaType.APPLICATION_JSON),
+        .andExpectAll(content().contentType(MediaType.APPLICATION_JSON),
             content().json(
-                "{\"apiVersion\":\"admission.k8s.io/v1\",\"kind\":\"AdmissionReview\",\"response\":{\"allowed\":true,\"patch\":\"W3sib3AiOiJhZGQiLCJwYXRoIjoiL21ldGFkYXRhL2xhYmVscy9hcHAua3ViZXJuZXRlcy5pb34xbmFtZSIsInZhbHVlIjoibXV0YXRpb24tdGVzdCJ9XQ==\",\"patchType\":\"JSONPatch\",\"status\":{\"apiVersion\":\"v1\",\"kind\":\"Status\",\"code\":200},\"uid\":\"0df28fbd-5f5f-11e8-bc74-36e6bb280816\"}}"));
+                "{\"apiVersion\":\"admission.k8s.io/v1\",\"kind\":\"AdmissionReview\",\"response\":{\"allowed\":true,\"patch\":\"W3sib3AiOiJhZGQiLCJwYXRoIjoiL21ldGFkYXRhL2xhYmVscy9hcHAua3ViZXJuZXRlcy5pb34xbmFtZSIsInZhbHVlIjoibXV0YXRpb24tdGVzdCJ9XQ==\",\"patchType\":\"JSONPatch\",\"uid\":\"0df28fbd-5f5f-11e8-bc74-36e6bb280816\"}}"));
   }
 
 }

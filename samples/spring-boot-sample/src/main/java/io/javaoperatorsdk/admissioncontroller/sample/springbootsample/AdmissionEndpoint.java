@@ -2,8 +2,6 @@ package io.javaoperatorsdk.admissioncontroller.sample.springbootsample;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -29,17 +27,14 @@ public class AdmissionEndpoint {
 
   @PostMapping("/mutate")
   @ResponseBody
-  public ResponseEntity<AdmissionReview> mutate(@RequestBody AdmissionReview admissionReview) {
-    AdmissionReview resultReview = addLabelMutationController.handle(admissionReview);
-    return new ResponseEntity<>(resultReview,
-        HttpStatus.valueOf(resultReview.getResponse().getStatus().getCode()));
+  public AdmissionReview mutate(@RequestBody AdmissionReview admissionReview) {
+    return addLabelMutationController.handle(admissionReview);
   }
 
   @PostMapping("/validate")
-  public ResponseEntity<AdmissionReview> validate(@RequestBody AdmissionReview admissionReview) {
-    AdmissionReview resultReview = validatingController.handle(admissionReview);
-    return new ResponseEntity<>(resultReview,
-        HttpStatus.valueOf(resultReview.getResponse().getStatus().getCode()));
+  @ResponseBody
+  public AdmissionReview validate(@RequestBody AdmissionReview admissionReview) {
+    return validatingController.handle(admissionReview);
   }
 
 }
