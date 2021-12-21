@@ -35,6 +35,9 @@ public class AdmissionUtils {
     AdmissionResponse admissionResponse = new AdmissionResponse();
     admissionResponse.setAllowed(true);
     admissionResponse.setPatchType(JSON_PATCH);
+    Status status = new Status();
+    status.setCode(200);
+    admissionResponse.setStatus(status);
     var originalResNode = mapper.valueToTree(originalResource);
     var mutatedResNode = mapper.valueToTree(mutatedResource);
 

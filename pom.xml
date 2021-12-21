@@ -51,6 +51,7 @@
         <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <json-patch.version>1.13</json-patch.version>
+        <maven-javadoc-plugin.version>3.3.1</maven-javadoc-plugin.version>
     </properties>
 
     <modules>

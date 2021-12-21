@@ -19,7 +19,8 @@ public class NotAllowedException extends AdmissionControllerException {
     this.status = status;
   }
 
-  public NotAllowedException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace, Status status) {
+  public NotAllowedException(String message, Throwable cause, boolean enableSuppression,
+      boolean writableStackTrace, Status status) {
     super(message, cause, enableSuppression, writableStackTrace);
     this.status = status;
   }
