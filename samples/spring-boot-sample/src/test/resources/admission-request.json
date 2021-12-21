@@ -25,6 +25,8 @@
       ]
     },
     "object": {
+      "apiVersion": "v1",
+      "kind": "Pod",
       "metadata": {
         "generateName": "nginx-deployment-6c54bd5869-",
         "creationTimestamp": null,
