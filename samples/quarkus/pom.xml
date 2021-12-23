@@ -9,7 +9,7 @@
   </parent>
   <groupId>io.javaoperatorsdk.admissioncontroller.sample</groupId>
   <artifactId>quarkus-sample</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
+  <name>Admission Controller Framework - Samples - Quarkus</name>
   <properties>
     <compiler-plugin.version>3.8.1</compiler-plugin.version>
     <maven.compiler.release>11</maven.compiler.release>
@@ -41,6 +41,11 @@
       <artifactId>quarkus-resteasy</artifactId>
     </dependency>
     <dependency>
+      <groupId>io.javaoperatorsdk</groupId>
+      <artifactId>operator-framework-framework-core</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-junit5</artifactId>
       <scope>test</scope>
@@ -49,6 +54,10 @@
       <groupId>io.rest-assured</groupId>
       <artifactId>rest-assured</artifactId>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.resteasy</groupId>
+      <artifactId>resteasy-jackson2-provider</artifactId>
     </dependency>
   </dependencies>
   <build>
