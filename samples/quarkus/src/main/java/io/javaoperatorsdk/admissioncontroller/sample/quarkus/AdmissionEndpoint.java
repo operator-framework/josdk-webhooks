@@ -23,7 +23,7 @@ public class AdmissionEndpoint {
   }
 
   @POST
-  @Path("/mutate")
+  @Path("mutate")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   public AdmissionReview mutate(AdmissionReview admissionReview) {
@@ -31,7 +31,7 @@ public class AdmissionEndpoint {
   }
 
   @POST
-  @Path("/validate")
+  @Path("validate")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   public AdmissionReview hello(AdmissionReview admissionReview) {
