@@ -1,4 +1,4 @@
-name: Test & Release Snapshot to Maven Central
+name: Sonar 
 
 env:
   MAVEN_ARGS: -V -ntp -e
@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        java: [ 11, 17 ]
+        java: [ 17 ]
         distribution: [ temurin ]
     steps:
       - uses: actions/checkout@v2
@@ -27,6 +27,12 @@ jobs:
           distribution: ${{ matrix.distribution }}
           java-version: ${{ matrix.java }}
           cache: 'maven'
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v1
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
       - name: Cache Maven packages
         uses: actions/cache@v1
         with:
@@ -37,5 +43,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: ./mvnw ${MAVEN_ARGS} -B test --file pom.xml
+        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=java-operator-sdk_admission-controller-framework
 
