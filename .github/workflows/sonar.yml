@@ -1,4 +1,4 @@
-name: Sonar 
+name: Sonar
 
 env:
   MAVEN_ARGS: -V -ntp -e
