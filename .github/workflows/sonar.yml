@@ -1,4 +1,4 @@
-name: Test & Release Snapshot to Maven Central
+name: Sonar 
 
 env:
   MAVEN_ARGS: -V -ntp -e
