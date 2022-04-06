@@ -61,6 +61,8 @@
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <json-patch.version>1.13</json-patch.version>
         <maven-javadoc-plugin.version>3.3.1</maven-javadoc-plugin.version>
+        <maven-gpg-plugin.version>3.0.1</maven-gpg-plugin.version>
+        <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
     </properties>
 
     <modules>
