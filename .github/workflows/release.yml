@@ -24,8 +24,8 @@ jobs:
         uses: samuelmeuli/action-maven-publish@v1
         with:
           maven_profiles: "release"
-#          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
-#          gpg_passphrase: ${{ secrets.GPG_PASSPHRASE }}
+          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+          gpg_passphrase: ${{ secrets.GPG_PASSPHRASE }}
           nexus_username: ${{ secrets.OSSRH_USERNAME }}
           nexus_password: ${{ secrets.OSSRH_TOKEN }}
 
