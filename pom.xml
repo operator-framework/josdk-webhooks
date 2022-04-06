@@ -24,6 +24,13 @@
         <url>https://github.com/java-operator-sdk/admission-controller-framework/tree/master</url>
     </scm>
 
+    <developers>
+        <developer>
+            <name>Attila Mészáros</name>
+            <email>csviri@gmail.com</email>
+        </developer>
+    </developers>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>11</java.version>
@@ -191,7 +198,6 @@
             </plugins>
         </pluginManagement>
         <plugins>
-
             <plugin>
                 <groupId>org.commonjava.maven.plugins</groupId>
                 <artifactId>directory-maven-plugin</artifactId>
