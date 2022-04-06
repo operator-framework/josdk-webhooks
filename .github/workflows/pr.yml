@@ -1,4 +1,4 @@
-name: Build and Run Tests
+name: Verify Pull Request
 
 env:
   MAVEN_ARGS: -V -ntp -e
@@ -7,13 +7,11 @@ concurrency:
   group: ${{ github.ref }}-${{ github.workflow }}
   cancel-in-progress: true
 on:
-  push:
-    branches: [ main ]
   pull_request:
-    types: [ opened, synchronize, reopened ]
-
+    branches: [ main ]
+  workflow_dispatch:
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -27,15 +25,9 @@ jobs:
           distribution: ${{ matrix.distribution }}
           java-version: ${{ matrix.java }}
           cache: 'maven'
-      - name: Cache Maven packages
-        uses: actions/cache@v1
-        with:
-          path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-          restore-keys: ${{ runner.os }}-m2
-      - name: Build and analyze
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      - name: Check code format
+        run: |
+          ./mvnw ${MAVEN_ARGS} formatter:validate -Dconfigfile=$PWD/contributing/eclipse-google-style.xml --file pom.xml
+          ./mvnw ${MAVEN_ARGS} impsort:check --file pom.xml
+      - name: Run unit tests
         run: ./mvnw ${MAVEN_ARGS} -B test --file pom.xml
-

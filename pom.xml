@@ -5,7 +5,7 @@
 
     <groupId>io.javaoperatorsdk</groupId>
     <artifactId>admission-controller-framework</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.1.0-SNAPSHOT</version>
     <name>Admission Controller Framework for Java</name>
     <description>Framework to Implement Admission Controllers in Java</description>
     <packaging>pom</packaging>
@@ -23,6 +23,13 @@
         <developerConnection>scm:git:git@github.com/java-operator-sdk/admission-controller-framework.git</developerConnection>
         <url>https://github.com/java-operator-sdk/admission-controller-framework/tree/master</url>
     </scm>
+
+    <developers>
+        <developer>
+            <name>Attila Mészáros</name>
+            <email>csviri@gmail.com</email>
+        </developer>
+    </developers>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -191,7 +198,6 @@
             </plugins>
         </pluginManagement>
         <plugins>
-
             <plugin>
                 <groupId>org.commonjava.maven.plugins</groupId>
                 <artifactId>directory-maven-plugin</artifactId>
