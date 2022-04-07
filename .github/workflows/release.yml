@@ -33,7 +33,7 @@ jobs:
   update-working-version:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v2
       - name: Set up Java and Maven
         uses: actions/setup-java@v2
         with:
@@ -53,4 +53,3 @@ jobs:
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: "main"
