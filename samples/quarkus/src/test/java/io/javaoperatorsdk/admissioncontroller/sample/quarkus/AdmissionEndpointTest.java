@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
+import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Test;
 
 import io.quarkus.test.junit.QuarkusTest;
@@ -27,27 +28,55 @@ class AdmissionEndpointTest {
   }
 
   @Test
-  void asyncMutates() {
-    mutate(ASYNC_MUTATE_PATH);
-  }
-
-  public void mutate(String path) {
-    given().contentType(ContentType.JSON)
-        .body(jsonRequest())
-        .when().post("/" + path)
-        .then()
-        .statusCode(200)
-        .body(is(MUTATION_RESPONSE));
-  }
-
-  @Test
   void validates() {
     validate(VALIDATE_PATH);
   }
 
   @Test
-  public void asyncValidates() {
+  void errorMutates() {
+    testServerErrorOnPath(ERROR_MUTATE_PATH);
+  }
+
+  @Test
+  void errorValidates() {
+    testServerErrorOnPath(ERROR_VALIDATE_PATH);
+  }
+  
+  @Test
+  void asyncMutates() {
+    mutate(ASYNC_MUTATE_PATH);
+  }
+
+  @Test
+  void asyncValidates() {
     validate(ASYNC_VALIDATE_PATH);
+  }
+
+  @Test
+  void errorAsyncValidation() {
+    testServerErrorOnPath(ERROR_ASYNC_VALIDATE_PATH);
+  }
+
+  @Test
+  void errorAsyncMutation() {
+    testServerErrorOnPath(ERROR_ASYNC_MUTATE_PATH);
+  }
+
+  private void testServerErrorOnPath(String path) {
+    given().contentType(ContentType.JSON)
+            .body(jsonRequest())
+            .when().post("/" + path)
+            .then()
+            .statusCode(HttpStatus.SC_INTERNAL_SERVER_ERROR);
+  }
+
+  public void mutate(String path) {
+    given().contentType(ContentType.JSON)
+            .body(jsonRequest())
+            .when().post("/" + path)
+            .then()
+            .statusCode(200)
+            .body(is(MUTATION_RESPONSE));
   }
 
   public void validate(String path) {
