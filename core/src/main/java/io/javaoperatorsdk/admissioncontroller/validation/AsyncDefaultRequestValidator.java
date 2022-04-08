@@ -25,7 +25,6 @@ public class AsyncDefaultRequestValidator<T extends KubernetesResource>
   public CompletionStage<AdmissionResponse> handle(AdmissionRequest admissionRequest) {
     Operation operation = Operation.valueOf(admissionRequest.getOperation());
     var originalResource = (T) getTargetResource(admissionRequest, operation);
-    CompletionStage<AdmissionResponse> admissionResponse;
 
     var asyncValidate =
         CompletableFuture.runAsync(() -> validator.validate(originalResource, operation));
@@ -39,7 +38,6 @@ public class AsyncDefaultRequestValidator<T extends KubernetesResource>
           // todo
           throw new IllegalStateException("todo");
         });
-
   }
 
   private AdmissionResponse allowedAdmissionResponse() {
