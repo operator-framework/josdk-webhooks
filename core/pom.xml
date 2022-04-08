@@ -6,7 +6,7 @@
   <parent>
     <groupId>io.javaoperatorsdk</groupId>
     <artifactId>admission-controller-framework</artifactId>
-    <version>0.1.1-SNAPSHOT</version>
+    <version>0.0.1-SNAPSHOT</version>
   </parent>
 
   <artifactId>operator-framework-framework-core</artifactId>
