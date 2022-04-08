@@ -48,22 +48,6 @@ public class AdmissionControllerConfig {
   }
 
   @Singleton
-  @Named(ERROR_MUTATING_CONTROLLER)
-  public AdmissionController<Pod> errorMutatingController() {
-    return new AdmissionController<>((Validator<Pod>) (resource, operation) -> {
-      throw new IllegalStateException("Some error happened");
-    });
-  }
-
-  @Singleton
-  @Named(ERROR_VALIDATING_CONTROLLER)
-  public AdmissionController<Pod> errorValidatingController() {
-    return new AdmissionController<>((Mutator<Pod>) (resource, operation) -> {
-      throw new IllegalStateException("Some error happened");
-    });
-  }
-
-  @Singleton
   @Named(ASYNC_MUTATING_CONTROLLER)
   public AsyncAdmissionController<Pod> asyncMutatingController() {
     return new AsyncAdmissionController<>(
@@ -80,6 +64,23 @@ public class AdmissionControllerConfig {
       if (resource.getMetadata().getLabels().get(APP_NAME_LABEL_KEY) == null) {
         throw new NotAllowedException("Missing label: " + APP_NAME_LABEL_KEY);
       }
+    });
+  }
+
+
+  @Singleton
+  @Named(ERROR_MUTATING_CONTROLLER)
+  public AdmissionController<Pod> errorMutatingController() {
+    return new AdmissionController<>((Validator<Pod>) (resource, operation) -> {
+      throw new IllegalStateException("Some error happened");
+    });
+  }
+
+  @Singleton
+  @Named(ERROR_VALIDATING_CONTROLLER)
+  public AdmissionController<Pod> errorValidatingController() {
+    return new AdmissionController<>((Mutator<Pod>) (resource, operation) -> {
+      throw new IllegalStateException("Some error happened");
     });
   }
 
