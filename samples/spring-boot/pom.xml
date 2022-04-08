@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>io.javaoperatorsdk</groupId>
-		<artifactId>operator-framework-framework-samples</artifactId>
+		<artifactId>operator-framework-samples</artifactId>
 		<version>0.1.1-SNAPSHOT</version>
 	</parent>
 
@@ -15,7 +15,7 @@
 
 	<properties>
 		<java.version>11</java.version>
-		<spring-boot-dependencies.version>2.6.1</spring-boot-dependencies.version>
+		<spring-boot-dependencies.version>2.6.6</spring-boot-dependencies.version>
 	</properties>
 
 	<dependencyManagement>
@@ -37,11 +37,16 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
+			<artifactId>spring-boot-starter-webflux</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.projectreactor</groupId>
+			<artifactId>reactor-test</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
