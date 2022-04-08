@@ -32,11 +32,16 @@ public class AsyncDefaultRequestValidator<T extends KubernetesResource>
         .thenApply(v -> allowedAdmissionResponse())
         .exceptionally(e -> {
           if (e instanceof CompletionException) {
-            return AdmissionUtils.notAllowedExceptionToAdmissionResponse(
-                (NotAllowedException) e.getCause());
+            if (e.getCause() instanceof NotAllowedException) {
+              return AdmissionUtils.notAllowedExceptionToAdmissionResponse(
+                  (NotAllowedException) e.getCause());
+            } else {
+              throw new IllegalStateException(e.getCause());
+            }
+            // todo check these exceptions how to handle correctly
+          } else {
+            throw new IllegalStateException(e);
           }
-          // todo
-          throw new IllegalStateException("todo");
         });
   }
 
