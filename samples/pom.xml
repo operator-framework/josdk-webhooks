@@ -7,7 +7,7 @@
     <artifactId>admission-controller-framework</artifactId>
     <version>0.1.1-SNAPSHOT</version>
   </parent>
-  <artifactId>operator-framework-framework-samples</artifactId>
+  <artifactId>operator-framework-samples</artifactId>
   <packaging>pom</packaging>
   <name>Admission Controller Framework - Samples</name>
   <modules>
