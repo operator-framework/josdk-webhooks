@@ -52,12 +52,11 @@ public class Config {
 
   @Bean
   public AsyncAdmissionController<Pod> asyncMutatingController() {
-    return new AsyncAdmissionController<>((resource, operation) -> {
-      return CompletableFuture.supplyAsync(() -> {
-        resource.getMetadata().getLabels().putIfAbsent(APP_NAME_LABEL_KEY, "mutation-test");
-        return resource;
-      });
-    });
+    return new AsyncAdmissionController<>(
+        (AsyncMutator<Pod>) (resource, operation) -> CompletableFuture.supplyAsync(() -> {
+          resource.getMetadata().getLabels().putIfAbsent(APP_NAME_LABEL_KEY, "mutation-test");
+          return resource;
+        }));
   }
 
   @Bean
