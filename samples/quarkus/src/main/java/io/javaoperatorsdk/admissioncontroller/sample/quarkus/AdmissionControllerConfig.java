@@ -1,7 +1,6 @@
 package io.javaoperatorsdk.admissioncontroller.sample.quarkus;
 
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.CompletionStage;
 
 import javax.enterprise.context.Dependent;
 import javax.inject.Named;
@@ -11,7 +10,6 @@ import io.fabric8.kubernetes.api.model.Pod;
 import io.javaoperatorsdk.admissioncontroller.AdmissionController;
 import io.javaoperatorsdk.admissioncontroller.AsyncAdmissionController;
 import io.javaoperatorsdk.admissioncontroller.NotAllowedException;
-import io.javaoperatorsdk.admissioncontroller.Operation;
 import io.javaoperatorsdk.admissioncontroller.mutation.AsyncMutator;
 import io.javaoperatorsdk.admissioncontroller.mutation.Mutator;
 import io.javaoperatorsdk.admissioncontroller.validation.Validator;
@@ -52,7 +50,7 @@ public class AdmissionControllerConfig {
   @Singleton
   @Named(ERROR_MUTATING_CONTROLLER)
   public AdmissionController<Pod> errorMutatingController() {
-    return new AdmissionController<>((Validator<Pod>)(resource, operation) -> {
+    return new AdmissionController<>((Validator<Pod>) (resource, operation) -> {
       throw new IllegalStateException("Some error happened");
     });
   }
@@ -68,11 +66,11 @@ public class AdmissionControllerConfig {
   @Singleton
   @Named(ASYNC_MUTATING_CONTROLLER)
   public AsyncAdmissionController<Pod> asyncMutatingController() {
-    return new AsyncAdmissionController<>((AsyncMutator<Pod>)(resource, operation) ->
-            CompletableFuture.supplyAsync(() -> {
-      resource.getMetadata().getLabels().putIfAbsent(APP_NAME_LABEL_KEY, "mutation-test");
-      return resource;
-    }));
+    return new AsyncAdmissionController<>(
+        (AsyncMutator<Pod>) (resource, operation) -> CompletableFuture.supplyAsync(() -> {
+          resource.getMetadata().getLabels().putIfAbsent(APP_NAME_LABEL_KEY, "mutation-test");
+          return resource;
+        }));
   }
 
   @Singleton

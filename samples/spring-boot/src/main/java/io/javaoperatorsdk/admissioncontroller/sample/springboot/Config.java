@@ -9,6 +9,9 @@ import io.fabric8.kubernetes.api.model.Pod;
 import io.javaoperatorsdk.admissioncontroller.AdmissionController;
 import io.javaoperatorsdk.admissioncontroller.AsyncAdmissionController;
 import io.javaoperatorsdk.admissioncontroller.NotAllowedException;
+import io.javaoperatorsdk.admissioncontroller.mutation.AsyncMutator;
+import io.javaoperatorsdk.admissioncontroller.mutation.Mutator;
+import io.javaoperatorsdk.admissioncontroller.validation.Validator;
 
 @Configuration
 public class Config {
@@ -33,6 +36,20 @@ public class Config {
   }
 
   @Bean
+  public AdmissionController<Pod> errorMutatingController() {
+    return new AdmissionController<>((Validator<Pod>) (resource, operation) -> {
+      throw new IllegalStateException("Some error happened");
+    });
+  }
+
+  @Bean
+  public AdmissionController<Pod> errorValidatingController() {
+    return new AdmissionController<>((Mutator<Pod>) (resource, operation) -> {
+      throw new IllegalStateException("Some error happened");
+    });
+  }
+
+  @Bean
   public AsyncAdmissionController<Pod> asyncMutatingController() {
     return new AsyncAdmissionController<>((resource, operation) -> {
       return CompletableFuture.supplyAsync(() -> {
@@ -50,5 +67,20 @@ public class Config {
       }
     });
   }
+
+  @Bean
+  public AsyncAdmissionController<Pod> errorAsyncMutatingController() {
+    return new AsyncAdmissionController<>((AsyncMutator<Pod>) (resource, operation) -> {
+      throw new IllegalStateException("Some error happened");
+    });
+  }
+
+  @Bean
+  public AsyncAdmissionController<Pod> errorAsyncValidatingController() {
+    return new AsyncAdmissionController<>((Validator<Pod>) (resource, operation) -> {
+      throw new IllegalStateException("Some error happened");
+    });
+  }
+
 
 }

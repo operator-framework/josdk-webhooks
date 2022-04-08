@@ -43,8 +43,7 @@ public class AdmissionEndpoint {
       @Named(ASYNC_MUTATING_CONTROLLER) AsyncAdmissionController<Pod> asyncMutationController,
       @Named(ASYNC_VALIDATING_CONTROLLER) AsyncAdmissionController<Pod> asyncValidationController,
       @Named(ERROR_ASYNC_MUTATING_CONTROLLER) AsyncAdmissionController<Pod> errorAsyncMutationController,
-      @Named(ERROR_ASYNC_VALIDATING_CONTROLLER) AsyncAdmissionController<Pod> errorAsyncValidationController
-  ) {
+      @Named(ERROR_ASYNC_VALIDATING_CONTROLLER) AsyncAdmissionController<Pod> errorAsyncValidationController) {
     this.mutationController = mutationController;
     this.validationController = validationController;
     this.errorMutationController = errorMutationController;
@@ -72,22 +71,6 @@ public class AdmissionEndpoint {
   }
 
   @POST
-  @Path(ERROR_MUTATE_PATH)
-  @Consumes(MediaType.APPLICATION_JSON)
-  @Produces(MediaType.APPLICATION_JSON)
-  public AdmissionReview errorMutate(AdmissionReview admissionReview) {
-    return errorMutationController.handle(admissionReview);
-  }
-
-  @POST
-  @Path(ERROR_VALIDATE_PATH)
-  @Consumes(MediaType.APPLICATION_JSON)
-  @Produces(MediaType.APPLICATION_JSON)
-  public AdmissionReview errorValidate(AdmissionReview admissionReview) {
-    return errorValidationController.handle(admissionReview);
-  }
-
-  @POST
   @Path(ASYNC_MUTATE_PATH)
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
@@ -111,7 +94,7 @@ public class AdmissionEndpoint {
   @Produces(MediaType.APPLICATION_JSON)
   public Uni<AdmissionReview> errorAsyncMutate(AdmissionReview admissionReview) {
     return Uni.createFrom()
-            .completionStage(() -> this.errorAsyncMutationController.handle(admissionReview));
+        .completionStage(() -> this.errorAsyncMutationController.handle(admissionReview));
   }
 
   @POST
@@ -120,7 +103,23 @@ public class AdmissionEndpoint {
   @Produces(MediaType.APPLICATION_JSON)
   public Uni<AdmissionReview> errorAsyncValidate(AdmissionReview admissionReview) {
     return Uni.createFrom()
-            .completionStage(() -> this.errorAsyncValidationController.handle(admissionReview));
+        .completionStage(() -> this.errorAsyncValidationController.handle(admissionReview));
+  }
+
+  @POST
+  @Path(ERROR_MUTATE_PATH)
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public AdmissionReview errorMutate(AdmissionReview admissionReview) {
+    return errorMutationController.handle(admissionReview);
+  }
+
+  @POST
+  @Path(ERROR_VALIDATE_PATH)
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public AdmissionReview errorValidate(AdmissionReview admissionReview) {
+    return errorValidationController.handle(admissionReview);
   }
 
 }

@@ -24,12 +24,12 @@ class AdmissionEndpointTest {
 
   @Test
   void mutates() {
-    mutate(MUTATE_PATH);
+    testMutate(MUTATE_PATH);
   }
 
   @Test
   void validates() {
-    validate(VALIDATE_PATH);
+    testValidate(VALIDATE_PATH);
   }
 
   @Test
@@ -41,15 +41,15 @@ class AdmissionEndpointTest {
   void errorValidates() {
     testServerErrorOnPath(ERROR_VALIDATE_PATH);
   }
-  
+
   @Test
   void asyncMutates() {
-    mutate(ASYNC_MUTATE_PATH);
+    testMutate(ASYNC_MUTATE_PATH);
   }
 
   @Test
   void asyncValidates() {
-    validate(ASYNC_VALIDATE_PATH);
+    testValidate(ASYNC_VALIDATE_PATH);
   }
 
   @Test
@@ -64,22 +64,22 @@ class AdmissionEndpointTest {
 
   private void testServerErrorOnPath(String path) {
     given().contentType(ContentType.JSON)
-            .body(jsonRequest())
-            .when().post("/" + path)
-            .then()
-            .statusCode(HttpStatus.SC_INTERNAL_SERVER_ERROR);
+        .body(jsonRequest())
+        .when().post("/" + path)
+        .then()
+        .statusCode(HttpStatus.SC_INTERNAL_SERVER_ERROR);
   }
 
-  public void mutate(String path) {
+  public void testMutate(String path) {
     given().contentType(ContentType.JSON)
-            .body(jsonRequest())
-            .when().post("/" + path)
-            .then()
-            .statusCode(200)
-            .body(is(MUTATION_RESPONSE));
+        .body(jsonRequest())
+        .when().post("/" + path)
+        .then()
+        .statusCode(200)
+        .body(is(MUTATION_RESPONSE));
   }
 
-  public void validate(String path) {
+  public void testValidate(String path) {
     given().contentType(ContentType.JSON)
         .body(jsonRequest())
         .when().post("/" + path)
