@@ -9,32 +9,55 @@ import org.junit.jupiter.api.Test;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.http.ContentType;
 
+import static io.javaoperatorsdk.admissioncontroller.sample.quarkus.AdmissionEndpoint.*;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
 
 @QuarkusTest
-public class AdmissionEndpointTest {
+class AdmissionEndpointTest {
+
+  public static final String MUTATION_RESPONSE =
+      "{\"apiVersion\":\"admission.k8s.io/v1\",\"kind\":\"AdmissionReview\",\"response\":{\"allowed\":true,\"patch\":\"W3sib3AiOiJhZGQiLCJwYXRoIjoiL21ldGFkYXRhL2xhYmVscy9hcHAua3ViZXJuZXRlcy5pb34xbmFtZSIsInZhbHVlIjoibXV0YXRpb24tdGVzdCJ9XQ==\",\"patchType\":\"JSONPatch\",\"uid\":\"0df28fbd-5f5f-11e8-bc74-36e6bb280816\"}}";
+  public static final String VALIDATE_RESPONSE =
+      "{\"apiVersion\":\"admission.k8s.io/v1\",\"kind\":\"AdmissionReview\",\"response\":{\"allowed\":false,\"status\":{\"apiVersion\":\"v1\",\"kind\":\"Status\",\"code\":403,\"message\":\"Missing label: app.kubernetes.io/name\"},\"uid\":\"0df28fbd-5f5f-11e8-bc74-36e6bb280816\"}}";
 
   @Test
-  public void mutates() {
-    given().contentType(ContentType.JSON)
-        .body(jsonRequest())
-        .when().post("/mutate")
-        .then()
-        .statusCode(200)
-        .body(is(
-            "{\"apiVersion\":\"admission.k8s.io/v1\",\"kind\":\"AdmissionReview\",\"response\":{\"allowed\":true,\"patch\":\"W3sib3AiOiJhZGQiLCJwYXRoIjoiL21ldGFkYXRhL2xhYmVscy9hcHAua3ViZXJuZXRlcy5pb34xbmFtZSIsInZhbHVlIjoibXV0YXRpb24tdGVzdCJ9XQ==\",\"patchType\":\"JSONPatch\",\"uid\":\"0df28fbd-5f5f-11e8-bc74-36e6bb280816\"}}"));
+  void mutates() {
+    mutate(MUTATE_PATH);
   }
 
   @Test
-  public void validates() {
+  void asyncMutates() {
+    mutate(ASYNC_MUTATE_PATH);
+  }
+
+  public void mutate(String path) {
     given().contentType(ContentType.JSON)
         .body(jsonRequest())
-        .when().post("/validate")
+        .when().post("/" + path)
+        .then()
+        .statusCode(200)
+        .body(is(MUTATION_RESPONSE));
+  }
+
+  @Test
+  void validates() {
+    validate(VALIDATE_PATH);
+  }
+
+  @Test
+  public void asyncValidates() {
+    validate(ASYNC_VALIDATE_PATH);
+  }
+
+  public void validate(String path) {
+    given().contentType(ContentType.JSON)
+        .body(jsonRequest())
+        .when().post("/" + path)
         .then()
         .statusCode(200)
         .body(is(
-            "{\"apiVersion\":\"admission.k8s.io/v1\",\"kind\":\"AdmissionReview\",\"response\":{\"allowed\":false,\"status\":{\"apiVersion\":\"v1\",\"kind\":\"Status\",\"code\":403,\"message\":\"Missing label: app.kubernetes.io/name\"},\"uid\":\"0df28fbd-5f5f-11e8-bc74-36e6bb280816\"}}"));
+            VALIDATE_RESPONSE));
   }
 
   private String jsonRequest() {

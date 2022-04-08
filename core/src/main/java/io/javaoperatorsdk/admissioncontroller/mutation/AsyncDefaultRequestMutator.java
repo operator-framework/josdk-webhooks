@@ -1,6 +1,7 @@
 package io.javaoperatorsdk.admissioncontroller.mutation;
 
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionStage;
 
 import io.fabric8.kubernetes.api.model.KubernetesResource;
 import io.fabric8.kubernetes.api.model.admission.v1.AdmissionRequest;
@@ -28,11 +29,11 @@ public class AsyncDefaultRequestMutator<T extends KubernetesResource>
   }
 
   @Override
-  public CompletableFuture<AdmissionResponse> handle(AdmissionRequest admissionRequest) {
+  public CompletionStage<AdmissionResponse> handle(AdmissionRequest admissionRequest) {
     Operation operation = Operation.valueOf(admissionRequest.getOperation());
     var originalResource = (T) getTargetResource(admissionRequest, operation);
     var clonedResource = cloner.clone(originalResource);
-    CompletableFuture<AdmissionResponse> admissionResponse;
+    CompletionStage<AdmissionResponse> admissionResponse;
     try {
       var mutatedResource = mutator.mutate(clonedResource, operation);
       admissionResponse =

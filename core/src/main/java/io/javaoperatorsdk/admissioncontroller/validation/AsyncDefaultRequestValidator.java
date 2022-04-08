@@ -1,6 +1,8 @@
 package io.javaoperatorsdk.admissioncontroller.validation;
 
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionException;
+import java.util.concurrent.CompletionStage;
 
 import io.fabric8.kubernetes.api.model.KubernetesResource;
 import io.fabric8.kubernetes.api.model.admission.v1.AdmissionRequest;
@@ -20,19 +22,24 @@ public class AsyncDefaultRequestValidator<T extends KubernetesResource>
 
   @Override
   @SuppressWarnings("unchecked")
-  public CompletableFuture<AdmissionResponse> handle(AdmissionRequest admissionRequest) {
+  public CompletionStage<AdmissionResponse> handle(AdmissionRequest admissionRequest) {
     Operation operation = Operation.valueOf(admissionRequest.getOperation());
     var originalResource = (T) getTargetResource(admissionRequest, operation);
-    CompletableFuture<AdmissionResponse> admissionResponse;
-    try {
-      var asyncValidate =
-          CompletableFuture.runAsync(() -> validator.validate(originalResource, operation));
-      admissionResponse = asyncValidate.thenApply(v -> allowedAdmissionResponse());
-    } catch (NotAllowedException e) {
-      admissionResponse = CompletableFuture
-          .supplyAsync(() -> AdmissionUtils.notAllowedExceptionToAdmissionResponse(e));
-    }
-    return admissionResponse;
+    CompletionStage<AdmissionResponse> admissionResponse;
+
+    var asyncValidate =
+        CompletableFuture.runAsync(() -> validator.validate(originalResource, operation));
+    return asyncValidate
+        .thenApply(v -> allowedAdmissionResponse())
+        .exceptionally(e -> {
+          if (e instanceof CompletionException) {
+            return AdmissionUtils.notAllowedExceptionToAdmissionResponse(
+                (NotAllowedException) e.getCause());
+          }
+          // todo
+          throw new IllegalStateException("todo");
+        });
+
   }
 
   private AdmissionResponse allowedAdmissionResponse() {

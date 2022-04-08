@@ -1,6 +1,6 @@
 package io.javaoperatorsdk.admissioncontroller;
 
-import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionStage;
 
 import io.fabric8.kubernetes.api.model.KubernetesResource;
 import io.fabric8.kubernetes.api.model.admission.v1.AdmissionReview;
@@ -17,22 +17,22 @@ public class AsyncAdmissionController<T extends KubernetesResource> {
     this(new AsyncDefaultRequestMutator<>(mutator));
   }
 
-  public AsyncAdmissionController(Validator<T> mutator) {
-    this(new AsyncDefaultRequestValidator<>(mutator));
+  public AsyncAdmissionController(Validator<T> validator) {
+    this(new AsyncDefaultRequestValidator<>(validator));
   }
 
   public AsyncAdmissionController(AsyncRequestHandler requestHandler) {
     this.requestHandler = requestHandler;
   }
 
-  public CompletableFuture<AdmissionReview> handle(AdmissionReview admissionReview) {
-    var response = requestHandler.handle(admissionReview.getRequest());
-    return response.thenApply(r -> {
-      AdmissionReview responseAdmissionReview = new AdmissionReview();
-      responseAdmissionReview.setResponse(r);
-      r.setUid(admissionReview.getRequest().getUid());
-      return admissionReview;
-    });
+  public CompletionStage<AdmissionReview> handle(AdmissionReview admissionReview) {
+    return requestHandler.handle(admissionReview.getRequest())
+        .thenApply(r -> {
+          AdmissionReview responseAdmissionReview = new AdmissionReview();
+          responseAdmissionReview.setResponse(r);
+          r.setUid(admissionReview.getRequest().getUid());
+          return responseAdmissionReview;
+        });
   }
 
 }
