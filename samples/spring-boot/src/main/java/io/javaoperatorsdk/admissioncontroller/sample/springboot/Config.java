@@ -17,6 +17,7 @@ import io.javaoperatorsdk.admissioncontroller.validation.Validator;
 public class Config {
 
   public static final String APP_NAME_LABEL_KEY = "app.kubernetes.io/name";
+  public static final String ERROR_MESSAGE = "Some error happened";
 
   @Bean
   public AdmissionController<Pod> mutatingController() {
@@ -38,14 +39,14 @@ public class Config {
   @Bean
   public AdmissionController<Pod> errorMutatingController() {
     return new AdmissionController<>((Validator<Pod>) (resource, operation) -> {
-      throw new IllegalStateException("Some error happened");
+      throw new IllegalStateException(ERROR_MESSAGE);
     });
   }
 
   @Bean
   public AdmissionController<Pod> errorValidatingController() {
     return new AdmissionController<>((Mutator<Pod>) (resource, operation) -> {
-      throw new IllegalStateException("Some error happened");
+      throw new IllegalStateException(ERROR_MESSAGE);
     });
   }
 
@@ -71,14 +72,14 @@ public class Config {
   @Bean
   public AsyncAdmissionController<Pod> errorAsyncMutatingController() {
     return new AsyncAdmissionController<>((AsyncMutator<Pod>) (resource, operation) -> {
-      throw new IllegalStateException("Some error happened");
+      throw new IllegalStateException(ERROR_MESSAGE);
     });
   }
 
   @Bean
   public AsyncAdmissionController<Pod> errorAsyncValidatingController() {
     return new AsyncAdmissionController<>((Validator<Pod>) (resource, operation) -> {
-      throw new IllegalStateException("Some error happened");
+      throw new IllegalStateException(ERROR_MESSAGE);
     });
   }
 

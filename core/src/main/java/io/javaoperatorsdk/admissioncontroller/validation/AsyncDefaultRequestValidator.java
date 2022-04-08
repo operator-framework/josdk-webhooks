@@ -38,7 +38,6 @@ public class AsyncDefaultRequestValidator<T extends KubernetesResource>
             } else {
               throw new IllegalStateException(e.getCause());
             }
-            // todo check these exceptions how to handle correctly
           } else {
             throw new IllegalStateException(e);
           }

@@ -27,6 +27,7 @@ public class AdmissionControllerConfig {
   public static final String ASYNC_VALIDATING_CONTROLLER = "asyncValidatingController";
   public static final String ERROR_ASYNC_MUTATING_CONTROLLER = "errorAsyncMutatingController";
   public static final String ERROR_ASYNC_VALIDATING_CONTROLLER = "errorAsyncValidatingController";
+  public static final String ERROR_MESSAGE = "Some error happened";
 
   @Singleton
   @Named(MUTATING_CONTROLLER)
@@ -67,12 +68,11 @@ public class AdmissionControllerConfig {
     });
   }
 
-
   @Singleton
   @Named(ERROR_MUTATING_CONTROLLER)
   public AdmissionController<Pod> errorMutatingController() {
     return new AdmissionController<>((Validator<Pod>) (resource, operation) -> {
-      throw new IllegalStateException("Some error happened");
+      throw new IllegalStateException(ERROR_MESSAGE);
     });
   }
 
@@ -80,7 +80,7 @@ public class AdmissionControllerConfig {
   @Named(ERROR_VALIDATING_CONTROLLER)
   public AdmissionController<Pod> errorValidatingController() {
     return new AdmissionController<>((Mutator<Pod>) (resource, operation) -> {
-      throw new IllegalStateException("Some error happened");
+      throw new IllegalStateException(ERROR_MESSAGE);
     });
   }
 
@@ -88,7 +88,7 @@ public class AdmissionControllerConfig {
   @Named(ERROR_ASYNC_MUTATING_CONTROLLER)
   public AsyncAdmissionController<Pod> errorAsyncMutatingController() {
     return new AsyncAdmissionController<>((AsyncMutator<Pod>) (resource, operation) -> {
-      throw new IllegalStateException("Some error happened");
+      throw new IllegalStateException(ERROR_MESSAGE);
     });
   }
 
@@ -96,7 +96,7 @@ public class AdmissionControllerConfig {
   @Named(ERROR_ASYNC_VALIDATING_CONTROLLER)
   public AsyncAdmissionController<Pod> errorAsyncValidatingController() {
     return new AsyncAdmissionController<>((Validator<Pod>) (resource, operation) -> {
-      throw new IllegalStateException("Some error happened");
+      throw new IllegalStateException(ERROR_MESSAGE);
     });
   }
 
