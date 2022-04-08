@@ -60,7 +60,8 @@ public class AdmissionEndpoint {
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   public Uni<AdmissionReview> asyncMutate(AdmissionReview admissionReview) {
-    return Uni.createFrom().completionStage(this.asyncMutationController.handle(admissionReview));
+    return Uni.createFrom()
+        .completionStage(() -> this.asyncMutationController.handle(admissionReview));
   }
 
   @POST
@@ -68,7 +69,8 @@ public class AdmissionEndpoint {
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   public Uni<AdmissionReview> asyncValidate(AdmissionReview admissionReview) {
-    return Uni.createFrom().completionStage(this.asyncValidationController.handle(admissionReview));
+    return Uni.createFrom()
+        .completionStage(() -> this.asyncValidationController.handle(admissionReview));
   }
 
 }
