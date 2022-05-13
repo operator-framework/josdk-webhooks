@@ -9,7 +9,7 @@
     <version>0.2.1-SNAPSHOT</version>
   </parent>
 
-  <artifactId>operator-framework-framework-core</artifactId>
+  <artifactId>admission-controller-framework-core</artifactId>
   <name>Admission Controller Framework - Core</name>
   <packaging>jar</packaging>
 
