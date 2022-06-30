@@ -6,7 +6,7 @@ Kubernetes in Java. Supports both **quarkus** and **spring boot**. Both Sync and
 
 ## Sample Usage
 
-Defining a mutation or validation controller should be simple as:
+Defining a mutation or validation controller is simple as:
 
 https://github.com/java-operator-sdk/admission-controller-framework/blob/0946595d941b789caef6a69b34c2e5be8c6b59cf/samples/quarkus/src/main/java/io/javaoperatorsdk/admissioncontroller/sample/quarkus/AdmissionControllerConfig.java#L31-L68
 
