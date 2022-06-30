@@ -1,27 +1,27 @@
-package io.javaoperatorsdk.admissioncontroller;
+package io.javaoperatorsdk.admissioncontroller.admission;
 
 import java.util.concurrent.CompletionStage;
 
 import io.fabric8.kubernetes.api.model.KubernetesResource;
 import io.fabric8.kubernetes.api.model.admission.v1.AdmissionReview;
-import io.javaoperatorsdk.admissioncontroller.mutation.AsyncDefaultRequestMutator;
-import io.javaoperatorsdk.admissioncontroller.mutation.AsyncMutator;
-import io.javaoperatorsdk.admissioncontroller.validation.AsyncDefaultRequestValidator;
-import io.javaoperatorsdk.admissioncontroller.validation.Validator;
+import io.javaoperatorsdk.admissioncontroller.admission.mutation.AsyncDefaultAdmissionRequestMutator;
+import io.javaoperatorsdk.admissioncontroller.admission.mutation.AsyncMutator;
+import io.javaoperatorsdk.admissioncontroller.admission.validation.AsyncDefaultAdmissionRequestValidator;
+import io.javaoperatorsdk.admissioncontroller.admission.validation.Validator;
 
 public class AsyncAdmissionController<T extends KubernetesResource> {
 
-  private final AsyncRequestHandler requestHandler;
+  private final AsyncAdmissionRequestHandler requestHandler;
 
   public AsyncAdmissionController(AsyncMutator<T> mutator) {
-    this(new AsyncDefaultRequestMutator<>(mutator));
+    this(new AsyncDefaultAdmissionRequestMutator<>(mutator));
   }
 
   public AsyncAdmissionController(Validator<T> validator) {
-    this(new AsyncDefaultRequestValidator<>(validator));
+    this(new AsyncDefaultAdmissionRequestValidator<>(validator));
   }
 
-  public AsyncAdmissionController(AsyncRequestHandler requestHandler) {
+  public AsyncAdmissionController(AsyncAdmissionRequestHandler requestHandler) {
     this.requestHandler = requestHandler;
   }
 

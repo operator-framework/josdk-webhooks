@@ -1,20 +1,21 @@
-package io.javaoperatorsdk.admissioncontroller.validation;
+package io.javaoperatorsdk.admissioncontroller.admission.validation;
 
 import io.fabric8.kubernetes.api.model.KubernetesResource;
 import io.fabric8.kubernetes.api.model.admission.v1.AdmissionRequest;
 import io.fabric8.kubernetes.api.model.admission.v1.AdmissionResponse;
-import io.javaoperatorsdk.admissioncontroller.AdmissionUtils;
-import io.javaoperatorsdk.admissioncontroller.NotAllowedException;
-import io.javaoperatorsdk.admissioncontroller.Operation;
-import io.javaoperatorsdk.admissioncontroller.RequestHandler;
+import io.javaoperatorsdk.admissioncontroller.admission.AdmissionRequestHandler;
+import io.javaoperatorsdk.admissioncontroller.admission.AdmissionUtils;
+import io.javaoperatorsdk.admissioncontroller.admission.NotAllowedException;
+import io.javaoperatorsdk.admissioncontroller.admission.Operation;
 
-import static io.javaoperatorsdk.admissioncontroller.AdmissionUtils.getTargetResource;
+import static io.javaoperatorsdk.admissioncontroller.admission.AdmissionUtils.getTargetResource;
 
-public class DefaultRequestValidator<T extends KubernetesResource> implements RequestHandler {
+public class DefaultAdmissionRequestValidator<T extends KubernetesResource>
+    implements AdmissionRequestHandler {
 
   private final Validator<T> validator;
 
-  public DefaultRequestValidator(Validator<T> validator) {
+  public DefaultAdmissionRequestValidator(Validator<T> validator) {
     this.validator = validator;
   }
 

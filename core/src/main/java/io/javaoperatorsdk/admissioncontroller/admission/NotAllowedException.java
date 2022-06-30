@@ -1,4 +1,4 @@
-package io.javaoperatorsdk.admissioncontroller;
+package io.javaoperatorsdk.admissioncontroller.admission;
 
 import io.fabric8.kubernetes.api.model.Status;
 

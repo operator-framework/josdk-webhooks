@@ -9,6 +9,7 @@ import io.fabric8.kubernetes.api.model.admission.v1.AdmissionRequest;
 import io.fabric8.kubernetes.api.model.admission.v1.AdmissionReview;
 import io.fabric8.kubernetes.api.model.apps.Deployment;
 import io.fabric8.kubernetes.client.utils.Serialization;
+import io.javaoperatorsdk.admissioncontroller.admission.Operation;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

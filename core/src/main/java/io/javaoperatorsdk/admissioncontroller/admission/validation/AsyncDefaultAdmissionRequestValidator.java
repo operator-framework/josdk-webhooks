@@ -1,4 +1,4 @@
-package io.javaoperatorsdk.admissioncontroller.validation;
+package io.javaoperatorsdk.admissioncontroller.admission.validation;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
@@ -7,16 +7,19 @@ import java.util.concurrent.CompletionStage;
 import io.fabric8.kubernetes.api.model.KubernetesResource;
 import io.fabric8.kubernetes.api.model.admission.v1.AdmissionRequest;
 import io.fabric8.kubernetes.api.model.admission.v1.AdmissionResponse;
-import io.javaoperatorsdk.admissioncontroller.*;
+import io.javaoperatorsdk.admissioncontroller.admission.AdmissionUtils;
+import io.javaoperatorsdk.admissioncontroller.admission.AsyncAdmissionRequestHandler;
+import io.javaoperatorsdk.admissioncontroller.admission.NotAllowedException;
+import io.javaoperatorsdk.admissioncontroller.admission.Operation;
 
-import static io.javaoperatorsdk.admissioncontroller.AdmissionUtils.getTargetResource;
+import static io.javaoperatorsdk.admissioncontroller.admission.AdmissionUtils.getTargetResource;
 
-public class AsyncDefaultRequestValidator<T extends KubernetesResource>
-    implements AsyncRequestHandler {
+public class AsyncDefaultAdmissionRequestValidator<T extends KubernetesResource>
+    implements AsyncAdmissionRequestHandler {
 
   private final Validator<T> validator;
 
-  public AsyncDefaultRequestValidator(Validator<T> validator) {
+  public AsyncDefaultAdmissionRequestValidator(Validator<T> validator) {
     this.validator = validator;
   }
 

@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.fabric8.kubernetes.api.model.Pod;
 import io.fabric8.kubernetes.api.model.admission.v1.AdmissionReview;
-import io.javaoperatorsdk.admissioncontroller.AdmissionController;
-import io.javaoperatorsdk.admissioncontroller.AsyncAdmissionController;
+import io.javaoperatorsdk.admissioncontroller.admission.AdmissionController;
+import io.javaoperatorsdk.admissioncontroller.admission.AsyncAdmissionController;
 
 import reactor.core.publisher.Mono;
 

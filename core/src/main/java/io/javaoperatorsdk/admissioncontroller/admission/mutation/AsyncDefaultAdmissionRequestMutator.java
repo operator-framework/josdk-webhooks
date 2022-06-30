@@ -1,4 +1,4 @@
-package io.javaoperatorsdk.admissioncontroller.mutation;
+package io.javaoperatorsdk.admissioncontroller.admission.mutation;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
@@ -6,24 +6,27 @@ import java.util.concurrent.CompletionStage;
 import io.fabric8.kubernetes.api.model.KubernetesResource;
 import io.fabric8.kubernetes.api.model.admission.v1.AdmissionRequest;
 import io.fabric8.kubernetes.api.model.admission.v1.AdmissionResponse;
-import io.javaoperatorsdk.admissioncontroller.*;
+import io.javaoperatorsdk.admissioncontroller.admission.AdmissionUtils;
+import io.javaoperatorsdk.admissioncontroller.admission.AsyncAdmissionRequestHandler;
+import io.javaoperatorsdk.admissioncontroller.admission.NotAllowedException;
+import io.javaoperatorsdk.admissioncontroller.admission.Operation;
 import io.javaoperatorsdk.admissioncontroller.clone.Cloner;
 import io.javaoperatorsdk.admissioncontroller.clone.ObjectMapperCloner;
 
-import static io.javaoperatorsdk.admissioncontroller.AdmissionUtils.admissionResponseFromMutation;
-import static io.javaoperatorsdk.admissioncontroller.AdmissionUtils.getTargetResource;
+import static io.javaoperatorsdk.admissioncontroller.admission.AdmissionUtils.admissionResponseFromMutation;
+import static io.javaoperatorsdk.admissioncontroller.admission.AdmissionUtils.getTargetResource;
 
-public class AsyncDefaultRequestMutator<T extends KubernetesResource>
-    implements AsyncRequestHandler {
+public class AsyncDefaultAdmissionRequestMutator<T extends KubernetesResource>
+    implements AsyncAdmissionRequestHandler {
 
   private final AsyncMutator<T> mutator;
   private final Cloner<T> cloner;
 
-  public AsyncDefaultRequestMutator(AsyncMutator<T> mutator) {
+  public AsyncDefaultAdmissionRequestMutator(AsyncMutator<T> mutator) {
     this(mutator, new ObjectMapperCloner<>());
   }
 
-  public AsyncDefaultRequestMutator(AsyncMutator<T> mutator, Cloner<T> cloner) {
+  public AsyncDefaultAdmissionRequestMutator(AsyncMutator<T> mutator, Cloner<T> cloner) {
     this.mutator = mutator;
     this.cloner = cloner;
   }

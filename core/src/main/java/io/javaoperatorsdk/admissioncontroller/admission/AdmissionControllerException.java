@@ -1,4 +1,4 @@
-package io.javaoperatorsdk.admissioncontroller;
+package io.javaoperatorsdk.admissioncontroller.admission;
 
 public class AdmissionControllerException extends RuntimeException {
 

@@ -7,12 +7,12 @@ import javax.inject.Named;
 import javax.inject.Singleton;
 
 import io.fabric8.kubernetes.api.model.Pod;
-import io.javaoperatorsdk.admissioncontroller.AdmissionController;
-import io.javaoperatorsdk.admissioncontroller.AsyncAdmissionController;
-import io.javaoperatorsdk.admissioncontroller.NotAllowedException;
-import io.javaoperatorsdk.admissioncontroller.mutation.AsyncMutator;
-import io.javaoperatorsdk.admissioncontroller.mutation.Mutator;
-import io.javaoperatorsdk.admissioncontroller.validation.Validator;
+import io.javaoperatorsdk.admissioncontroller.admission.AdmissionController;
+import io.javaoperatorsdk.admissioncontroller.admission.AsyncAdmissionController;
+import io.javaoperatorsdk.admissioncontroller.admission.NotAllowedException;
+import io.javaoperatorsdk.admissioncontroller.admission.mutation.AsyncMutator;
+import io.javaoperatorsdk.admissioncontroller.admission.mutation.Mutator;
+import io.javaoperatorsdk.admissioncontroller.admission.validation.Validator;
 
 @Dependent
 public class AdmissionControllerConfig {

@@ -1,4 +1,4 @@
-package io.javaoperatorsdk.admissioncontroller;
+package io.javaoperatorsdk.admissioncontroller.admission;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;

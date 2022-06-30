@@ -7,7 +7,9 @@ import org.junit.jupiter.api.Test;
 
 import io.fabric8.kubernetes.api.model.HasMetadata;
 import io.fabric8.kubernetes.api.model.admission.v1.AdmissionReview;
-import io.javaoperatorsdk.admissioncontroller.mutation.AsyncMutator;
+import io.javaoperatorsdk.admissioncontroller.admission.AsyncAdmissionController;
+import io.javaoperatorsdk.admissioncontroller.admission.NotAllowedException;
+import io.javaoperatorsdk.admissioncontroller.admission.mutation.AsyncMutator;
 
 import static io.javaoperatorsdk.admissioncontroller.Commons.*;
 

@@ -3,6 +3,8 @@ package io.javaoperatorsdk.admissioncontroller;
 import org.junit.jupiter.api.Test;
 
 import io.fabric8.kubernetes.api.model.HasMetadata;
+import io.javaoperatorsdk.admissioncontroller.admission.AdmissionController;
+import io.javaoperatorsdk.admissioncontroller.admission.NotAllowedException;
 
 import static io.javaoperatorsdk.admissioncontroller.Commons.*;
 
