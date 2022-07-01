@@ -1,9 +1,13 @@
 package io.javaoperatorsdk.webhook.conversion;
 
+import java.util.Arrays;
+import java.util.UUID;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import io.fabric8.kubernetes.api.model.HasMetadata;
+import io.fabric8.kubernetes.api.model.apiextensions.v1.ConversionRequest;
 import io.fabric8.kubernetes.api.model.apiextensions.v1.ConversionReview;
 import io.javaoperatorsdk.webhook.conversion.mapper.CustomResourceV1Mapper;
 import io.javaoperatorsdk.webhook.conversion.mapper.CustomResourceV2Mapper;
@@ -34,8 +38,12 @@ public class ConversionControllerTest {
   }
 
   ConversionReview createRequest(HasMetadata... resources) {
-
-    return null;
+    ConversionReview review = new ConversionReview();
+    ConversionRequest request = new ConversionRequest();
+    request.setUid(UUID.randomUUID().toString());
+    request.setObjects(Arrays.asList(resources));
+    review.setRequest(request);
+    return review;
   }
 
 }
