@@ -2,12 +2,12 @@ package io.javaoperatorsdk.admissioncontroller.conversion;
 
 import io.fabric8.kubernetes.api.model.HasMetadata;
 
-public interface Mapper<S extends HasMetadata, T extends HasMetadata> {
+public interface Mapper<R extends HasMetadata, T> {
 
-  String sourceVersion();
+  String version();
 
-  String targetVersion();
+  T toHub(R source);
 
-  T map(S source);
+  R fromHub(T source);
 
 }

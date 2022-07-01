@@ -16,48 +16,12 @@ import io.fabric8.kubernetes.api.model.apiextensions.v1.ConversionReview;
 public class DefaultConversionService implements ConversionRequestHandler {
 
   private static final Logger log = LoggerFactory.getLogger(DefaultConversionService.class);
+  public static final String FAILED_STATUS_MESSAGE = "Failed";
 
-  public static final String VERSION_DELIMITER = "#";
-
-  private final String hubVersion;
-
-  private Map<String, Mapper> toHubMappers;
-  private Map<String, Mapper> fromHubMappers;
-  private Map<String, Mapper> directMappers = new HashMap<>();
-
-  /**
-   * Initialize without a hub version.
-   */
-  public DefaultConversionService() {
-    this(null);
-  }
-
-  public DefaultConversionService(String hubVersion) {
-    this.hubVersion = hubVersion;
-    if (isHubSupported()) {
-      toHubMappers = new HashMap<>();
-      fromHubMappers = new HashMap<>();
-    }
-  }
+  private Map<String, Mapper> mappers = new HashMap<>();
 
   public void registerMapper(Mapper<?, ?> mapper) {
-    directMappers.put(combinedVersionIdentifier(mapper.sourceVersion(), mapper.targetVersion()),
-        mapper);
-    if (isHubSupported()) {
-      if (mapper.sourceVersion().equals(hubVersion)) {
-        fromHubMappers.put(mapper.targetVersion(), mapper);
-      } else if (mapper.targetVersion().equals(hubVersion)) {
-        toHubMappers.put(mapper.sourceVersion(), mapper);
-      } else {
-        log.warn(
-            "Hub supported, but neither source ({}) or target ({}) version of mapper equals to hub ({}) version",
-            mapper.sourceVersion(), mapper.targetVersion(), hubVersion);
-      }
-    }
-  }
-
-  private String combinedVersionIdentifier(String sourceVersion, String targetVersion) {
-    return sourceVersion + VERSION_DELIMITER + targetVersion;
+    mappers.put(mapper.version(), mapper);
   }
 
   @Override
@@ -66,11 +30,10 @@ public class DefaultConversionService implements ConversionRequestHandler {
       List<HasMetadata> convertedObjects =
           convertObjects(conversionReview.getRequest().getObjects(),
               conversionReview.getRequest().getDesiredAPIVersion());
-
       return createResponse(convertedObjects, conversionReview);
     } catch (RuntimeException e) {
-      // todo
-      return null;
+      log.error("Error in conversion hook. UID: {}", conversionReview.getRequest().getUid(), e);
+      return createErrorResponse(e, conversionReview);
     }
   }
 
@@ -86,9 +49,14 @@ public class DefaultConversionService implements ConversionRequestHandler {
     return result;
   }
 
-  private ConversionReview createErrorResponse(Exception e,ConversionReview conversionReview) {
+  private ConversionReview createErrorResponse(Exception e, ConversionReview conversionReview) {
     ConversionReview result = new ConversionReview();
-
+    var response = new ConversionResponse();
+    response.setUid(conversionReview.getRequest().getUid());
+    response.setResult(new Status());
+    response.getResult().setStatus(FAILED_STATUS_MESSAGE);
+    response.getResult().setMessage(e.getMessage());
+    result.setResponse(response);
     return result;
   }
 
@@ -101,39 +69,21 @@ public class DefaultConversionService implements ConversionRequestHandler {
   @SuppressWarnings({"unchecked", "rawtypes"})
   private HasMetadata mapObject(HasMetadata resource, String targetVersion) {
     String sourceVersion = resource.getApiVersion();
-    Mapper directMapper =
-        directMappers.get(combinedVersionIdentifier(sourceVersion, targetVersion));
-    if (directMapper != null) {
-      return directMapper.map(resource);
+
+    var sourceToHubMapper = mappers.get(sourceVersion);
+    if (sourceToHubMapper == null) {
+      throwMissingMapperForVersion(sourceVersion);
     }
-    if (!isHubSupported()) {
-      throw new MissingConversionMapperException(
-          "Missing direct conversion mapper, from version: " + sourceVersion
-              + ", to version:" + targetVersion);
+    var hubToTarget = mappers.get(targetVersion);
+    if (hubToTarget == null) {
+      throwMissingMapperForVersion(targetVersion);
     }
-    if (targetVersion.equals(hubVersion)) {
-      return toHubMappers.get(sourceVersion).map(resource);
-    } else if (sourceVersion.equals(hubVersion)) {
-      return fromHubMappers.get(targetVersion).map(resource);
-    } else {
-      var toHubMapper = toHubMappers.get(sourceVersion);
-      if (toHubMapper == null) {
-        throw new MissingConversionMapperException(
-            "Missing to hub mapper from version: " + sourceVersion);
-      }
-      HasMetadata hubResource = toHubMapper.map(resource);
-      var fromHubMapper = fromHubMappers.get(targetVersion);
-      if (fromHubMapper == null) {
-        throw new MissingConversionMapperException(
-            "Missing mapper from hub to version: " + targetVersion);
-      }
-      return fromHubMapper.map(hubResource);
-    }
+    return hubToTarget.fromHub(sourceToHubMapper.fromHub(resource));
   }
 
-
-
-  private boolean isHubSupported() {
-    return hubVersion != null;
+  private void throwMissingMapperForVersion(String version) {
+    throw new MissingConversionMapperException(
+        "Missing mapper from version: " + version);
   }
+
 }

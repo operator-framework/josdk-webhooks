@@ -5,22 +5,15 @@ import io.fabric8.kubernetes.api.model.HasMetadata;
 public abstract class DefaultMapper<S extends HasMetadata, T extends HasMetadata>
     implements Mapper<S, T> {
 
-  private final String sourceVersion;
-  private final String targetVersion;
+  private final String version;
 
-  protected DefaultMapper(String sourceVersion, String targetVersion) {
-    this.sourceVersion = sourceVersion;
-    this.targetVersion = targetVersion;
+  protected DefaultMapper(String version) {
+    this.version = version;
   }
 
   @Override
-  public String sourceVersion() {
-    return sourceVersion;
-  }
-
-  @Override
-  public String targetVersion() {
-    return targetVersion;
+  public String version() {
+    return version;
   }
 
 }
