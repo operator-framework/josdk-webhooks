@@ -18,6 +18,7 @@ public class DefaultConversionService implements ConversionRequestHandler {
   private static final Logger log = LoggerFactory.getLogger(DefaultConversionService.class);
   public static final String FAILED_STATUS_MESSAGE = "Failed";
 
+  @SuppressWarnings("rawtypes")
   private Map<String, Mapper> mappers = new HashMap<>();
 
   public void registerMapper(Mapper<?, ?> mapper) {

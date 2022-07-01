@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class ObjectMapperCloner<T> implements Cloner<T> {
 
-  private final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+  private final ObjectMapper object_mapper = new ObjectMapper();
 
   @Override
   public T clone(T object) {
@@ -13,7 +13,7 @@ public class ObjectMapperCloner<T> implements Cloner<T> {
       return null;
     }
     try {
-      return (T) OBJECT_MAPPER.readValue(OBJECT_MAPPER.writeValueAsString(object),
+      return (T) object_mapper.readValue(object_mapper.writeValueAsString(object),
           object.getClass());
     } catch (JsonProcessingException e) {
       throw new IllegalStateException(e);

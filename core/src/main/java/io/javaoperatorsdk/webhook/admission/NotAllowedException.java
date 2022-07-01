@@ -4,9 +4,10 @@ import io.fabric8.kubernetes.api.model.Status;
 
 public class NotAllowedException extends AdmissionControllerException {
 
-  private Status status = new Status();
+  private final Status status;
 
   public NotAllowedException() {
+    status = new Status();
     status.setCode(403);
   }
 
@@ -27,34 +28,40 @@ public class NotAllowedException extends AdmissionControllerException {
 
   public NotAllowedException(String message) {
     super(message);
+    this.status = new Status();
     this.status.setMessage(message);
     this.status.setCode(403);
   }
 
   public NotAllowedException(int code) {
+    this.status = new Status();
     this.status.setCode(code);
   }
 
   public NotAllowedException(String message, int code) {
     super(message);
+    this.status = new Status();
     this.status.setCode(code);
     this.status.setMessage(message);
   }
 
   public NotAllowedException(String message, Throwable cause, int code) {
     super(message, cause);
+    this.status = new Status();
     this.status.setCode(code);
     this.status.setMessage(message);
   }
 
   public NotAllowedException(Throwable cause, int code) {
     super(cause);
+    this.status = new Status();
     this.status.setCode(code);
   }
 
   public NotAllowedException(String message, Throwable cause, boolean enableSuppression,
       boolean writableStackTrace, int code) {
     super(message, cause, enableSuppression, writableStackTrace);
+    this.status = new Status();
     status.setCode(code);
   }
 

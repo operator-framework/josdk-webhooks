@@ -13,7 +13,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class AdmissionUtils {
 
   public static final String JSON_PATCH = "JSONPatch";
-  private final static ObjectMapper mapper = new ObjectMapper();
+  private static final ObjectMapper mapper = new ObjectMapper();
+
+  private AdmissionUtils() {}
 
   public static AdmissionResponse notAllowedExceptionToAdmissionResponse(
       NotAllowedException notAllowedException) {
