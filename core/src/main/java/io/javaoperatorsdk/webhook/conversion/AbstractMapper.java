@@ -2,8 +2,8 @@ package io.javaoperatorsdk.webhook.conversion;
 
 import io.fabric8.kubernetes.api.model.HasMetadata;
 
-public abstract class AbstractMapper<S extends HasMetadata, T extends HasMetadata>
-    implements Mapper<S, T> {
+public abstract class AbstractMapper<S extends HasMetadata, HUB>
+    implements Mapper<S, HUB> {
 
   private final String version;
 

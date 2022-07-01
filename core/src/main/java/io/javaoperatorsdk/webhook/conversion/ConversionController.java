@@ -13,13 +13,13 @@ import io.fabric8.kubernetes.api.model.Status;
 import io.fabric8.kubernetes.api.model.apiextensions.v1.ConversionResponse;
 import io.fabric8.kubernetes.api.model.apiextensions.v1.ConversionReview;
 
-public class DefaultConversionService implements ConversionRequestHandler {
+public class ConversionController implements ConversionRequestHandler {
 
-  private static final Logger log = LoggerFactory.getLogger(DefaultConversionService.class);
+  private static final Logger log = LoggerFactory.getLogger(ConversionController.class);
   public static final String FAILED_STATUS_MESSAGE = "Failed";
 
   @SuppressWarnings("rawtypes")
-  private Map<String, Mapper> mappers = new HashMap<>();
+  private final Map<String, Mapper> mappers = new HashMap<>();
 
   public void registerMapper(Mapper<?, ?> mapper) {
     mappers.put(mapper.version(), mapper);
@@ -30,7 +30,7 @@ public class DefaultConversionService implements ConversionRequestHandler {
     try {
       List<HasMetadata> convertedObjects =
           convertObjects(conversionReview.getRequest().getObjects(),
-              conversionReview.getRequest().getDesiredAPIVersion());
+              Utils.versionOfApiVersion(conversionReview.getRequest().getDesiredAPIVersion()));
       return createResponse(convertedObjects, conversionReview);
     } catch (RuntimeException e) {
       log.error("Error in conversion hook. UID: {}", conversionReview.getRequest().getUid(), e);
@@ -69,7 +69,7 @@ public class DefaultConversionService implements ConversionRequestHandler {
 
   @SuppressWarnings({"unchecked", "rawtypes"})
   private HasMetadata mapObject(HasMetadata resource, String targetVersion) {
-    String sourceVersion = resource.getApiVersion();
+    String sourceVersion = Utils.versionOfApiVersion(resource.getApiVersion());
 
     var sourceToHubMapper = mappers.get(sourceVersion);
     if (sourceToHubMapper == null) {

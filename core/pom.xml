@@ -108,5 +108,10 @@
       <groupId>com.github.java-json-tools</groupId>
       <artifactId>json-patch</artifactId>
     </dependency>
+    <dependency>
+      <groupId>io.fabric8</groupId>
+      <artifactId>crd-generator-apt</artifactId>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 </project>
