@@ -9,20 +9,21 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import io.fabric8.kubernetes.api.model.HasMetadata;
-import io.fabric8.kubernetes.api.model.Status;
-import io.fabric8.kubernetes.api.model.apiextensions.v1.ConversionResponse;
 import io.fabric8.kubernetes.api.model.apiextensions.v1.ConversionReview;
+
+import static io.javaoperatorsdk.webhook.conversion.Commons.*;
 
 public class ConversionController implements ConversionRequestHandler {
 
   private static final Logger log = LoggerFactory.getLogger(ConversionController.class);
-  public static final String FAILED_STATUS_MESSAGE = "Failed";
+
 
   @SuppressWarnings("rawtypes")
   private final Map<String, Mapper> mappers = new HashMap<>();
 
   public void registerMapper(Mapper<?, ?> mapper) {
-    mappers.put(mapper.version(), mapper);
+    String version = mapper.getClass().getDeclaredAnnotation(TargetVersion.class).value();
+    mappers.put(version, mapper);
   }
 
   @Override
@@ -36,29 +37,6 @@ public class ConversionController implements ConversionRequestHandler {
       log.error("Error in conversion hook. UID: {}", conversionReview.getRequest().getUid(), e);
       return createErrorResponse(e, conversionReview);
     }
-  }
-
-  private ConversionReview createResponse(List<HasMetadata> convertedObjects,
-      ConversionReview conversionReview) {
-    ConversionReview result = new ConversionReview();
-    var response = new ConversionResponse();
-    response.setResult(new Status());
-    response.getResult().setStatus("Success");
-    response.setUid(conversionReview.getRequest().getUid());
-    response.setConvertedObjects(convertedObjects);
-    result.setResponse(response);
-    return result;
-  }
-
-  private ConversionReview createErrorResponse(Exception e, ConversionReview conversionReview) {
-    ConversionReview result = new ConversionReview();
-    var response = new ConversionResponse();
-    response.setUid(conversionReview.getRequest().getUid());
-    response.setResult(new Status());
-    response.getResult().setStatus(FAILED_STATUS_MESSAGE);
-    response.getResult().setMessage(e.getMessage());
-    result.setResponse(response);
-    return result;
   }
 
   @SuppressWarnings("unchecked")
@@ -79,11 +57,6 @@ public class ConversionController implements ConversionRequestHandler {
       throwMissingMapperForVersion(targetVersion);
     }
     return hubToTarget.fromHub(sourceToHubMapper.toHub(resource));
-  }
-
-  private void throwMissingMapperForVersion(String version) {
-    throw new MissingConversionMapperException(
-        "Missing mapper from version: " + version);
   }
 
 }

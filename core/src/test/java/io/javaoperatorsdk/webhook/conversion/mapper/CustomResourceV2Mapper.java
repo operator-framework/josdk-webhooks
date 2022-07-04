@@ -1,16 +1,14 @@
 package io.javaoperatorsdk.webhook.conversion.mapper;
 
-import io.javaoperatorsdk.webhook.conversion.AbstractMapper;
+import io.javaoperatorsdk.webhook.conversion.Mapper;
+import io.javaoperatorsdk.webhook.conversion.TargetVersion;
 import io.javaoperatorsdk.webhook.conversion.crd.*;
 
 import static io.javaoperatorsdk.webhook.conversion.ConversionControllerTest.DEFAULT_ADDITIONAL_VALUE;
 import static io.javaoperatorsdk.webhook.conversion.ConversionControllerTest.DEFAULT_THIRD_VALUE;
 
-public class CustomResourceV2Mapper extends AbstractMapper<CustomResourceV2, CustomResourceV3> {
-
-  public CustomResourceV2Mapper() {
-    super("v2");
-  }
+@TargetVersion("v2")
+public class CustomResourceV2Mapper implements Mapper<CustomResourceV2, CustomResourceV3> {
 
   @Override
   public CustomResourceV3 toHub(CustomResourceV2 resource) {
