@@ -70,7 +70,6 @@ public class ConversionController implements ConversionRequestHandler {
   @SuppressWarnings({"unchecked", "rawtypes"})
   private HasMetadata mapObject(HasMetadata resource, String targetVersion) {
     String sourceVersion = Utils.versionOfApiVersion(resource.getApiVersion());
-
     var sourceToHubMapper = mappers.get(sourceVersion);
     if (sourceToHubMapper == null) {
       throwMissingMapperForVersion(sourceVersion);
@@ -79,7 +78,7 @@ public class ConversionController implements ConversionRequestHandler {
     if (hubToTarget == null) {
       throwMissingMapperForVersion(targetVersion);
     }
-    return hubToTarget.fromHub(sourceToHubMapper.fromHub(resource));
+    return hubToTarget.fromHub(sourceToHubMapper.toHub(resource));
   }
 
   private void throwMissingMapperForVersion(String version) {
