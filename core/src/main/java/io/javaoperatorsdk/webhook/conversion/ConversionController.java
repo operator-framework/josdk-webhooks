@@ -23,6 +23,9 @@ public class ConversionController implements ConversionRequestHandler {
 
   public void registerMapper(Mapper<?, ?> mapper) {
     String version = mapper.getClass().getDeclaredAnnotation(TargetVersion.class).value();
+    if (mappers.get(version) != null) {
+      throw new IllegalStateException(MAPPER_ALREADY_REGISTERED_FOR_VERSION_MESSAGE + version);
+    }
     mappers.put(version, mapper);
   }
 
@@ -33,7 +36,7 @@ public class ConversionController implements ConversionRequestHandler {
           convertObjects(conversionReview.getRequest().getObjects(),
               Utils.versionOfApiVersion(conversionReview.getRequest().getDesiredAPIVersion()));
       return createResponse(convertedObjects, conversionReview);
-    } catch (RuntimeException e) {
+    } catch (MissingConversionMapperException e) {
       log.error("Error in conversion hook. UID: {}", conversionReview.getRequest().getUid(), e);
       return createErrorResponse(e, conversionReview);
     }

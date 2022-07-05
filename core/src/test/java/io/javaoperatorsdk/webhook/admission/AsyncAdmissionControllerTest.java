@@ -9,7 +9,7 @@ import io.fabric8.kubernetes.api.model.HasMetadata;
 import io.fabric8.kubernetes.api.model.admission.v1.AdmissionReview;
 import io.javaoperatorsdk.webhook.admission.mutation.AsyncMutator;
 
-import static io.javaoperatorsdk.webhook.admission.Commons.*;
+import static io.javaoperatorsdk.webhook.admission.TestCommons.*;
 
 class AsyncAdmissionControllerTest {
 

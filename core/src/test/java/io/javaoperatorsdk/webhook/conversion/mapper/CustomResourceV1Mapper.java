@@ -4,8 +4,8 @@ import io.javaoperatorsdk.webhook.conversion.Mapper;
 import io.javaoperatorsdk.webhook.conversion.TargetVersion;
 import io.javaoperatorsdk.webhook.conversion.crd.*;
 
-import static io.javaoperatorsdk.webhook.conversion.ConversionControllerTest.DEFAULT_ADDITIONAL_VALUE;
-import static io.javaoperatorsdk.webhook.conversion.ConversionControllerTest.DEFAULT_THIRD_VALUE;
+import static io.javaoperatorsdk.webhook.conversion.TestCommons.DEFAULT_ADDITIONAL_VALUE;
+import static io.javaoperatorsdk.webhook.conversion.TestCommons.DEFAULT_THIRD_VALUE;
 
 @TargetVersion("v1")
 public class CustomResourceV1Mapper implements Mapper<CustomResourceV1, CustomResourceV3> {

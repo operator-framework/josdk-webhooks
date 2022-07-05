@@ -10,6 +10,8 @@ import io.fabric8.kubernetes.api.model.apiextensions.v1.ConversionReview;
 public class Commons {
 
   public static final String FAILED_STATUS_MESSAGE = "Failed";
+  public static final String MAPPER_ALREADY_REGISTERED_FOR_VERSION_MESSAGE =
+      "Mapper already registered for version: ";
 
   public static ConversionReview createResponse(List<HasMetadata> convertedObjects,
       ConversionReview conversionReview) {

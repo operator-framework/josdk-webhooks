@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import io.fabric8.kubernetes.api.model.HasMetadata;
 
-import static io.javaoperatorsdk.webhook.admission.Commons.*;
+import static io.javaoperatorsdk.webhook.admission.TestCommons.*;
 
 class AdmissionControllerTest {
 
@@ -12,7 +12,7 @@ class AdmissionControllerTest {
   void validatesResource() {
     AdmissionController<HasMetadata> admissionController =
         new AdmissionController<>((resource, operation) -> {
-          if (resource.getMetadata().getLabels().get(Commons.LABEL_KEY) == null) {
+          if (resource.getMetadata().getLabels().get(TestCommons.LABEL_KEY) == null) {
             throw new NotAllowedException(MISSING_REQUIRED_LABEL);
           }
         });
@@ -27,7 +27,7 @@ class AdmissionControllerTest {
   void mutatesResource() {
     AdmissionController<HasMetadata> admissionController =
         new AdmissionController<>((resource, operation) -> {
-          resource.getMetadata().getLabels().putIfAbsent(Commons.LABEL_KEY, LABEL_TEST_VALUE);
+          resource.getMetadata().getLabels().putIfAbsent(TestCommons.LABEL_KEY, LABEL_TEST_VALUE);
           return resource;
         });
     var inputAdmissionReview = createTestAdmissionReview();

@@ -12,7 +12,7 @@ import io.fabric8.kubernetes.client.utils.Serialization;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class Commons {
+public class TestCommons {
 
   public static final String LABEL_KEY = "app.kubernetes.io/name";
   public static final String MISSING_REQUIRED_LABEL = "Missing required label.";
@@ -25,7 +25,7 @@ public class Commons {
     request.setOperation(Operation.CREATE.name());
     request.setUid(UUID.randomUUID().toString());
     Deployment deployment = null;
-    try (InputStream is = Commons.class.getResourceAsStream("deployment.yaml")) {
+    try (InputStream is = TestCommons.class.getResourceAsStream("deployment.yaml")) {
       deployment = Serialization.unmarshal(is, Deployment.class);
       request.setObject(deployment);
     } catch (IOException e) {

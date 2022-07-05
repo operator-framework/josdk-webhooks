@@ -1,12 +1,11 @@
 package io.javaoperatorsdk.webhook.conversion;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,11 +19,15 @@ public class AsyncConversionController implements AsyncConversionRequestHandler 
 
   private static final Logger log = LoggerFactory.getLogger(ConversionController.class);
 
+
   @SuppressWarnings("rawtypes")
   private final Map<String, AsyncMapper> mappers = new HashMap<>();
 
   public void registerMapper(AsyncMapper<?, ?> mapper) {
     String version = mapper.getClass().getDeclaredAnnotation(TargetVersion.class).value();
+    if (mappers.get(version) != null) {
+      throw new IllegalStateException(MAPPER_ALREADY_REGISTERED_FOR_VERSION_MESSAGE + version);
+    }
     mappers.put(version, mapper);
   }
 
@@ -37,6 +40,8 @@ public class AsyncConversionController implements AsyncConversionRequestHandler 
             .thenApply(convertedObjects -> createResponse(convertedObjects, conversionReview))
             .exceptionally(e -> {
               if (e instanceof MissingConversionMapperException) {
+                log.error("Error in conversion hook. UID: {}",
+                    conversionReview.getRequest().getUid(), e);
                 return createErrorResponse((Exception) e, conversionReview);
               } else {
                 throw new IllegalStateException(e);
@@ -52,8 +57,13 @@ public class AsyncConversionController implements AsyncConversionRequestHandler 
     for (int i = 0; i < objects.size(); i++) {
       completableFutures[i] = mapObject(objects.get(i), targetVersion);
     }
-    return CompletableFuture.allOf(completableFutures).thenApply(r -> Stream.of(completableFutures)
-        .map(CompletableFuture::join).collect(Collectors.toList()));
+    return CompletableFuture.allOf(completableFutures).thenApply(r -> {
+      List<HasMetadata> result = new ArrayList<>(completableFutures.length);
+      for (CompletableFuture<HasMetadata> cf : completableFutures) {
+        result.add(cf.join());
+      }
+      return result;
+    });
   }
 
   @SuppressWarnings({"unchecked", "rawtypes"})
@@ -67,7 +77,9 @@ public class AsyncConversionController implements AsyncConversionRequestHandler 
     if (hubToTarget == null) {
       throwMissingMapperForVersion(targetVersion);
     }
-    return sourceToHubMapper.toHub(resource).thenApply(hubToTarget::fromHub).toCompletableFuture();
+    return sourceToHubMapper.toHub(resource)
+        .thenApply(r -> hubToTarget.fromHub(r).toCompletableFuture().join())
+        .toCompletableFuture();
 
   }
 
