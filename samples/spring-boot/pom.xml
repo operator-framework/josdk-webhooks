@@ -8,7 +8,7 @@
 		<version>0.2.1-SNAPSHOT</version>
 	</parent>
 
-	<groupId>io.javaoperatorsdk.admissioncontroller.sample</groupId>
+	<groupId>webhook.sample</groupId>
 	<artifactId>spring-boot-sample</artifactId>
 	<version>0.2.1-SNAPSHOT</version>
 	<name>Admission Controller Framework - Samples - Spring Boot</name>
