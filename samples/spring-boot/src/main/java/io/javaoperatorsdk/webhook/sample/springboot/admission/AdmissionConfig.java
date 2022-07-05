@@ -1,4 +1,4 @@
-package io.javaoperatorsdk.webhook.sample.springboot;
+package io.javaoperatorsdk.webhook.sample.springboot.admission;
 
 import java.util.HashMap;
 import java.util.concurrent.CompletableFuture;
@@ -15,7 +15,7 @@ import io.javaoperatorsdk.webhook.admission.mutation.Mutator;
 import io.javaoperatorsdk.webhook.admission.validation.Validator;
 
 @Configuration
-public class Config {
+public class AdmissionConfig {
 
   public static final String APP_NAME_LABEL_KEY = "app.kubernetes.io/name";
   public static final String ERROR_MESSAGE = "Some error happened";

@@ -1,4 +1,4 @@
-package io.javaoperatorsdk.webhook.sample.springboot;
+package io.javaoperatorsdk.webhook.sample.springboot.admission;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -14,7 +14,7 @@ import io.javaoperatorsdk.webhook.admission.AsyncAdmissionController;
 
 import reactor.core.publisher.Mono;
 
-@RestController("/")
+@RestController
 public class AdmissionEndpoint {
 
   public static final String MUTATE_PATH = "mutate";
