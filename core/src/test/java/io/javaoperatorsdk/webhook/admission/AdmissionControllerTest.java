@@ -4,36 +4,31 @@ import org.junit.jupiter.api.Test;
 
 import io.fabric8.kubernetes.api.model.HasMetadata;
 
-import static io.javaoperatorsdk.webhook.admission.TestCommons.*;
+import static io.javaoperatorsdk.webhook.admission.AdmissionTestSupport.*;
 
 class AdmissionControllerTest {
+
+  AdmissionTestSupport admissionTestSupport = new AdmissionTestSupport();
 
   @Test
   void validatesResource() {
     AdmissionController<HasMetadata> admissionController =
         new AdmissionController<>((resource, operation) -> {
-          if (resource.getMetadata().getLabels().get(TestCommons.LABEL_KEY) == null) {
+          if (resource.getMetadata().getLabels().get(AdmissionTestSupport.LABEL_KEY) == null) {
             throw new NotAllowedException(MISSING_REQUIRED_LABEL);
           }
         });
-    var inputAdmissionReview = createTestAdmissionReview();
-
-    var response = admissionController.handle(inputAdmissionReview);
-
-    assertValidation(response, inputAdmissionReview.getRequest().getUid());
+    admissionTestSupport.validatesResource(admissionController::handle);
   }
 
   @Test
   void mutatesResource() {
     AdmissionController<HasMetadata> admissionController =
         new AdmissionController<>((resource, operation) -> {
-          resource.getMetadata().getLabels().putIfAbsent(TestCommons.LABEL_KEY, LABEL_TEST_VALUE);
+          resource.getMetadata().getLabels().putIfAbsent(AdmissionTestSupport.LABEL_KEY,
+              LABEL_TEST_VALUE);
           return resource;
         });
-    var inputAdmissionReview = createTestAdmissionReview();
-
-    var response = admissionController.handle(inputAdmissionReview);
-
-    assertMutation(response);
+    admissionTestSupport.mutatesResource(admissionController::handle);
   }
 }

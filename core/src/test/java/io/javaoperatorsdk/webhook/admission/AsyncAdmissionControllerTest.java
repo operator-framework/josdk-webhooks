@@ -6,12 +6,13 @@ import java.util.concurrent.ExecutionException;
 import org.junit.jupiter.api.Test;
 
 import io.fabric8.kubernetes.api.model.HasMetadata;
-import io.fabric8.kubernetes.api.model.admission.v1.AdmissionReview;
 import io.javaoperatorsdk.webhook.admission.mutation.AsyncMutator;
 
-import static io.javaoperatorsdk.webhook.admission.TestCommons.*;
+import static io.javaoperatorsdk.webhook.admission.AdmissionTestSupport.*;
 
 class AsyncAdmissionControllerTest {
+
+  AdmissionTestSupport admissionTestSupport = new AdmissionTestSupport();
 
   @Test
   void validatesResource() throws ExecutionException, InterruptedException {
@@ -21,12 +22,12 @@ class AsyncAdmissionControllerTest {
             throw new NotAllowedException(MISSING_REQUIRED_LABEL);
           }
         });
-    var inputAdmissionReview = createTestAdmissionReview();
 
-    CompletableFuture<AdmissionReview> response =
-        (CompletableFuture<AdmissionReview>) admissionController.handle(inputAdmissionReview);
 
-    assertValidation(response.get(), inputAdmissionReview.getRequest().getUid());
+    admissionTestSupport
+        .validatesResource(res -> admissionController.handle(res).toCompletableFuture().join());
+
+
   }
 
   @Test
@@ -37,12 +38,9 @@ class AsyncAdmissionControllerTest {
               resource.getMetadata().getLabels().putIfAbsent(LABEL_KEY, LABEL_TEST_VALUE);
               return resource;
             }));
-    var inputAdmissionReview = createTestAdmissionReview();
 
-    CompletableFuture<AdmissionReview> response =
-        (CompletableFuture<AdmissionReview>) admissionController.handle(inputAdmissionReview);
-
-    assertMutation(response.get());
+    admissionTestSupport
+        .mutatesResource(res -> admissionController.handle(res).toCompletableFuture().join());
   }
 
 }

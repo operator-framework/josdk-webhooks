@@ -12,7 +12,7 @@ import io.javaoperatorsdk.webhook.conversion.mapper.*;
 
 class AsyncConversionControllerTest {
 
-  ConversionTests conversionTests = new ConversionTests();
+  ConversionTestSupport conversionTestSupport = new ConversionTestSupport();
   AsyncConversionController controller = new AsyncConversionController();
 
   @BeforeEach
@@ -24,20 +24,20 @@ class AsyncConversionControllerTest {
 
   @Test
   void handlesSimpleConversion() {
-    conversionTests.handlesSimpleConversion(getConversionReviewConversionResponseFunction());
+    conversionTestSupport.handlesSimpleConversion(getConversionReviewConversionResponseFunction());
   }
 
 
   @Test
   void convertsVariousVersionsInSingleRequest() {
-    conversionTests
+    conversionTestSupport
         .convertsVariousVersionsInSingleRequest(getConversionReviewConversionResponseFunction());
   }
 
   @Test
   void errorResponseOnMissingMapper() {
-    conversionTests
-        .convertsVariousVersionsInSingleRequest(getConversionReviewConversionResponseFunction());
+    conversionTestSupport
+        .errorResponseOnMissingMapper(getConversionReviewConversionResponseFunction());
   }
 
   private Function<ConversionReview, ConversionResponse> getConversionReviewConversionResponseFunction() {

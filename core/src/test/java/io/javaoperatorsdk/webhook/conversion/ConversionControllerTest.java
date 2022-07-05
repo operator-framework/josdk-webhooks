@@ -12,7 +12,8 @@ import io.javaoperatorsdk.webhook.conversion.mapper.CustomResourceV2Mapper;
 import io.javaoperatorsdk.webhook.conversion.mapper.CustomResourceV3Mapper;
 
 public class ConversionControllerTest {
-  ConversionTests conversionTests = new ConversionTests();
+
+  ConversionTestSupport conversionTestSupport = new ConversionTestSupport();
   ConversionController controller = new ConversionController();
 
   @BeforeEach
@@ -24,19 +25,19 @@ public class ConversionControllerTest {
 
   @Test
   void handlesSimpleConversion() {
-    conversionTests.handlesSimpleConversion(getConversionReviewConversionResponseFunction());
+    conversionTestSupport.handlesSimpleConversion(getConversionReviewConversionResponseFunction());
   }
 
   @Test
   void convertsVariousVersionsInSingleRequest() {
-    conversionTests
+    conversionTestSupport
         .convertsVariousVersionsInSingleRequest(getConversionReviewConversionResponseFunction());
   }
 
   @Test
   void errorResponseOnMissingMapper() {
-    conversionTests
-        .convertsVariousVersionsInSingleRequest(getConversionReviewConversionResponseFunction());
+    conversionTestSupport
+        .errorResponseOnMissingMapper(getConversionReviewConversionResponseFunction());
   }
 
   private Function<ConversionReview, ConversionResponse> getConversionReviewConversionResponseFunction() {

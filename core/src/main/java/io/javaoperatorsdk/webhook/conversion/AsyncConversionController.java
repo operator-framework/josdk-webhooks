@@ -18,8 +18,7 @@ import static io.javaoperatorsdk.webhook.conversion.Commons.*;
 public class AsyncConversionController implements AsyncConversionRequestHandler {
 
   private static final Logger log = LoggerFactory.getLogger(ConversionController.class);
-
-
+  
   @SuppressWarnings("rawtypes")
   private final Map<String, AsyncMapper> mappers = new HashMap<>();
 
@@ -33,20 +32,16 @@ public class AsyncConversionController implements AsyncConversionRequestHandler 
 
   @Override
   public CompletionStage<ConversionReview> handle(ConversionReview conversionReview) {
-
-    return convertObjects(
-        conversionReview.getRequest().getObjects(),
-        Utils.versionOfApiVersion(conversionReview.getRequest().getDesiredAPIVersion()))
-            .thenApply(convertedObjects -> createResponse(convertedObjects, conversionReview))
-            .exceptionally(e -> {
-              if (e instanceof MissingConversionMapperException) {
-                log.error("Error in conversion hook. UID: {}",
-                    conversionReview.getRequest().getUid(), e);
-                return createErrorResponse((Exception) e, conversionReview);
-              } else {
-                throw new IllegalStateException(e);
-              }
-            });
+    try {
+      return convertObjects(
+          conversionReview.getRequest().getObjects(),
+          Utils.versionOfApiVersion(conversionReview.getRequest().getDesiredAPIVersion()))
+              .thenApply(convertedObjects -> createResponse(convertedObjects, conversionReview));
+    } catch (MissingConversionMapperException e) {
+      log.error("Error in conversion hook. UID: {}",
+          conversionReview.getRequest().getUid(), e);
+      return CompletableFuture.completedStage(createErrorResponse(e, conversionReview));
+    }
 
   }
 
