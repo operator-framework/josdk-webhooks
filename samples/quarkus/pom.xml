@@ -7,7 +7,7 @@
     <artifactId>admission-controller-framework-samples</artifactId>
     <version>0.2.1-SNAPSHOT</version>
   </parent>
-  <groupId>webhook.sample</groupId>
+  <groupId>io.javaoperatorsdk.admissioncontroller.sample</groupId>
   <artifactId>quarkus-sample</artifactId>
   <name>Admission Controller Framework - Samples - Quarkus</name>
   <properties>
