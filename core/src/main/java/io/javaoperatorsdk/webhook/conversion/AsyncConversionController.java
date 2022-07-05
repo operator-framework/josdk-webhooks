@@ -18,7 +18,7 @@ import static io.javaoperatorsdk.webhook.conversion.Commons.*;
 public class AsyncConversionController implements AsyncConversionRequestHandler {
 
   private static final Logger log = LoggerFactory.getLogger(ConversionController.class);
-  
+
   @SuppressWarnings("rawtypes")
   private final Map<String, AsyncMapper> mappers = new HashMap<>();
 
