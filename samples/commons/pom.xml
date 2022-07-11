@@ -27,6 +27,10 @@
 			<artifactId>admission-controller-framework-core</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>io.fabric8</groupId>
+			<artifactId>crd-generator-apt</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
