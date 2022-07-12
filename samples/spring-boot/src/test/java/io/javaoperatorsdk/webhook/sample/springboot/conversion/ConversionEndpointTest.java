@@ -3,7 +3,6 @@ package io.javaoperatorsdk.webhook.sample.springboot.conversion;
 import java.io.IOException;
 import java.nio.file.Files;
 
-import io.javaoperatorsdk.webhook.sample.commons.customresource.TestCustomResourceV2;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,6 +16,7 @@ import org.springframework.web.reactive.function.BodyInserter;
 import org.springframework.web.reactive.function.BodyInserters;
 
 import io.fabric8.kubernetes.api.model.apiextensions.v1.ConversionReview;
+import io.javaoperatorsdk.webhook.sample.commons.customresource.TestCustomResourceV2;
 
 import static io.javaoperatorsdk.webhook.sample.commons.mapper.V1Mapper.DEFAULT_ADDITIONAL_VALUE;
 import static io.javaoperatorsdk.webhook.sample.springboot.conversion.ConversionEndpoint.ASYNC_CONVERSION_PATH;
@@ -50,7 +50,8 @@ class ConversionEndpointTest {
         .expectStatus().isOk().expectBody(ConversionReview.class).consumeWith(res -> {
           var review = res.getResponseBody();
           assertThat(review.getResponse().getConvertedObjects()).hasSize(2);
-          assertThat(((TestCustomResourceV2)review.getResponse().getConvertedObjects().get(0)).getSpec().getAdditionalValue())
+          assertThat(((TestCustomResourceV2) review.getResponse().getConvertedObjects().get(0))
+              .getSpec().getAdditionalValue())
                   .isEqualTo(DEFAULT_ADDITIONAL_VALUE);
         });
   }
