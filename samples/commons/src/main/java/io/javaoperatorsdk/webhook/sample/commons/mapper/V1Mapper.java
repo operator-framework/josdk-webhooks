@@ -8,6 +8,8 @@ import io.javaoperatorsdk.webhook.sample.commons.customresource.*;
 public class V1Mapper implements Mapper<TestCustomResource, TestCustomResourceV2> {
 
 
+  public static final String DEFAULT_ADDITIONAL_VALUE = "default_additional_value";
+
   @Override
   public TestCustomResourceV2 toHub(TestCustomResource resource) {
     var hub = new TestCustomResourceV2();
@@ -15,7 +17,9 @@ public class V1Mapper implements Mapper<TestCustomResource, TestCustomResourceV2
 
     var spec = new TestCustomResourceSpecV2();
     spec.setValue(String.valueOf(resource.getSpec().getValue()));
+    spec.setAdditionalValue(DEFAULT_ADDITIONAL_VALUE);
     hub.setSpec(spec);
+
 
     if (resource.getStatus() != null) {
       var status = new TestCustomResourceStatusV2();

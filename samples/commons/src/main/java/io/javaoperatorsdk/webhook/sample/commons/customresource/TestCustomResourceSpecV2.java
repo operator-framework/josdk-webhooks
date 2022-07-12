@@ -14,4 +14,12 @@ public class TestCustomResourceSpecV2 {
     this.value = value;
     return this;
   }
+
+  public String getAdditionalValue() {
+    return additionalValue;
+  }
+
+  public void setAdditionalValue(String additionalValue) {
+    this.additionalValue = additionalValue;
+  }
 }
