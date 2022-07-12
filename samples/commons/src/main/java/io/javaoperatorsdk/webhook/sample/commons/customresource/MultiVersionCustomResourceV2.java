@@ -10,6 +10,6 @@ import io.fabric8.kubernetes.model.annotation.Version;
 @Version(value = "v2")
 @Kind("MultiVersionCustomResource")
 @ShortNames("tcr")
-public class TestCustomResourceV2
-    extends CustomResource<TestCustomResourceSpecV2, TestCustomResourceStatusV2> {
+public class MultiVersionCustomResourceV2
+    extends CustomResource<MultiVersionCustomResourceSpecV2, MultiVersionCustomResourceStatusV2> {
 }

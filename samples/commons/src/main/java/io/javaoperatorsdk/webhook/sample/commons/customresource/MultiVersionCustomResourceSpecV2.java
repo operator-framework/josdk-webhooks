@@ -1,6 +1,6 @@
 package io.javaoperatorsdk.webhook.sample.commons.customresource;
 
-public class TestCustomResourceSpecV2 {
+public class MultiVersionCustomResourceSpecV2 {
 
   private String value;
 
@@ -10,7 +10,7 @@ public class TestCustomResourceSpecV2 {
     return value;
   }
 
-  public TestCustomResourceSpecV2 setValue(String value) {
+  public MultiVersionCustomResourceSpecV2 setValue(String value) {
     this.value = value;
     return this;
   }

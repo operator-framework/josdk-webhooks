@@ -16,7 +16,7 @@ import org.springframework.web.reactive.function.BodyInserter;
 import org.springframework.web.reactive.function.BodyInserters;
 
 import io.fabric8.kubernetes.api.model.apiextensions.v1.ConversionReview;
-import io.javaoperatorsdk.webhook.sample.commons.customresource.TestCustomResourceV2;
+import io.javaoperatorsdk.webhook.sample.commons.customresource.MultiVersionCustomResourceV2;
 
 import static io.javaoperatorsdk.webhook.sample.commons.mapper.V1Mapper.DEFAULT_ADDITIONAL_VALUE;
 import static io.javaoperatorsdk.webhook.sample.springboot.conversion.ConversionEndpoint.ASYNC_CONVERSION_PATH;
@@ -32,6 +32,7 @@ class ConversionEndpointTest {
 
   @Value("classpath:conversion-request.json")
   private Resource request;
+
 
   @Test
   void convert() {
@@ -50,7 +51,7 @@ class ConversionEndpointTest {
         .expectStatus().isOk().expectBody(ConversionReview.class).consumeWith(res -> {
           var review = res.getResponseBody();
           var resource1 =
-              ((TestCustomResourceV2) review.getResponse().getConvertedObjects().get(0));
+              ((MultiVersionCustomResourceV2) review.getResponse().getConvertedObjects().get(0));
           assertThat(review.getResponse().getConvertedObjects()).hasSize(2);
           assertThat(resource1.getSpec().getAdditionalValue()).isEqualTo(DEFAULT_ADDITIONAL_VALUE);
           assertThat(resource1.getMetadata().getName()).isEqualTo("resource1");

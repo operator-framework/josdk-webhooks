@@ -1,7 +1,7 @@
 package io.javaoperatorsdk.webhook.sample.commons.customresource;
 
 
-public class TestCustomResourceStatusV2 {
+public class MultiVersionCustomResourceStatusV2 {
 
   private Boolean ready;
 
@@ -11,7 +11,7 @@ public class TestCustomResourceStatusV2 {
     return ready;
   }
 
-  public TestCustomResourceStatusV2 setReady(Boolean ready) {
+  public MultiVersionCustomResourceStatusV2 setReady(Boolean ready) {
     this.ready = ready;
     return this;
   }
@@ -20,7 +20,7 @@ public class TestCustomResourceStatusV2 {
     return message;
   }
 
-  public TestCustomResourceStatusV2 setMessage(String message) {
+  public MultiVersionCustomResourceStatusV2 setMessage(String message) {
     this.message = message;
     return this;
   }
