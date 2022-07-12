@@ -52,7 +52,7 @@ class ConversionEndpointTest {
           var resource1 =
               ((TestCustomResourceV2) review.getResponse().getConvertedObjects().get(0));
           assertThat(review.getResponse().getConvertedObjects()).hasSize(2);
-          assertThat(resource1).isEqualTo(DEFAULT_ADDITIONAL_VALUE);
+          assertThat(resource1.getSpec().getAdditionalValue()).isEqualTo(DEFAULT_ADDITIONAL_VALUE);
           assertThat(resource1.getMetadata().getName()).isEqualTo("resource1");
         });
   }

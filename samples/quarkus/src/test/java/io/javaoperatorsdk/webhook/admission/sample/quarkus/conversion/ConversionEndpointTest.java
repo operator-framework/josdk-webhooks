@@ -17,6 +17,9 @@ import static org.hamcrest.CoreMatchers.is;
 @QuarkusTest
 public class ConversionEndpointTest {
 
+  final static String expectedResult =
+      "{\"apiVersion\":\"apiextensions.k8s.io/v1\",\"kind\":\"ConversionReview\",\"response\":{\"convertedObjects\":[{\"apiVersion\":\"sample.javaoperatorsdk/v2\",\"kind\":\"MultiVersionCustomResource\",\"metadata\":{\"creationTimestamp\":\"2021-09-04T14:03:02Z\",\"name\":\"resource1\",\"namespace\":\"default\",\"resourceVersion\":\"143\",\"uid\":\"3415a7fc-162b-4300-b5da-fd6083580d66\"},\"spec\":{\"value\":\"1\",\"additionalValue\":\"default_additional_value\"},\"status\":{\"ready\":true,\"message\":null}},{\"apiVersion\":\"sample.javaoperatorsdk/v2\",\"kind\":\"MultiVersionCustomResource\",\"metadata\":{\"creationTimestamp\":\"2021-09-04T14:03:02Z\",\"name\":\"resource2\",\"namespace\":\"default\",\"resourceVersion\":\"14344\",\"uid\":\"1115a7fc-162b-4300-b5da-fd6083580d55\"},\"spec\":{\"value\":\"2\",\"additionalValue\":\"default_additional_value\"},\"status\":{\"ready\":false,\"message\":null}}],\"result\":{\"apiVersion\":\"v1\",\"kind\":\"Status\",\"status\":\"Success\"},\"uid\":\"705ab4f5-6393-11e8-b7cc-42010a800002\"}}";
+
   @Test
   void conversion() {
     testConversion(CONVERSION_PATH);
@@ -33,7 +36,7 @@ public class ConversionEndpointTest {
         .when().post("/" + path)
         .then()
         .statusCode(200)
-        .body(is("s"));
+        .body(is(expectedResult));
   }
 
   private String jsonRequest() {
