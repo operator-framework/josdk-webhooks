@@ -42,7 +42,9 @@ public class AdmissionControllerConfig {
   @Named(VALIDATING_CONTROLLER)
   public AdmissionController<Pod> validatingController() {
     return new AdmissionController<>((resource, operation) -> {
-      if (resource.getMetadata().getLabels().get(APP_NAME_LABEL_KEY) == null) {
+      if (resource.getMetadata() == null
+          || resource.getMetadata().getLabels() == null
+          || resource.getMetadata().getLabels().get(APP_NAME_LABEL_KEY) == null) {
         throw new NotAllowedException("Missing label: " + APP_NAME_LABEL_KEY);
       }
     });
@@ -62,7 +64,9 @@ public class AdmissionControllerConfig {
   @Named(ASYNC_VALIDATING_CONTROLLER)
   public AsyncAdmissionController<Pod> asyncValidatingController() {
     return new AsyncAdmissionController<>((resource, operation) -> {
-      if (resource.getMetadata().getLabels().get(APP_NAME_LABEL_KEY) == null) {
+      if (resource.getMetadata() == null
+          || resource.getMetadata().getLabels() == null
+          || resource.getMetadata().getLabels().get(APP_NAME_LABEL_KEY) == null) {
         throw new NotAllowedException("Missing label: " + APP_NAME_LABEL_KEY);
       }
     });

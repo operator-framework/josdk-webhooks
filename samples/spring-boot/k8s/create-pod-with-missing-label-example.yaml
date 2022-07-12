@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-with-missing-label
+spec:
+  containers:
+    - image: any
+      imagePullPolicy: IfNotPresent
+      name: spring-boot-sample
