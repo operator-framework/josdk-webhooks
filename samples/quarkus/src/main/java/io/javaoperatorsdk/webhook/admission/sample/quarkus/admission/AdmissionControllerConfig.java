@@ -1,4 +1,4 @@
-package io.javaoperatorsdk.webhook.admission.sample.quarkus;
+package io.javaoperatorsdk.webhook.admission.sample.quarkus.admission;
 
 import java.util.HashMap;
 import java.util.concurrent.CompletableFuture;

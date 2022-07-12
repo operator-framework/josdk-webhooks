@@ -49,10 +49,11 @@ class ConversionEndpointTest {
         .exchange()
         .expectStatus().isOk().expectBody(ConversionReview.class).consumeWith(res -> {
           var review = res.getResponseBody();
+          var resource1 =
+              ((TestCustomResourceV2) review.getResponse().getConvertedObjects().get(0));
           assertThat(review.getResponse().getConvertedObjects()).hasSize(2);
-          assertThat(((TestCustomResourceV2) review.getResponse().getConvertedObjects().get(0))
-              .getSpec().getAdditionalValue())
-                  .isEqualTo(DEFAULT_ADDITIONAL_VALUE);
+          assertThat(resource1).isEqualTo(DEFAULT_ADDITIONAL_VALUE);
+          assertThat(resource1.getMetadata().getName()).isEqualTo("resource1");
         });
   }
 
