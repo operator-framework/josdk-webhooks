@@ -13,7 +13,7 @@ public class V1Mapper implements Mapper<TestCustomResource, TestCustomResourceV2
     var hub = new TestCustomResourceV2();
     hub.setMetadata(resource.getMetadata());
 
-    var spec= new TestCustomResourceSpecV2();
+    var spec = new TestCustomResourceSpecV2();
     spec.setValue(String.valueOf(resource.getSpec().getValue()));
     hub.setSpec(spec);
 
