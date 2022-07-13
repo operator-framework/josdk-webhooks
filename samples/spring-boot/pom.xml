@@ -51,6 +51,11 @@
 			<version>${dekorate.version}</version>
 		</dependency>
 		<dependency>
+			<groupId>io.dekorate</groupId>
+			<artifactId>jib-annotations</artifactId>
+			<version>${dekorate.version}</version>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>

@@ -75,14 +75,14 @@ kubectl create namespace test
 kubectl config set-context --current --namespace=test
 ```
 
-Next, let's generate all the manifests and push the container image into your container registry. This example uses [Dekorate](https://dekorate.io/) to generate all the Kubernetes resources, so we can generate the manifests and build/push the image at once simply by running the following Maven command:
+Next, let's generate all the manifests and push the container image into your container registry. This example uses [Dekorate](https://dekorate.io/) to generate all the Kubernetes resources and the [Dekorate JIB](https://dekorate.io/docs/jib-build-hook) extension to build/push the image. Therefore, we can generate the manifests and build/push the image at once simply by running the following Maven command:
 
 ```
 mvn clean install \
-  -Ddekorate.docker.registry=<CONTAINER REGISTRY URL> \
-  -Ddekorate.docker.group=<CONTAINER REGISTRY USER> \
-  -Ddekorate.docker.version=<VERSION> \
-  -Ddekorate.docker.autoPushEnabled=true
+  -Ddekorate.jib.registry=<CONTAINER REGISTRY URL> \
+  -Ddekorate.jib.group=<CONTAINER REGISTRY USER> \
+  -Ddekorate.jib.version=<VERSION> \
+  -Ddekorate.jib.autoPushEnabled=true
 ```
 
 For example, if our container registry url is `quay.io`, the group is `jcarvaja` and the version is `latest`; the previous Maven command will build and push the image `quay.io/jcarvaja/spring-boot-sample:latest`. 
@@ -138,7 +138,7 @@ This POD resource should not pass the validation as the label "app.kubernetes.io
 When we install it, we should get the following error:
 
 ```
-> kubectl apply -f k8s/create-pod-with-missing-label-example.yaml
+> kubectl apply -f k8s/create-pod-with-missing-label-example.yml
 Error from server: error when creating "k8s/create-pod-with-missing-label-example.yaml": admission webhook "pod-policy.spring-boot.example.com" denied the request: Missing label: app.kubernetes.io/name
 ```
 
@@ -153,11 +153,11 @@ kubectl apply -f k8s/mutating-webhook-configuration.yml
 And again, let's install the same Pod without annotations:
 
 ```
-> kubectl apply -f k8s/create-pod-with-missing-label-example.yaml
+> kubectl apply -f k8s/create-pod-with-missing-label-example.yml
 pod/pod-with-missing-label created
 ```
 
-Now, the pod resource passed the validation because the mutate webhook added the missing label. We can see the installed Pod resource:
+Now, the pod resource passed the validation because the mutating webhook added the missing label. We can see the installed Pod resource:
 
 ```
 > kubectl get pod pod-with-missing-label -o yaml | grep app.kubernetes.io/name
