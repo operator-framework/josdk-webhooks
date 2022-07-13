@@ -1,5 +1,6 @@
 package io.javaoperatorsdk.webhook.sample.springboot;
 
+import java.util.HashMap;
 import java.util.concurrent.CompletableFuture;
 
 import org.springframework.context.annotation.Bean;
@@ -22,6 +23,10 @@ public class Config {
   @Bean
   public AdmissionController<Pod> mutatingController() {
     return new AdmissionController<>((resource, operation) -> {
+      if (resource.getMetadata().getLabels() == null) {
+        resource.getMetadata().setLabels(new HashMap<>());
+      }
+
       resource.getMetadata().getLabels().putIfAbsent(APP_NAME_LABEL_KEY, "mutation-test");
       return resource;
     });
@@ -55,6 +60,10 @@ public class Config {
   public AsyncAdmissionController<Pod> asyncMutatingController() {
     return new AsyncAdmissionController<>(
         (AsyncMutator<Pod>) (resource, operation) -> CompletableFuture.supplyAsync(() -> {
+          if (resource.getMetadata().getLabels() == null) {
+            resource.getMetadata().setLabels(new HashMap<>());
+          }
+
           resource.getMetadata().getLabels().putIfAbsent(APP_NAME_LABEL_KEY, "mutation-test");
           return resource;
         }));

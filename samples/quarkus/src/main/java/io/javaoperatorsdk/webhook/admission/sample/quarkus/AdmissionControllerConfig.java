@@ -1,5 +1,6 @@
 package io.javaoperatorsdk.webhook.admission.sample.quarkus;
 
+import java.util.HashMap;
 import java.util.concurrent.CompletableFuture;
 
 import javax.enterprise.context.Dependent;
@@ -33,6 +34,10 @@ public class AdmissionControllerConfig {
   @Named(MUTATING_CONTROLLER)
   public AdmissionController<Pod> mutatingController() {
     return new AdmissionController<>((resource, operation) -> {
+      if (resource.getMetadata().getLabels() == null) {
+        resource.getMetadata().setLabels(new HashMap<>());
+      }
+
       resource.getMetadata().getLabels().putIfAbsent(APP_NAME_LABEL_KEY, "mutation-test");
       return resource;
     });
@@ -54,6 +59,10 @@ public class AdmissionControllerConfig {
   public AsyncAdmissionController<Pod> asyncMutatingController() {
     return new AsyncAdmissionController<>(
         (AsyncMutator<Pod>) (resource, operation) -> CompletableFuture.supplyAsync(() -> {
+          if (resource.getMetadata().getLabels() == null) {
+            resource.getMetadata().setLabels(new HashMap<>());
+          }
+
           resource.getMetadata().getLabels().putIfAbsent(APP_NAME_LABEL_KEY, "mutation-test");
           return resource;
         }));
