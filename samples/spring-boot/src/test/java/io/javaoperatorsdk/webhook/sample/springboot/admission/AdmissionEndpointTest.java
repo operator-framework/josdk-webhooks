@@ -1,4 +1,4 @@
-package io.javaoperatorsdk.webhook.sample.springboot;
+package io.javaoperatorsdk.webhook.sample.springboot.admission;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -15,9 +15,9 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserter;
 import org.springframework.web.reactive.function.BodyInserters;
 
-import static io.javaoperatorsdk.webhook.sample.springboot.AdmissionEndpoint.*;
+import static io.javaoperatorsdk.webhook.sample.springboot.admission.AdmissionEndpoint.*;
 
-@Import(Config.class)
+@Import(AdmissionConfig.class)
 @WebFluxTest(AdmissionEndpoint.class)
 class AdmissionEndpointTest {
 

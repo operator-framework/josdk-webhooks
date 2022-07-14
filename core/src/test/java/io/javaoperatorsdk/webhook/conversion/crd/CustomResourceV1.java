@@ -9,7 +9,7 @@ import io.fabric8.kubernetes.model.annotation.Version;
 
 @Group("sample.javaoperatorsdk")
 @Version("v1")
-@Kind("MultiVersionCustomResource")
+@Kind("MultiVersionTestCustomResource")
 @ShortNames("mv1")
 public class CustomResourceV1
     extends

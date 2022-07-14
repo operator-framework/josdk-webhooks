@@ -11,6 +11,7 @@
   <packaging>pom</packaging>
   <name>Admission Controller Framework - Samples</name>
   <modules>
+    <module>commons</module>
     <module>spring-boot</module>
     <module>quarkus</module>
   </modules>

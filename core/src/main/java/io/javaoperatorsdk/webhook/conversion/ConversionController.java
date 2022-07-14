@@ -27,6 +27,8 @@ public class ConversionController implements ConversionRequestHandler {
       throw new IllegalStateException(MAPPER_ALREADY_REGISTERED_FOR_VERSION_MESSAGE + version);
     }
     mappers.put(version, mapper);
+    Utils.registerCustomKind(
+        Utils.getFirstTypeArgumentFromInterface(mapper.getClass(), Mapper.class));
   }
 
   @Override
