@@ -15,7 +15,6 @@
 
 	<properties>
 		<java.version>11</java.version>
-		<spring-boot-dependencies.version>2.6.6</spring-boot-dependencies.version>
 		<dekorate.version>2.11.1</dekorate.version>
 	</properties>
 
@@ -39,21 +38,6 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-webflux</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>io.dekorate</groupId>
-			<artifactId>kubernetes-spring-starter</artifactId>
-			<version>${dekorate.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>io.dekorate</groupId>
-			<artifactId>certmanager-annotations</artifactId>
-			<version>${dekorate.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>io.dekorate</groupId>
-			<artifactId>jib-annotations</artifactId>
-			<version>${dekorate.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
