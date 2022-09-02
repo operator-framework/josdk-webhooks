@@ -31,3 +31,74 @@ jobs:
           ./mvnw ${MAVEN_ARGS} impsort:check --file pom.xml
       - name: Run unit tests
         run: ./mvnw ${MAVEN_ARGS} -B test --file pom.xml
+  spring-boot-integration-test:
+    runs-on: ubuntu-latest
+    needs: build
+    strategy:
+      matrix:
+        java: [ 11 ]
+        distribution: [ temurin ]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Java and Maven
+        uses: actions/setup-java@v2
+        with:
+          distribution: ${{ matrix.distribution }}
+          java-version: ${{ matrix.java }}
+          cache: 'maven'
+      - name: Build
+        run: ./mvnw ${MAVEN_ARGS} clean install -DskipTests
+      - name: Kubernetes KinD Cluster
+        uses: container-tools/kind-action@v1
+        with:
+          version: v0.11.1
+          registry: true
+      - name: Install Cert-Manager
+        run: |
+          OS=$(go env GOOS); ARCH=$(go env GOARCH); curl -sSL -o kubectl-cert-manager.tar.gz https://github.com/cert-manager/cert-manager/releases/download/v1.7.2/kubectl-cert_manager-$OS-$ARCH.tar.gz
+          tar xzf kubectl-cert-manager.tar.gz
+          sudo mv kubectl-cert_manager /usr/local/bin
+          kubectl cert-manager x install
+      - name: Run Integration Test
+        run: |
+          set -x
+
+          # Create namespace
+          kubectl create namespace test
+          kubectl config set-context --current --namespace=test
+
+          # Generate manifests and image
+          cd samples/spring-boot
+          ./mvnw ${MAVEN_ARGS} clean install -Ddekorate.jib.registry=$KIND_REGISTRY -Ddekorate.jib.group=tests -Ddekorate.jib.version=latest -Ddekorate.jib.autoPushEnabled=true -DskipTests
+
+          # Install manifests
+          kubectl apply -f target/classes/META-INF/dekorate/kubernetes.yml
+
+          # Wait until the service is started
+          kubectl wait --for=condition=available --timeout=600s deployment/spring-boot-sample
+
+          # First test: verify validating webhook works
+          ## Install webhook
+          kubectl apply -f k8s/validating-webhook-configuration.yml
+
+          ## Wait some time to let Cert-Manager to inject issuers
+          sleep 10
+
+          ## Test Pod with missing label: it should fail
+          K8S_MESSAGE=$(kubectl apply -f k8s/create-pod-with-missing-label-example.yml 2>&1 || true)
+          if [[ $K8S_MESSAGE != *"Missing label"* ]]; then
+            echo "The validation webhook didn't work. Message: $K8S_MESSAGE"
+            exit 1
+          fi
+
+          # Second test: verify mutating webhook works
+          ## Install webhook
+          kubectl apply -f k8s/mutating-webhook-configuration.yml
+
+          ## Test the same Pod can now be installed because the mutating webhook adds the missing label
+          kubectl apply -f k8s/create-pod-with-missing-label-example.yml
+          K8S_MESSAGE=`kubectl get pod pod-with-missing-label -o yaml | grep app.kubernetes.io/name`
+          if [[ $K8S_MESSAGE != *"mutation-test"* ]]; then
+            echo "The mutating webhook didn't work. Message: $K8S_MESSAGE"
+            exit 1
+          fi
