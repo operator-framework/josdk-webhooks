@@ -15,7 +15,7 @@
 
 	<properties>
 		<java.version>11</java.version>
-		<dekorate.version>2.11.2</dekorate.version>
+		<jib-maven-plugin.version>3.3.0</jib-maven-plugin.version>
 	</properties>
 
 	<dependencyManagement>
@@ -68,6 +68,19 @@
 
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>com.google.cloud.tools</groupId>
+				<artifactId>jib-maven-plugin</artifactId>
+				<version>${jib-maven-plugin.version}</version>
+				<configuration>
+					<from>
+						<image>gcr.io/distroless/java:11</image>
+					</from>
+					<to>
+						<image>spring-boot-sample</image>
+					</to>
+				</configuration>
+			</plugin>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>

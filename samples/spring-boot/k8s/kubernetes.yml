@@ -101,8 +101,8 @@ spec:
                 secretKeyRef:
                   key: password
                   name: pkcs12-pass
-          image: csviri/spring-boot-sample:0.2.1-SNAPSHOT
-          imagePullPolicy: IfNotPresent
+          image: csviri/spring-boot-sample:latest
+          imagePullPolicy: Never
           name: spring-boot-sample
           ports:
             - containerPort: 443
