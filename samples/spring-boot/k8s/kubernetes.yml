@@ -101,7 +101,7 @@ spec:
                 secretKeyRef:
                   key: password
                   name: pkcs12-pass
-          image: csviri/spring-boot-sample:latest
+          image: spring-boot-sample:latest
           imagePullPolicy: Never
           name: spring-boot-sample
           ports:
