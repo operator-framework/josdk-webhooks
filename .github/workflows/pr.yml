@@ -69,10 +69,12 @@ jobs:
 
           # Generate manifests and image
           cd samples/spring-boot
-          ./mvnw ${MAVEN_ARGS} clean install -Ddekorate.jib.registry=$KIND_REGISTRY -Ddekorate.jib.group=tests -Ddekorate.jib.version=latest -Ddekorate.jib.autoPushEnabled=true -DskipTests
+          ./mvnw jib:dockerBuild
+          kind load docker-image spring-boot-sample:latest
+          # ./mvnw ${MAVEN_ARGS} clean install -Ddekorate.jib.registry=$KIND_REGISTRY -Ddekorate.jib.group=tests -Ddekorate.jib.version=latest -Ddekorate.jib.autoPushEnabled=true -DskipTests
 
           # Install manifests
-          kubectl apply -f target/classes/META-INF/dekorate/kubernetes.yml
+          kubectl apply -f k8s/kubernetes.yml
 
           # Wait until the service is started
           kubectl wait --for=condition=available --timeout=600s deployment/spring-boot-sample
