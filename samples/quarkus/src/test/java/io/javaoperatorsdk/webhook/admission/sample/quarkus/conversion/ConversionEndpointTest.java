@@ -15,19 +15,19 @@ import static io.javaoperatorsdk.webhook.admission.sample.quarkus.conversion.Con
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
 
+@Disabled
 @QuarkusTest
 class ConversionEndpointTest {
 
   final static String expectedResult =
       "{\"apiVersion\":\"apiextensions.k8s.io/v1\",\"kind\":\"ConversionReview\",\"response\":{\"convertedObjects\":[{\"apiVersion\":\"sample.javaoperatorsdk/v2\",\"kind\":\"MultiVersionCustomResource\",\"metadata\":{\"creationTimestamp\":\"2021-09-04T14:03:02Z\",\"name\":\"resource1\",\"namespace\":\"default\",\"resourceVersion\":\"143\",\"uid\":\"3415a7fc-162b-4300-b5da-fd6083580d66\"},\"spec\":{\"value\":\"1\",\"additionalValue\":\"default_additional_value\"},\"status\":{\"ready\":true,\"message\":null}},{\"apiVersion\":\"sample.javaoperatorsdk/v2\",\"kind\":\"MultiVersionCustomResource\",\"metadata\":{\"creationTimestamp\":\"2021-09-04T14:03:02Z\",\"name\":\"resource2\",\"namespace\":\"default\",\"resourceVersion\":\"14344\",\"uid\":\"1115a7fc-162b-4300-b5da-fd6083580d55\"},\"spec\":{\"value\":\"2\",\"additionalValue\":\"default_additional_value\"},\"status\":{\"ready\":false,\"message\":null}}],\"result\":{\"apiVersion\":\"v1\",\"kind\":\"Status\",\"status\":\"Success\"},\"uid\":\"705ab4f5-6393-11e8-b7cc-42010a800002\"}}";
 
-  @Disabled
+
   @Test
   void conversion() {
     testConversion(CONVERSION_PATH);
   }
 
-  @Disabled
   @Test
   void asyncConversion() {
     testConversion(ASYNC_CONVERSION_PATH);
