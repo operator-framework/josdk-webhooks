@@ -3,7 +3,6 @@ package io.javaoperatorsdk.webhook.admission.sample.quarkus.admission;
 import java.util.HashMap;
 import java.util.concurrent.CompletableFuture;
 
-import javax.enterprise.context.Dependent;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
@@ -15,7 +14,6 @@ import io.javaoperatorsdk.webhook.admission.mutation.AsyncMutator;
 import io.javaoperatorsdk.webhook.admission.mutation.Mutator;
 import io.javaoperatorsdk.webhook.admission.validation.Validator;
 
-@Dependent
 public class AdmissionControllerConfig {
 
   public static final String APP_NAME_LABEL_KEY = "app.kubernetes.io/name";
