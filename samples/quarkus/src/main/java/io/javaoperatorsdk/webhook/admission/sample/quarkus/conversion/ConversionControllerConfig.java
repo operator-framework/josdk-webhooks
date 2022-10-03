@@ -1,6 +1,5 @@
 package io.javaoperatorsdk.webhook.admission.sample.quarkus.conversion;
 
-import javax.enterprise.context.Dependent;
 import javax.inject.Singleton;
 
 import io.javaoperatorsdk.webhook.conversion.AsyncConversionController;
@@ -10,7 +9,6 @@ import io.javaoperatorsdk.webhook.sample.commons.mapper.AsyncV2Mapper;
 import io.javaoperatorsdk.webhook.sample.commons.mapper.V1Mapper;
 import io.javaoperatorsdk.webhook.sample.commons.mapper.V2Mapper;
 
-@Dependent
 public class ConversionControllerConfig {
 
 
