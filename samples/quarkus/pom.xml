@@ -44,6 +44,12 @@
       <groupId>io.javaoperatorsdk</groupId>
       <artifactId>admission-controller-framework-core</artifactId>
       <version>${project.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>io.fabric8</groupId>
+          <artifactId>kubernetes-client</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>io.quarkus</groupId>
@@ -67,6 +73,12 @@
       <groupId>io.javaoperatorsdk.admissioncontroller.sample</groupId>
       <artifactId>sample-commons</artifactId>
       <version>${project.version}</version>
+    <exclusions>
+      <exclusion>
+        <groupId>io.fabric8</groupId>
+        <artifactId>kubernetes-client</artifactId>
+      </exclusion>
+    </exclusions>
     </dependency>
   </dependencies>
   <build>
