@@ -49,6 +49,7 @@ public class ConversionTestSupport {
 
     assertThat(response.getConvertedObjects()).hasSize(3);
     List<String> namesInOrder = response.getConvertedObjects().stream()
+        .map(HasMetadata.class::cast)
         .map(r -> r.getMetadata().getName()).collect(Collectors.toList());
     assertThat(namesInOrder).containsExactly(V1_NAME, V2_NAME, V3_NAME);
     assertThat(response.getConvertedObjects()).allMatch(r -> r instanceof CustomResourceV3);

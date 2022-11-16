@@ -17,7 +17,6 @@ public class ConversionController implements ConversionRequestHandler {
 
   private static final Logger log = LoggerFactory.getLogger(ConversionController.class);
 
-
   @SuppressWarnings("rawtypes")
   private final Map<String, Mapper> mappers = new HashMap<>();
 
@@ -35,7 +34,8 @@ public class ConversionController implements ConversionRequestHandler {
   public ConversionReview handle(ConversionReview conversionReview) {
     try {
       List<HasMetadata> convertedObjects =
-          convertObjects(conversionReview.getRequest().getObjects(),
+          convertObjects(conversionReview.getRequest().getObjects().stream()
+              .map(HasMetadata.class::cast).collect(Collectors.toList()),
               Utils.versionOfApiVersion(conversionReview.getRequest().getDesiredAPIVersion()));
       return createResponse(convertedObjects, conversionReview);
     } catch (MissingConversionMapperException e) {

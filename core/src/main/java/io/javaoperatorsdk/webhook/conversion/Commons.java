@@ -1,8 +1,10 @@
 package io.javaoperatorsdk.webhook.conversion;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import io.fabric8.kubernetes.api.model.HasMetadata;
+import io.fabric8.kubernetes.api.model.KubernetesResource;
 import io.fabric8.kubernetes.api.model.Status;
 import io.fabric8.kubernetes.api.model.apiextensions.v1.ConversionResponse;
 import io.fabric8.kubernetes.api.model.apiextensions.v1.ConversionReview;
@@ -20,7 +22,8 @@ public class Commons {
     response.setResult(new Status());
     response.getResult().setStatus("Success");
     response.setUid(conversionReview.getRequest().getUid());
-    response.setConvertedObjects(convertedObjects);
+    response.setConvertedObjects(convertedObjects.stream().map(KubernetesResource.class::cast)
+        .collect(Collectors.toList()));
     result.setResponse(response);
     return result;
   }

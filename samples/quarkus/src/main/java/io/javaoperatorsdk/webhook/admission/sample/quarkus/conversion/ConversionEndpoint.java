@@ -26,7 +26,6 @@ public class ConversionEndpoint {
     this.asyncConversionController = asyncConversionController;
   }
 
-
   @POST
   @Path(CONVERSION_PATH)
   @Consumes(MediaType.APPLICATION_JSON)
@@ -43,5 +42,4 @@ public class ConversionEndpoint {
     return Uni.createFrom()
         .completionStage(() -> asyncConversionController.handle(conversionReview));
   }
-
 }

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,7 +37,8 @@ public class AsyncConversionController implements AsyncConversionRequestHandler 
   public CompletionStage<ConversionReview> handle(ConversionReview conversionReview) {
     try {
       return convertObjects(
-          conversionReview.getRequest().getObjects(),
+          conversionReview.getRequest().getObjects().stream()
+              .map(HasMetadata.class::cast).collect(Collectors.toList()),
           Utils.versionOfApiVersion(conversionReview.getRequest().getDesiredAPIVersion()))
               .thenApply(convertedObjects -> createResponse(convertedObjects, conversionReview));
     } catch (MissingConversionMapperException e) {
@@ -52,7 +54,7 @@ public class AsyncConversionController implements AsyncConversionRequestHandler 
       String targetVersion) {
     CompletableFuture<HasMetadata>[] completableFutures = new CompletableFuture[objects.size()];
     for (int i = 0; i < objects.size(); i++) {
-      completableFutures[i] = mapObject(objects.get(i), targetVersion);
+      completableFutures[i] = mapObject((HasMetadata) objects.get(i), targetVersion);
     }
     return CompletableFuture.allOf(completableFutures).thenApply(r -> {
       List<HasMetadata> result = new ArrayList<>(completableFutures.length);
