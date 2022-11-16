@@ -22,8 +22,8 @@ See samples also for details.
 ### Conversion Hooks
 
 Conversion hooks follows the same patter described
-in [Kuberbuilder](https://book.kubebuilder.io/multiversion-tutorial/conversion-concepts.html), thus a custom resource
-version is first converted from actual version to a hub, and as next step from the hub to the target resource version.
+in [Kuberbuilder](https://book.kubebuilder.io/multiversion-tutorial/conversion-concepts.html), thus first converts the
+custom resource from actual version to a hub, and as next step from the hub to the target resource version.
 
 To create the controller
 register [mappers](https://github.com/java-operator-sdk/admission-controller-framework/blob/main/core/src/main/java/io/javaoperatorsdk/webhook/conversion/Mapper.java)
