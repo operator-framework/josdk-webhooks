@@ -26,7 +26,7 @@ in [Kuberbuilder](https://book.kubebuilder.io/multiversion-tutorial/conversion-c
 version is first converted from actual version to a hub, and as next step from the hub to the target resource version.
 
 To create the controller
-register [mappers](https://github.com/java-operator-sdk/admission-controller-framework/blob/main/core/src/main/java/io/javaoperatorsdk/webhook/conversion/Mapper.java#L5-L5)
+register [mappers](https://github.com/java-operator-sdk/admission-controller-framework/blob/main/core/src/main/java/io/javaoperatorsdk/webhook/conversion/Mapper.java)
 :
 
 https://github.com/java-operator-sdk/admission-controller-framework/blob/2a2bce54b49ea3398bef95a9102ee8645e11cf87/samples/quarkus/src/main/java/io/javaoperatorsdk/webhook/admission/sample/quarkus/conversion/ConversionControllerConfig.java#L15-L29
