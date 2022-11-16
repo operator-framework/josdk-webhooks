@@ -11,11 +11,11 @@ for Kubernetes in Java. Supports both **quarkus** and **spring boot**. Both Sync
 
 Defining a mutation or validation controller is simple as:
 
-https://github.com/java-operator-sdk/admission-controller-framework/blob/0946595d941b789caef6a69b34c2e5be8c6b59cf/samples/quarkus/src/main/java/io/javaoperatorsdk/admissioncontroller/sample/quarkus/AdmissionControllerConfig.java#L31-L68
+https://github.com/java-operator-sdk/admission-controller-framework/blob/main/samples/quarkus/src/main/java/io/javaoperatorsdk/admissioncontroller/sample/quarkus/AdmissionControllerConfig.java#L31-L68
 
 What can be then simple used in an endpoint:
 
-https://github.com/java-operator-sdk/admission-controller-framework/blob/0946595d941b789caef6a69b34c2e5be8c6b59cf/samples/quarkus/src/main/java/io/javaoperatorsdk/admissioncontroller/sample/quarkus/AdmissionEndpoint.java#L57-L89
+https://github.com/java-operator-sdk/admission-controller-framework/blob/main/samples/quarkus/src/main/java/io/javaoperatorsdk/admissioncontroller/sample/quarkus/AdmissionEndpoint.java#L57-L89
 
 See samples also for details.
 
@@ -26,7 +26,8 @@ in [Kuberbuilder](https://book.kubebuilder.io/multiversion-tutorial/conversion-c
 version is first converted from actual version to a hub, and as next step from the hub to the target resource version.
 
 To create the controller
-register [mappers](https://github.com/java-operator-sdk/admission-controller-framework/blob/main/core/src/main/java/io/javaoperatorsdk/webhook/conversion/Mapper.java#L5-L5):
+register [mappers](https://github.com/java-operator-sdk/admission-controller-framework/blob/main/core/src/main/java/io/javaoperatorsdk/webhook/conversion/Mapper.java#L5-L5)
+:
 
 https://github.com/java-operator-sdk/admission-controller-framework/blob/main/samples/quarkus/src/main/java/io/javaoperatorsdk/webhook/admission/sample/quarkus/conversion/ConversionControllerConfig.java#L15-L29
 
