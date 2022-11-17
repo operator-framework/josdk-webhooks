@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import io.quarkus.test.junit.QuarkusTest;
@@ -15,7 +14,6 @@ import static io.javaoperatorsdk.webhook.admission.sample.quarkus.conversion.Con
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
 
-@Disabled
 @QuarkusTest
 class ConversionEndpointTest {
 
