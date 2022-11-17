@@ -9,6 +9,9 @@ import io.quarkus.jackson.ObjectMapperCustomizer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+/**
+ * For quarkus for now the custom kinds needs to be registered explicitly
+ */
 @Singleton
 public class CustomResourceDeserializationCustomizer implements ObjectMapperCustomizer {
 
