@@ -25,31 +25,19 @@ public class AdmissionEndpoint {
 
   private final AdmissionController<Pod> mutationController;
   private final AdmissionController<Pod> validationController;
-  private final AdmissionController<Pod> errorMutationController;
-  private final AdmissionController<Pod> errorValidationController;
   private final AsyncAdmissionController<Pod> asyncMutationController;
   private final AsyncAdmissionController<Pod> asyncValidationController;
-  private final AsyncAdmissionController<Pod> errorAsyncMutationController;
-  private final AsyncAdmissionController<Pod> errorAsyncValidationController;
 
   @Inject
   public AdmissionEndpoint(
       @Named(AdmissionControllerConfig.MUTATING_CONTROLLER) AdmissionController<Pod> mutationController,
       @Named(AdmissionControllerConfig.VALIDATING_CONTROLLER) AdmissionController<Pod> validationController,
-      @Named(AdmissionControllerConfig.ERROR_MUTATING_CONTROLLER) AdmissionController<Pod> errorMutationController,
-      @Named(AdmissionControllerConfig.ERROR_VALIDATING_CONTROLLER) AdmissionController<Pod> errorValidationController,
       @Named(AdmissionControllerConfig.ASYNC_MUTATING_CONTROLLER) AsyncAdmissionController<Pod> asyncMutationController,
-      @Named(AdmissionControllerConfig.ASYNC_VALIDATING_CONTROLLER) AsyncAdmissionController<Pod> asyncValidationController,
-      @Named(AdmissionControllerConfig.ERROR_ASYNC_MUTATING_CONTROLLER) AsyncAdmissionController<Pod> errorAsyncMutationController,
-      @Named(AdmissionControllerConfig.ERROR_ASYNC_VALIDATING_CONTROLLER) AsyncAdmissionController<Pod> errorAsyncValidationController) {
+      @Named(AdmissionControllerConfig.ASYNC_VALIDATING_CONTROLLER) AsyncAdmissionController<Pod> asyncValidationController) {
     this.mutationController = mutationController;
     this.validationController = validationController;
-    this.errorMutationController = errorMutationController;
-    this.errorValidationController = errorValidationController;
     this.asyncMutationController = asyncMutationController;
     this.asyncValidationController = asyncValidationController;
-    this.errorAsyncMutationController = errorAsyncMutationController;
-    this.errorAsyncValidationController = errorAsyncValidationController;
   }
 
   @POST
@@ -85,39 +73,4 @@ public class AdmissionEndpoint {
     return Uni.createFrom()
         .completionStage(() -> this.asyncValidationController.handle(admissionReview));
   }
-
-  @POST
-  @Path(ERROR_ASYNC_MUTATE_PATH)
-  @Consumes(MediaType.APPLICATION_JSON)
-  @Produces(MediaType.APPLICATION_JSON)
-  public Uni<AdmissionReview> errorAsyncMutate(AdmissionReview admissionReview) {
-    return Uni.createFrom()
-        .completionStage(() -> this.errorAsyncMutationController.handle(admissionReview));
-  }
-
-  @POST
-  @Path(ERROR_ASYNC_VALIDATE_PATH)
-  @Consumes(MediaType.APPLICATION_JSON)
-  @Produces(MediaType.APPLICATION_JSON)
-  public Uni<AdmissionReview> errorAsyncValidate(AdmissionReview admissionReview) {
-    return Uni.createFrom()
-        .completionStage(() -> this.errorAsyncValidationController.handle(admissionReview));
-  }
-
-  @POST
-  @Path(ERROR_MUTATE_PATH)
-  @Consumes(MediaType.APPLICATION_JSON)
-  @Produces(MediaType.APPLICATION_JSON)
-  public AdmissionReview errorMutate(AdmissionReview admissionReview) {
-    return errorMutationController.handle(admissionReview);
-  }
-
-  @POST
-  @Path(ERROR_VALIDATE_PATH)
-  @Consumes(MediaType.APPLICATION_JSON)
-  @Produces(MediaType.APPLICATION_JSON)
-  public AdmissionReview errorValidate(AdmissionReview admissionReview) {
-    return errorValidationController.handle(admissionReview);
-  }
-
 }

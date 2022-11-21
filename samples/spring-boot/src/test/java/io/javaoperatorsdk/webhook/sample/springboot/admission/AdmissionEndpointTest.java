@@ -15,10 +15,11 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserter;
 import org.springframework.web.reactive.function.BodyInserters;
 
+import static io.javaoperatorsdk.webhook.sample.springboot.admission.AdmissionAdditionalTestEndpoint.*;
 import static io.javaoperatorsdk.webhook.sample.springboot.admission.AdmissionEndpoint.*;
 
-@Import(AdmissionConfig.class)
-@WebFluxTest(AdmissionEndpoint.class)
+@Import({AdmissionConfig.class, AdditionalAdmissionConfig.class})
+@WebFluxTest({AdmissionEndpoint.class, AdmissionAdditionalTestEndpoint.class})
 class AdmissionEndpointTest {
 
   @Autowired
