@@ -4,7 +4,6 @@ public class MultiVersionCustomResourceSpecV2 {
 
   private String value;
 
-  private String additionalValue;
 
   public String getValue() {
     return value;
@@ -15,11 +14,4 @@ public class MultiVersionCustomResourceSpecV2 {
     return this;
   }
 
-  public String getAdditionalValue() {
-    return additionalValue;
-  }
-
-  public void setAdditionalValue(String additionalValue) {
-    this.additionalValue = additionalValue;
-  }
 }

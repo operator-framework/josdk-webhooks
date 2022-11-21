@@ -18,7 +18,6 @@ import org.springframework.web.reactive.function.BodyInserters;
 import io.fabric8.kubernetes.api.model.apiextensions.v1.ConversionReview;
 import io.javaoperatorsdk.webhook.sample.commons.customresource.MultiVersionCustomResourceV2;
 
-import static io.javaoperatorsdk.webhook.sample.commons.mapper.V1Mapper.DEFAULT_ADDITIONAL_VALUE;
 import static io.javaoperatorsdk.webhook.sample.springboot.conversion.ConversionEndpoint.ASYNC_CONVERSION_PATH;
 import static io.javaoperatorsdk.webhook.sample.springboot.conversion.ConversionEndpoint.CONVERSION_PATH;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -53,7 +52,6 @@ class ConversionEndpointTest {
           var resource1 =
               ((MultiVersionCustomResourceV2) review.getResponse().getConvertedObjects().get(0));
           assertThat(review.getResponse().getConvertedObjects()).hasSize(2);
-          assertThat(resource1.getSpec().getAdditionalValue()).isEqualTo(DEFAULT_ADDITIONAL_VALUE);
           assertThat(resource1.getMetadata().getName()).isEqualTo("resource1");
         });
   }

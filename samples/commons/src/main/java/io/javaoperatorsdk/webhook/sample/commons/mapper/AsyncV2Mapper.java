@@ -9,19 +9,17 @@ import io.javaoperatorsdk.webhook.sample.commons.customresource.MultiVersionCust
 
 @TargetVersion("v2")
 public class AsyncV2Mapper
-    implements AsyncMapper<MultiVersionCustomResourceV2, MultiVersionCustomResourceV2> {
+    implements AsyncMapper<MultiVersionCustomResourceV2, MultiVersionHub> {
 
   private V2Mapper mapper = new V2Mapper();
 
   @Override
-  public CompletionStage<MultiVersionCustomResourceV2> toHub(
-      MultiVersionCustomResourceV2 resource) {
+  public CompletionStage<MultiVersionHub> toHub(MultiVersionCustomResourceV2 resource) {
     return CompletableFuture.completedStage(mapper.toHub(resource));
   }
 
   @Override
-  public CompletionStage<MultiVersionCustomResourceV2> fromHub(
-      MultiVersionCustomResourceV2 multiVersionCustomResourceV2) {
-    return CompletableFuture.completedStage(mapper.fromHub(multiVersionCustomResourceV2));
+  public CompletionStage<MultiVersionCustomResourceV2> fromHub(MultiVersionHub multiVersionHub) {
+    return CompletableFuture.completedStage(mapper.fromHub(multiVersionHub));
   }
 }
