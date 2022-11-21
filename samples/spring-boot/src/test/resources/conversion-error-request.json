@@ -1,0 +1,30 @@
+{
+  "apiVersion": "apiextensions.k8s.io/v1",
+  "kind": "ConversionReview",
+  "request": {
+
+  "uid": "705ab4f5-6393-11e8-b7cc-42010a800002",
+
+  "desiredAPIVersion": "sample.javaoperatorsdk/v2",
+
+  "objects": [
+    {
+      "kind": "MultiVersionCustomResource",
+      "apiVersion": "sample.javaoperatorsdk/v2",
+      "metadata": {
+        "creationTimestamp": "2021-09-04T14:03:02Z",
+        "name": "resource1",
+        "namespace": "default",
+        "resourceVersion": "143",
+        "uid": "3415a7fc-162b-4300-b5da-fd6083580d66"
+      },
+      "spec": {
+        "value": "non integer"
+      },
+      "status":{
+        "ready": true
+      }
+    }
+  ]
+}
+}

@@ -31,17 +31,43 @@ class ConversionEndpointTest {
     testConversion(ASYNC_CONVERSION_PATH);
   }
 
+  @Test
+  void errorConversion() {
+    testErrorConversion(CONVERSION_PATH);
+  }
+
+  @Test
+  void asyncErrorConversion() {
+    testErrorConversion(ASYNC_CONVERSION_PATH);
+  }
+
+  private void testErrorConversion(String conversionPath) {
+    given().contentType(ContentType.JSON)
+        .body(errorRequest())
+        .when().post("/" + conversionPath)
+        .then()
+        .statusCode(500);
+  }
+
   public void testConversion(String path) {
     given().contentType(ContentType.JSON)
-        .body(jsonRequest())
+        .body(request())
         .when().post("/" + path)
         .then()
         .statusCode(200)
         .body(is(expectedResult));
   }
 
-  private String jsonRequest() {
-    try (InputStream is = this.getClass().getResourceAsStream("/conversion-request.json")) {
+  private String errorRequest() {
+    return request("/conversion-error-request.json");
+  }
+
+  private String request() {
+    return request("/conversion-request.json");
+  }
+
+  private String request(String path) {
+    try (InputStream is = this.getClass().getResourceAsStream(path)) {
       return new String(is.readAllBytes(), StandardCharsets.UTF_8);
     } catch (IOException e) {
       throw new IllegalStateException(e);
