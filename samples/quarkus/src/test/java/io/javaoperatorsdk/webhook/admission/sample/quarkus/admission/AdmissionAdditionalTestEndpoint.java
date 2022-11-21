@@ -19,11 +19,15 @@ import static io.javaoperatorsdk.webhook.admission.sample.quarkus.admission.Admi
 @Path("/")
 public class AdmissionAdditionalTestEndpoint {
 
+  public static final String ERROR_ASYNC_MUTATE_PATH = "error-async-mutate";
+  public static final String ERROR_ASYNC_VALIDATE_PATH = "error-async-validate";
+  public static final String ERROR_MUTATE_PATH = "error-mutate";
+  public static final String ERROR_VALIDATE_PATH = "error-validate";
+
   private final AdmissionController<Pod> errorMutationController;
   private final AdmissionController<Pod> errorValidationController;
   private final AsyncAdmissionController<Pod> errorAsyncMutationController;
   private final AsyncAdmissionController<Pod> errorAsyncValidationController;
-
 
   @Inject
   public AdmissionAdditionalTestEndpoint(

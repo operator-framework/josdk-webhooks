@@ -16,12 +16,8 @@ public class AdmissionEndpoint {
 
   public static final String MUTATE_PATH = "mutate";
   public static final String VALIDATE_PATH = "validate";
-  public static final String ERROR_MUTATE_PATH = "error-mutate";
-  public static final String ERROR_VALIDATE_PATH = "error-validate";
   public static final String ASYNC_MUTATE_PATH = "async-mutate";
   public static final String ASYNC_VALIDATE_PATH = "async-validate";
-  public static final String ERROR_ASYNC_MUTATE_PATH = "error-async-mutate";
-  public static final String ERROR_ASYNC_VALIDATE_PATH = "error-async-validate";
 
   private final AdmissionController<Pod> mutationController;
   private final AdmissionController<Pod> validationController;
