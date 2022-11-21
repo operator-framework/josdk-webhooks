@@ -3,6 +3,7 @@ package io.javaoperatorsdk.webhook.sample.springboot.conversion;
 import java.io.IOException;
 import java.nio.file.Files;
 
+import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,6 +33,8 @@ class ConversionEndpointTest {
   @Value("classpath:conversion-request.json")
   private Resource request;
 
+  @Value("classpath:conversion-error-request.json")
+  private Resource errorRequest;
 
   @Test
   void convert() {
@@ -41,6 +44,23 @@ class ConversionEndpointTest {
   @Test
   void asyncConvert() {
     testConversion(ASYNC_CONVERSION_PATH);
+  }
+
+  @Test
+  void errorConversion() {
+    testErrorConversion(CONVERSION_PATH);
+  }
+
+  @Test
+  void asyncErrorConversion() {
+    testErrorConversion(ASYNC_CONVERSION_PATH);
+  }
+
+  private void testErrorConversion(String conversionPath) {
+    webClient.post().uri("/" + conversionPath).contentType(MediaType.APPLICATION_JSON)
+        .body(errorRequest())
+        .exchange()
+        .expectStatus().is5xxServerError();
   }
 
   public void testConversion(String path) {
@@ -57,11 +77,19 @@ class ConversionEndpointTest {
   }
 
   private BodyInserter<String, ReactiveHttpOutputMessage> request() {
+    return requestFromResource(request);
+  }
+
+  private BodyInserter<String, ReactiveHttpOutputMessage> errorRequest() {
+    return requestFromResource(errorRequest);
+  }
+
+  @NotNull
+  private BodyInserter<String, ReactiveHttpOutputMessage> requestFromResource(Resource request) {
     try {
       return BodyInserters.fromValue(new String(Files.readAllBytes(request.getFile().toPath())));
     } catch (IOException e) {
       throw new IllegalStateException(e);
     }
   }
-
 }
