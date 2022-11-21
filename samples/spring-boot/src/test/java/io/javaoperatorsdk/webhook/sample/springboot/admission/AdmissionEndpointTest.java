@@ -1,17 +1,16 @@
 package io.javaoperatorsdk.webhook.sample.springboot.admission;
 
 import java.io.IOException;
-import java.nio.file.Files;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
 import org.springframework.context.annotation.Import;
-import org.springframework.core.io.Resource;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ReactiveHttpOutputMessage;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.reactive.function.BodyInserter;
 import org.springframework.web.reactive.function.BodyInserters;
 
@@ -24,9 +23,6 @@ class AdmissionEndpointTest {
 
   @Autowired
   private WebTestClient webClient;
-
-  @Value("classpath:admission-request.json")
-  private Resource request;
 
   @Test
   void validation() {
@@ -44,7 +40,7 @@ class AdmissionEndpointTest {
   }
 
   @Test
-  void asyncMutation() throws Exception {
+  void asyncMutation() {
     testMutate(ASYNC_MUTATE_PATH);
   }
 
@@ -93,10 +89,11 @@ class AdmissionEndpointTest {
 
   private BodyInserter<String, ReactiveHttpOutputMessage> request() {
     try {
-      return BodyInserters.fromValue(new String(Files.readAllBytes(request.getFile().toPath())));
+      ClassPathResource classPathResource = new ClassPathResource("admission-request.json");
+      return BodyInserters
+          .fromValue(new String(FileCopyUtils.copyToByteArray(classPathResource.getInputStream())));
     } catch (IOException e) {
       throw new IllegalStateException(e);
     }
   }
-
 }

@@ -1,18 +1,16 @@
 package io.javaoperatorsdk.webhook.sample.springboot.conversion;
 
 import java.io.IOException;
-import java.nio.file.Files;
 
-import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
 import org.springframework.context.annotation.Import;
-import org.springframework.core.io.Resource;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ReactiveHttpOutputMessage;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.reactive.function.BodyInserter;
 import org.springframework.web.reactive.function.BodyInserters;
 
@@ -29,12 +27,6 @@ class ConversionEndpointTest {
 
   @Autowired
   private WebTestClient webClient;
-
-  @Value("classpath:conversion-request.json")
-  private Resource request;
-
-  @Value("classpath:conversion-error-request.json")
-  private Resource errorRequest;
 
   @Test
   void convert() {
@@ -77,17 +69,18 @@ class ConversionEndpointTest {
   }
 
   private BodyInserter<String, ReactiveHttpOutputMessage> request() {
-    return requestFromResource(request);
+    return requestFromResource("/conversion-request.json");
   }
 
   private BodyInserter<String, ReactiveHttpOutputMessage> errorRequest() {
-    return requestFromResource(errorRequest);
+    return requestFromResource("/conversion-error-request.json");
   }
 
-  @NotNull
-  private BodyInserter<String, ReactiveHttpOutputMessage> requestFromResource(Resource request) {
+  private BodyInserter<String, ReactiveHttpOutputMessage> requestFromResource(String resource) {
     try {
-      return BodyInserters.fromValue(new String(Files.readAllBytes(request.getFile().toPath())));
+      ClassPathResource classPathResource = new ClassPathResource(resource);
+      return BodyInserters
+          .fromValue(new String(FileCopyUtils.copyToByteArray(classPathResource.getInputStream())));
     } catch (IOException e) {
       throw new IllegalStateException(e);
     }
