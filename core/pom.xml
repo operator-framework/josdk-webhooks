@@ -6,7 +6,7 @@
   <parent>
     <groupId>io.javaoperatorsdk</groupId>
     <artifactId>kubernetes-webhooks-framework</artifactId>
-    <version>0.2.1-SNAPSHOT</version>
+    <version>1.0.1-SNAPSHOT</version>
   </parent>
 
   <artifactId>kubernetes-webhooks-framework-core</artifactId>
