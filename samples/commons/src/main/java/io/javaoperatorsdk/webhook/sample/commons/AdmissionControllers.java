@@ -21,7 +21,6 @@ public class AdmissionControllers {
       if (resource.getMetadata().getLabels() == null) {
         resource.getMetadata().setLabels(new HashMap<>());
       }
-
       resource.getMetadata().getLabels().putIfAbsent(APP_NAME_LABEL_KEY, "mutation-test");
       return resource;
     });

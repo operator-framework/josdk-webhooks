@@ -10,7 +10,7 @@
 
 	<groupId>io.javaoperatorsdk.admissioncontroller.sample</groupId>
 	<artifactId>sample-commons</artifactId>
-	<name>Admission Controller Framework - Samples - Commons</name>
+	<name>Kubernetes Webhooks Framework - Samples - Commons</name>
 
 	<properties>
 		<java.version>11</java.version>

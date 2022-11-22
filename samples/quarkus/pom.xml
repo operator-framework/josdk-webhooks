@@ -7,9 +7,9 @@
     <artifactId>kubernetes-webhooks-framework-samples</artifactId>
     <version>0.2.1-SNAPSHOT</version>
   </parent>
-  <groupId>io.javaoperatorsdk.admissioncontroller.sample</groupId>
+  <groupId>io.javaoperatorsdk.webhook.sample</groupId>
   <artifactId>quarkus-sample</artifactId>
-  <name>Admission Controller Framework - Samples - Quarkus</name>
+  <name>Kubernetes Webhooks Framework - Samples - Quarkus</name>
   <properties>
     <compiler-plugin.version>3.8.1</compiler-plugin.version>
     <maven.compiler.release>11</maven.compiler.release>
