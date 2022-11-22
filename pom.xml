@@ -4,12 +4,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>io.javaoperatorsdk</groupId>
-    <artifactId>admission-controller-framework</artifactId>
+    <artifactId>kubernetes-webhooks-framework</artifactId>
     <version>0.2.1-SNAPSHOT</version>
-    <name>Admission Controller Framework for Java</name>
-    <description>Framework to Implement Admission Controllers in Java</description>
+    <name>Kubernetes Webhooks Framework for Java</name>
+    <description>Framework to Implement Admission Controllers and Conversion Hooks in Java</description>
     <packaging>pom</packaging>
-    <url>https://github.com/java-operator-sdk/admission-controller-framework</url>
+    <url>https://github.com/java-operator-sdk/kubernetes-webhooks-framework</url>
 
     <licenses>
         <license>
@@ -19,9 +19,9 @@
     </licenses>
 
     <scm>
-        <connection>scm:git:git://github.com/java-operator-sdk/admission-controller-framework.git</connection>
-        <developerConnection>scm:git:git@github.com/java-operator-sdk/admission-controller-framework.git</developerConnection>
-        <url>https://github.com/java-operator-sdk/admission-controller-framework/tree/master</url>
+        <connection>scm:git:git://github.com/java-operator-sdk/kubernetes-webhooks-framework.git</connection>
+        <developerConnection>scm:git:git@github.com/java-operator-sdk/kubernetes-webhooks-framework.git</developerConnection>
+        <url>https://github.com/java-operator-sdk/kubernetes-webhooks-framework/tree/master</url>
     </scm>
 
     <developers>

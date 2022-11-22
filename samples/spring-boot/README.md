@@ -164,4 +164,4 @@ Now, the pod resource passed the validation because the mutating webhook added t
 app.kubernetes.io/name: mutation-test
 ```
 
-This label was added by our mutate webhook (see logic in [here](https://github.com/java-operator-sdk/admission-controller-framework/blob/ce64f6e2a1a11a538d73acf6c49af96c04ed484d/samples/spring-boot/src/main/java/io/javaoperatorsdk/webhook/sample/springboot/Config.java#L57)).
+This label was added by our mutate webhook (see logic in [here](https://github.com/java-operator-sdk/kubernetes-webhooks-framework/blob/ce64f6e2a1a11a538d73acf6c49af96c04ed484d/samples/spring-boot/src/main/java/io/javaoperatorsdk/webhook/sample/springboot/Config.java#L57)).
