@@ -1,12 +1,12 @@
 package io.javaoperatorsdk.webhook.admission.sample.quarkus.admission;
 
+import javax.inject.Named;
+import javax.inject.Singleton;
+
 import io.fabric8.kubernetes.api.model.Pod;
 import io.javaoperatorsdk.webhook.admission.AdmissionController;
 import io.javaoperatorsdk.webhook.admission.AsyncAdmissionController;
 import io.javaoperatorsdk.webhook.sample.commons.AdmissionControllers;
-
-import javax.inject.Named;
-import javax.inject.Singleton;
 
 public class AdmissionControllerConfig {
 
