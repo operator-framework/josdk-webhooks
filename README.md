@@ -38,7 +38,7 @@ Defining a mutation or validation controller is simple as:
 
 ```
 
-What can be then simple used in an endpoint:
+What can be simply used in an endpoint:
 
 ```java
   @POST
