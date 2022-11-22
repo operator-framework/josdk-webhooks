@@ -1,4 +1,4 @@
-# admission-controller-framework
+# kubernetes-webhooks-framework
 
 Framework and tooling to support
 implementing [admission controllers](https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/)
@@ -11,11 +11,11 @@ for Kubernetes in Java. Supports both **quarkus** and **spring boot**. Both Sync
 
 Defining a mutation or validation controller is simple as:
 
-https://github.com/java-operator-sdk/admission-controller-framework/blob/0946595d941b789caef6a69b34c2e5be8c6b59cf/samples/quarkus/src/main/java/io/javaoperatorsdk/admissioncontroller/sample/quarkus/AdmissionControllerConfig.java#L31-L68
+https://github.com/java-operator-sdk/kubernetes-webhooks-framework/blob/0946595d941b789caef6a69b34c2e5be8c6b59cf/samples/quarkus/src/main/java/io/javaoperatorsdk/admissioncontroller/sample/quarkus/AdmissionControllerConfig.java#L31-L68
 
 What can be then simple used in an endpoint:
 
-https://github.com/java-operator-sdk/admission-controller-framework/blob/0946595d941b789caef6a69b34c2e5be8c6b59cf/samples/quarkus/src/main/java/io/javaoperatorsdk/admissioncontroller/sample/quarkus/AdmissionEndpoint.java#L57-L89
+https://github.com/java-operator-sdk/kubernetes-webhooks-framework/blob/0946595d941b789caef6a69b34c2e5be8c6b59cf/samples/quarkus/src/main/java/io/javaoperatorsdk/admissioncontroller/sample/quarkus/AdmissionEndpoint.java#L57-L89
 
 See samples also for details.
 
@@ -26,11 +26,11 @@ in [Kuberbuilder](https://book.kubebuilder.io/multiversion-tutorial/conversion-c
 custom resource from actual version to a hub, and as next step from the hub to the target resource version.
 
 To create the controller
-register [mappers](https://github.com/java-operator-sdk/admission-controller-framework/blob/main/core/src/main/java/io/javaoperatorsdk/webhook/conversion/Mapper.java)
+register [mappers](https://github.com/java-operator-sdk/kubernetes-webhooks-framework/blob/main/core/src/main/java/io/javaoperatorsdk/webhook/conversion/Mapper.java)
 :
 
-https://github.com/java-operator-sdk/admission-controller-framework/blob/2a2bce54b49ea3398bef95a9102ee8645e11cf87/samples/quarkus/src/main/java/io/javaoperatorsdk/webhook/admission/sample/quarkus/conversion/ConversionControllerConfig.java#L15-L29
+https://github.com/java-operator-sdk/kubernetes-webhooks-framework/blob/2a2bce54b49ea3398bef95a9102ee8645e11cf87/samples/quarkus/src/main/java/io/javaoperatorsdk/webhook/admission/sample/quarkus/conversion/ConversionControllerConfig.java#L15-L29
 
 and use the controllers in the endpoint:
 
-https://github.com/java-operator-sdk/admission-controller-framework/blob/2a2bce54b49ea3398bef95a9102ee8645e11cf87/samples/spring-boot/src/main/java/io/javaoperatorsdk/webhook/sample/springboot/conversion/ConversionEndpoint.java#L29-L40
+https://github.com/java-operator-sdk/kubernetes-webhooks-framework/blob/2a2bce54b49ea3398bef95a9102ee8645e11cf87/samples/spring-boot/src/main/java/io/javaoperatorsdk/webhook/sample/springboot/conversion/ConversionEndpoint.java#L29-L40
