@@ -9,7 +9,7 @@
   </parent>
   <artifactId>kubernetes-webhooks-framework-samples</artifactId>
   <packaging>pom</packaging>
-  <name>Admission Controller Framework - Samples</name>
+  <name>Kubernetes Webhooks Framework - Samples</name>
   <modules>
     <module>commons</module>
     <module>spring-boot</module>

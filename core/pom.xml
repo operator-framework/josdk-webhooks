@@ -10,7 +10,7 @@
   </parent>
 
   <artifactId>kubernetes-webhooks-framework-core</artifactId>
-  <name>Admission Controller Framework - Core</name>
+  <name>Kubernetes Webhooks Framework - Core</name>
   <packaging>jar</packaging>
 
   <build>
