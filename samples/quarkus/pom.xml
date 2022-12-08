@@ -74,16 +74,9 @@
       <artifactId>quarkus-kubernetes</artifactId>
     </dependency>
     <dependency>
-      <groupId>io.dekorate</groupId>
-      <artifactId>kubernetes-annotations</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>io.dekorate</groupId>
-      <artifactId>certmanager-annotations</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>io.dekorate</groupId>
-      <artifactId>jib-annotations</artifactId>
+      <groupId>io.quarkiverse.certmanager</groupId>
+      <artifactId>quarkus-certmanager</artifactId>
+      <version>0.0.2</version>
     </dependency>
     <dependency>
       <groupId>io.javaoperatorsdk.admissioncontroller.sample</groupId>
