@@ -70,6 +70,18 @@
       <artifactId>resteasy-jackson2-provider</artifactId>
     </dependency>
     <dependency>
+      <groupId>io.dekorate</groupId>
+      <artifactId>kubernetes-annotations</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.dekorate</groupId>
+      <artifactId>certmanager-annotations</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.dekorate</groupId>
+      <artifactId>jib-annotations</artifactId>
+    </dependency>
+    <dependency>
       <groupId>io.javaoperatorsdk.admissioncontroller.sample</groupId>
       <artifactId>sample-commons</artifactId>
       <version>${project.version}</version>
