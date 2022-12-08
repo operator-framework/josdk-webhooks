@@ -93,7 +93,7 @@ jobs:
 
           # Second test: verify mutating webhook works
           ## Install webhook
-          kubectl apply -f target/classes/META-INF/dekorate/kubernetes.yml
+          kubectl apply -f k8s/mutating-webhook-configuration.yml
 
           ## Test the same Pod can now be installed because the mutating webhook adds the missing label
           kubectl apply -f k8s/create-pod-with-missing-label-example.yml
