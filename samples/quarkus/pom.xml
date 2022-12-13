@@ -46,14 +46,18 @@
       <version>${project.version}</version>
       <exclusions>
         <exclusion>
-          <groupId>io.fabric8</groupId>
           <artifactId>kubernetes-client</artifactId>
+          <groupId>io.fabric8</groupId>
         </exclusion>
       </exclusions>
     </dependency>
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-kubernetes-client</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-container-image-jib</artifactId>
     </dependency>
     <dependency>
       <groupId>io.quarkus</groupId>
@@ -82,12 +86,12 @@
       <groupId>io.javaoperatorsdk.admissioncontroller.sample</groupId>
       <artifactId>sample-commons</artifactId>
       <version>${project.version}</version>
-    <exclusions>
-      <exclusion>
-        <groupId>io.fabric8</groupId>
-        <artifactId>kubernetes-client</artifactId>
-      </exclusion>
-    </exclusions>
+      <exclusions>
+        <exclusion>
+          <artifactId>kubernetes-client</artifactId>
+          <groupId>io.fabric8</groupId>
+        </exclusion>
+      </exclusions>
     </dependency>
   </dependencies>
   <build>
