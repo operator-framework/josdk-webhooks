@@ -8,8 +8,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import io.fabric8.kubernetes.api.model.Pod;
 import io.fabric8.kubernetes.api.model.admission.v1.AdmissionReview;
+import io.fabric8.kubernetes.api.model.networking.v1.Ingress;
 import io.javaoperatorsdk.webhook.admission.AdmissionController;
 import io.javaoperatorsdk.webhook.admission.AsyncAdmissionController;
 import io.smallrye.mutiny.Uni;
@@ -22,17 +22,17 @@ public class AdmissionAdditionalTestEndpoint {
   public static final String ERROR_MUTATE_PATH = "error-mutate";
   public static final String ERROR_VALIDATE_PATH = "error-validate";
 
-  private final AdmissionController<Pod> errorMutationController;
-  private final AdmissionController<Pod> errorValidationController;
-  private final AsyncAdmissionController<Pod> errorAsyncMutationController;
-  private final AsyncAdmissionController<Pod> errorAsyncValidationController;
+  private final AdmissionController<Ingress> errorMutationController;
+  private final AdmissionController<Ingress> errorValidationController;
+  private final AsyncAdmissionController<Ingress> errorAsyncMutationController;
+  private final AsyncAdmissionController<Ingress> errorAsyncValidationController;
 
   @Inject
   public AdmissionAdditionalTestEndpoint(
-      @Named(AdditionalAdmissionConfig.ERROR_MUTATING_CONTROLLER) AdmissionController<Pod> errorMutationController,
-      @Named(AdditionalAdmissionConfig.ERROR_VALIDATING_CONTROLLER) AdmissionController<Pod> errorValidationController,
-      @Named(AdditionalAdmissionConfig.ERROR_ASYNC_MUTATING_CONTROLLER) AsyncAdmissionController<Pod> errorAsyncMutationController,
-      @Named(AdditionalAdmissionConfig.ERROR_ASYNC_VALIDATING_CONTROLLER) AsyncAdmissionController<Pod> errorAsyncValidationController) {
+      @Named(AdditionalAdmissionConfig.ERROR_MUTATING_CONTROLLER) AdmissionController<Ingress> errorMutationController,
+      @Named(AdditionalAdmissionConfig.ERROR_VALIDATING_CONTROLLER) AdmissionController<Ingress> errorValidationController,
+      @Named(AdditionalAdmissionConfig.ERROR_ASYNC_MUTATING_CONTROLLER) AsyncAdmissionController<Ingress> errorAsyncMutationController,
+      @Named(AdditionalAdmissionConfig.ERROR_ASYNC_VALIDATING_CONTROLLER) AsyncAdmissionController<Ingress> errorAsyncValidationController) {
     this.errorMutationController = errorMutationController;
     this.errorValidationController = errorValidationController;
     this.errorAsyncMutationController = errorAsyncMutationController;

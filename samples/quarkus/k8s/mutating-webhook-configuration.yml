@@ -1,11 +1,11 @@
 apiVersion: admissionregistration.k8s.io/v1
-kind: ValidatingWebhookConfiguration
+kind: MutatingWebhookConfiguration
 metadata:
-  name: "pod-policy.spring-boot.example.com"
+  name: "pod-mutating.quarkus.example.com"
   annotations:
     cert-manager.io/inject-ca-from: test/spring-boot-sample
 webhooks:
-  - name: "pod-policy.spring-boot.example.com"
+  - name: "pod-mutating.quarkus.example.com"
     rules:
       - apiGroups:   [""]
         apiVersions: ["v1"]
@@ -14,9 +14,9 @@ webhooks:
         scope:       "Namespaced"
     clientConfig:
       service:
-        namespace: "test"
-        name: "spring-boot-sample"
-        path: "/validate"
+        namespace: "default"
+        name: "quarkus-sample"
+        path: "/mutate"
     admissionReviewVersions: ["v1"]
     sideEffects: None
     timeoutSeconds: 5

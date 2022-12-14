@@ -5,8 +5,8 @@ import javax.inject.Named;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
-import io.fabric8.kubernetes.api.model.Pod;
 import io.fabric8.kubernetes.api.model.admission.v1.AdmissionReview;
+import io.fabric8.kubernetes.api.model.networking.v1.Ingress;
 import io.javaoperatorsdk.webhook.admission.AdmissionController;
 import io.javaoperatorsdk.webhook.admission.AsyncAdmissionController;
 import io.smallrye.mutiny.Uni;
@@ -19,17 +19,17 @@ public class AdmissionEndpoint {
   public static final String ASYNC_MUTATE_PATH = "async-mutate";
   public static final String ASYNC_VALIDATE_PATH = "async-validate";
 
-  private final AdmissionController<Pod> mutationController;
-  private final AdmissionController<Pod> validationController;
-  private final AsyncAdmissionController<Pod> asyncMutationController;
-  private final AsyncAdmissionController<Pod> asyncValidationController;
+  private final AdmissionController<Ingress> mutationController;
+  private final AdmissionController<Ingress> validationController;
+  private final AsyncAdmissionController<Ingress> asyncMutationController;
+  private final AsyncAdmissionController<Ingress> asyncValidationController;
 
   @Inject
   public AdmissionEndpoint(
-      @Named(AdmissionControllerConfig.MUTATING_CONTROLLER) AdmissionController<Pod> mutationController,
-      @Named(AdmissionControllerConfig.VALIDATING_CONTROLLER) AdmissionController<Pod> validationController,
-      @Named(AdmissionControllerConfig.ASYNC_MUTATING_CONTROLLER) AsyncAdmissionController<Pod> asyncMutationController,
-      @Named(AdmissionControllerConfig.ASYNC_VALIDATING_CONTROLLER) AsyncAdmissionController<Pod> asyncValidationController) {
+      @Named(AdmissionControllerConfig.MUTATING_CONTROLLER) AdmissionController<Ingress> mutationController,
+      @Named(AdmissionControllerConfig.VALIDATING_CONTROLLER) AdmissionController<Ingress> validationController,
+      @Named(AdmissionControllerConfig.ASYNC_MUTATING_CONTROLLER) AsyncAdmissionController<Ingress> asyncMutationController,
+      @Named(AdmissionControllerConfig.ASYNC_VALIDATING_CONTROLLER) AsyncAdmissionController<Ingress> asyncValidationController) {
     this.mutationController = mutationController;
     this.validationController = validationController;
     this.asyncMutationController = asyncMutationController;

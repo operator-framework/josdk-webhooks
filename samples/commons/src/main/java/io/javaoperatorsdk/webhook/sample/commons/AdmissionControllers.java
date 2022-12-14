@@ -3,7 +3,7 @@ package io.javaoperatorsdk.webhook.sample.commons;
 import java.util.HashMap;
 import java.util.concurrent.CompletableFuture;
 
-import io.fabric8.kubernetes.api.model.Pod;
+import io.fabric8.kubernetes.api.model.networking.v1.Ingress;
 import io.javaoperatorsdk.webhook.admission.AdmissionController;
 import io.javaoperatorsdk.webhook.admission.AsyncAdmissionController;
 import io.javaoperatorsdk.webhook.admission.NotAllowedException;
@@ -15,18 +15,19 @@ public class AdmissionControllers {
 
   public static final String ERROR_MESSAGE = "Some error happened";
   public static final String APP_NAME_LABEL_KEY = "app.kubernetes.io/name";
+  public static final String ANOTHER_LABEL_TO_ADD = "app.kubernetes.io/id";
 
-  public static AdmissionController<Pod> mutatingController() {
+  public static AdmissionController<Ingress> mutatingController() {
     return new AdmissionController<>((resource, operation) -> {
       if (resource.getMetadata().getLabels() == null) {
         resource.getMetadata().setLabels(new HashMap<>());
       }
-      resource.getMetadata().getLabels().putIfAbsent(APP_NAME_LABEL_KEY, "mutation-test");
+      resource.getMetadata().getLabels().putIfAbsent(ANOTHER_LABEL_TO_ADD, "mutation-test");
       return resource;
     });
   }
 
-  public static AdmissionController<Pod> validatingController() {
+  public static AdmissionController<Ingress> validatingController() {
     return new AdmissionController<>((resource, operation) -> {
       if (resource.getMetadata().getLabels() == null
           || resource.getMetadata().getLabels().get(APP_NAME_LABEL_KEY) == null) {
@@ -35,18 +36,18 @@ public class AdmissionControllers {
     });
   }
 
-  public static AsyncAdmissionController<Pod> asyncMutatingController() {
+  public static AsyncAdmissionController<Ingress> asyncMutatingController() {
     return new AsyncAdmissionController<>(
-        (AsyncMutator<Pod>) (resource, operation) -> CompletableFuture.supplyAsync(() -> {
+        (AsyncMutator<Ingress>) (resource, operation) -> CompletableFuture.supplyAsync(() -> {
           if (resource.getMetadata().getLabels() == null) {
             resource.getMetadata().setLabels(new HashMap<>());
           }
-          resource.getMetadata().getLabels().putIfAbsent(APP_NAME_LABEL_KEY, "mutation-test");
+          resource.getMetadata().getLabels().putIfAbsent(ANOTHER_LABEL_TO_ADD, "mutation-test");
           return resource;
         }));
   }
 
-  public static AsyncAdmissionController<Pod> asyncValidatingController() {
+  public static AsyncAdmissionController<Ingress> asyncValidatingController() {
     return new AsyncAdmissionController<>((resource, operation) -> {
       if (resource.getMetadata().getLabels() == null
           || resource.getMetadata().getLabels().get(APP_NAME_LABEL_KEY) == null) {
@@ -56,26 +57,26 @@ public class AdmissionControllers {
   }
 
 
-  public static AdmissionController<Pod> errorMutatingController() {
-    return new AdmissionController<>((Validator<Pod>) (resource, operation) -> {
+  public static AdmissionController<Ingress> errorMutatingController() {
+    return new AdmissionController<>((Validator<Ingress>) (resource, operation) -> {
       throw new IllegalStateException(ERROR_MESSAGE);
     });
   }
 
-  public static AdmissionController<Pod> errorValidatingController() {
-    return new AdmissionController<>((Mutator<Pod>) (resource, operation) -> {
+  public static AdmissionController<Ingress> errorValidatingController() {
+    return new AdmissionController<>((Mutator<Ingress>) (resource, operation) -> {
       throw new IllegalStateException(ERROR_MESSAGE);
     });
   }
 
-  public static AsyncAdmissionController<Pod> errorAsyncMutatingController() {
-    return new AsyncAdmissionController<>((AsyncMutator<Pod>) (resource, operation) -> {
+  public static AsyncAdmissionController<Ingress> errorAsyncMutatingController() {
+    return new AsyncAdmissionController<>((AsyncMutator<Ingress>) (resource, operation) -> {
       throw new IllegalStateException(ERROR_MESSAGE);
     });
   }
 
-  public static AsyncAdmissionController<Pod> errorAsyncValidatingController() {
-    return new AsyncAdmissionController<>((Validator<Pod>) (resource, operation) -> {
+  public static AsyncAdmissionController<Ingress> errorAsyncValidatingController() {
+    return new AsyncAdmissionController<>((Validator<Ingress>) (resource, operation) -> {
       throw new IllegalStateException(ERROR_MESSAGE);
     });
   }

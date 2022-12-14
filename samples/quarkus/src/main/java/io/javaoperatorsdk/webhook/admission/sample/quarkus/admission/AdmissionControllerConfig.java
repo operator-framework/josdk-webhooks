@@ -3,7 +3,7 @@ package io.javaoperatorsdk.webhook.admission.sample.quarkus.admission;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
-import io.fabric8.kubernetes.api.model.Pod;
+import io.fabric8.kubernetes.api.model.networking.v1.Ingress;
 import io.javaoperatorsdk.webhook.admission.AdmissionController;
 import io.javaoperatorsdk.webhook.admission.AsyncAdmissionController;
 import io.javaoperatorsdk.webhook.sample.commons.AdmissionControllers;
@@ -17,25 +17,25 @@ public class AdmissionControllerConfig {
 
   @Singleton
   @Named(MUTATING_CONTROLLER)
-  public AdmissionController<Pod> mutatingController() {
+  public AdmissionController<Ingress> mutatingController() {
     return AdmissionControllers.mutatingController();
   }
 
   @Singleton
   @Named(VALIDATING_CONTROLLER)
-  public AdmissionController<Pod> validatingController() {
+  public AdmissionController<Ingress> validatingController() {
     return AdmissionControllers.validatingController();
   }
 
   @Singleton
   @Named(ASYNC_MUTATING_CONTROLLER)
-  public AsyncAdmissionController<Pod> asyncMutatingController() {
+  public AsyncAdmissionController<Ingress> asyncMutatingController() {
     return AdmissionControllers.asyncMutatingController();
   }
 
   @Singleton
   @Named(ASYNC_VALIDATING_CONTROLLER)
-  public AsyncAdmissionController<Pod> asyncValidatingController() {
+  public AsyncAdmissionController<Ingress> asyncValidatingController() {
     return AdmissionControllers.asyncValidatingController();
   }
 }

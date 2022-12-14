@@ -10,7 +10,7 @@ webhooks:
       - apiGroups:   [""]
         apiVersions: ["v1"]
         operations:  ["CREATE"]
-        resources:   ["pods"]
+        resources:   ["ingresses"]
         scope:       "Namespaced"
     clientConfig:
       service:
