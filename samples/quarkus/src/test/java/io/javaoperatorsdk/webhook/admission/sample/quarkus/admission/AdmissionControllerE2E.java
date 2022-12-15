@@ -31,7 +31,7 @@ class AdmissionControllerE2E {
                 "https://github.com/cert-manager/cert-manager/releases/download/v1.10.1/cert-manager.yaml")
                     .openStream()) {
       applyAndWait(client, certManager);
-      // applyAndWait(client, "target/kubernetes/minikube.yml");
+      applyAndWait(client, "target/kubernetes/minikube.yml");
       applyAndWait(client, "k8s/validating-webhook-configuration.yml");
       applyAndWait(client, "k8s/mutating-webhook-configuration.yml");
     }
