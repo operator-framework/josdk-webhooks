@@ -56,6 +56,7 @@ jobs:
       - name: Run E2E Test
         run: |
           set -x
+          eval $(minikube -p minikube docker-env)
           ./mvnw ${MAVEN_ARGS} clean install -DskipTests
           cd samples/spring-boot
           pwd
@@ -87,6 +88,7 @@ jobs:
       - name: Run E2E Test
         run: |
           set -x
+          eval $(minikube -p minikube docker-env)
           ./mvnw clean install -DskipTests
           cd samples/quarkus
           ./mvnw install -Dquarkus.container-image.build=true -DskipTests
