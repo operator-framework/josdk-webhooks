@@ -68,7 +68,8 @@ jobs:
           kubectl config set-context --current --namespace=test
 
           # Generate manifests and image
-          cd samples/spring-boot          
+          cd samples/spring-boot
+          # ./mvnw ${MAVEN_ARGS} clean install  jib:dockerBuild  -Ddekorate.jib.group=test -DskipTests
           ./mvnw ${MAVEN_ARGS} clean install -Ddekorate.jib.registry=$KIND_REGISTRY -Ddekorate.jib.group=tests -Ddekorate.jib.version=latest -Ddekorate.jib.autoPushEnabled=true -DskipTests
 
           # Install manifests

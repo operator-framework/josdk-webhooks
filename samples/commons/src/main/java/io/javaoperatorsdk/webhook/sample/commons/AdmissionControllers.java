@@ -14,15 +14,15 @@ import io.javaoperatorsdk.webhook.admission.validation.Validator;
 public class AdmissionControllers {
 
   public static final String ERROR_MESSAGE = "Some error happened";
-  public static final String APP_NAME_LABEL_KEY = "app.kubernetes.io/name";
-  public static final String ANOTHER_LABEL_TO_ADD = "app.kubernetes.io/id";
+  public static final String VALIDATION_TARGET_LABEL = "app.kubernetes.io/name";
+  public static final String MUTATION_TARGET_LABEL = "app.kubernetes.io/id";
 
   public static AdmissionController<Ingress> mutatingController() {
     return new AdmissionController<>((resource, operation) -> {
       if (resource.getMetadata().getLabels() == null) {
         resource.getMetadata().setLabels(new HashMap<>());
       }
-      resource.getMetadata().getLabels().putIfAbsent(ANOTHER_LABEL_TO_ADD, "mutation-test");
+      resource.getMetadata().getLabels().putIfAbsent(MUTATION_TARGET_LABEL, "mutation-test");
       return resource;
     });
   }
@@ -30,8 +30,8 @@ public class AdmissionControllers {
   public static AdmissionController<Ingress> validatingController() {
     return new AdmissionController<>((resource, operation) -> {
       if (resource.getMetadata().getLabels() == null
-          || resource.getMetadata().getLabels().get(APP_NAME_LABEL_KEY) == null) {
-        throw new NotAllowedException("Missing label: " + APP_NAME_LABEL_KEY);
+          || resource.getMetadata().getLabels().get(VALIDATION_TARGET_LABEL) == null) {
+        throw new NotAllowedException("Missing label: " + VALIDATION_TARGET_LABEL);
       }
     });
   }
@@ -42,7 +42,7 @@ public class AdmissionControllers {
           if (resource.getMetadata().getLabels() == null) {
             resource.getMetadata().setLabels(new HashMap<>());
           }
-          resource.getMetadata().getLabels().putIfAbsent(ANOTHER_LABEL_TO_ADD, "mutation-test");
+          resource.getMetadata().getLabels().putIfAbsent(MUTATION_TARGET_LABEL, "mutation-test");
           return resource;
         }));
   }
@@ -50,8 +50,8 @@ public class AdmissionControllers {
   public static AsyncAdmissionController<Ingress> asyncValidatingController() {
     return new AsyncAdmissionController<>((resource, operation) -> {
       if (resource.getMetadata().getLabels() == null
-          || resource.getMetadata().getLabels().get(APP_NAME_LABEL_KEY) == null) {
-        throw new NotAllowedException("Missing label: " + APP_NAME_LABEL_KEY);
+          || resource.getMetadata().getLabels().get(VALIDATION_TARGET_LABEL) == null) {
+        throw new NotAllowedException("Missing label: " + VALIDATION_TARGET_LABEL);
       }
     });
   }

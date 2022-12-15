@@ -1,15 +1,15 @@
 apiVersion: admissionregistration.k8s.io/v1
 kind: ValidatingWebhookConfiguration
 metadata:
-  name: "pod-policy.quarkus.example.com"
+  name: "validating.quarkus.example.com"
   annotations:
-    cert-manager.io/inject-ca-from: test/spring-boot-sample
+    cert-manager.io/inject-ca-from: default/quarkus-sample
 webhooks:
-  - name: "pod-policy.quarkus.example.com"
+  - name: "validating.quarkus.example.com"
     rules:
-      - apiGroups:   [""]
+      - apiGroups:   ["networking.k8s.io"]
         apiVersions: ["v1"]
-        operations:  ["CREATE"]
+        operations:  ["*"]
         resources:   ["ingresses"]
         scope:       "Namespaced"
     clientConfig:
@@ -17,6 +17,7 @@ webhooks:
         namespace: "default"
         name: "quarkus-sample"
         path: "/validate"
+        port: 443
     admissionReviewVersions: ["v1"]
     sideEffects: None
     timeoutSeconds: 5

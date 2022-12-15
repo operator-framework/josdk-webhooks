@@ -1,4 +1,4 @@
-package io.javaoperatorsdk.webhook.admission.sample.quarkus.admission;
+package io.javaoperatorsdk.webhook.sample.springboot.admission;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,7 +29,7 @@ class AdmissionControllerE2E {
                 "https://github.com/cert-manager/cert-manager/releases/download/v1.10.1/cert-manager.yaml")
                     .openStream()) {
       applyAndWait(client, certManager);
-      // applyAndWait(client, "target/kubernetes/minikube.yml");
+      applyAndWait(client, "target/classes/META-INF/dekorate/kubernetes.yml");
       applyAndWait(client, "k8s/validating-webhook-configuration.yml");
       applyAndWait(client, "k8s/mutating-webhook-configuration.yml");
     }
@@ -56,5 +56,6 @@ class AdmissionControllerE2E {
 
     assertThat(res.getMetadata().getLabels()).containsKey(MUTATION_TARGET_LABEL);
   }
+
 
 }
