@@ -51,8 +51,8 @@ class AdmissionControllerE2E {
       assertThat(res).isNotNull();
     });
     assertThrows(KubernetesClientException.class,
-            () -> client.network().v1().ingresses().resource(testIngress("validate-test"))
-                    .createOrReplace());
+        () -> client.network().v1().ingresses().resource(testIngress("validate-test"))
+            .createOrReplace());
   }
 
   @Test
