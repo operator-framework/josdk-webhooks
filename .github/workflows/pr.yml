@@ -55,9 +55,9 @@ jobs:
           driver: docker
       - name: Run E2E Test
         run: |
-          set -x          
-          cd samples/spring-boot
+          set -x
           ./mvnw ${MAVEN_ARGS} clean install jib:dockerBuild -DskipTests
+          cd samples/spring-boot          
           ./mvnw ${MAVEN_ARGS} test -Pend-to-end-tests  
           
   quarkus-e2e-tests:
@@ -84,7 +84,7 @@ jobs:
           driver: docker
       - name: Run E2E Test
         run: |
-          set -x          
-          cd samples/quarkus
+          set -x
           ./mvnw install -Dquarkus.container-image.build=true -DskipTests
+          cd samples/quarkus          
           ./mvnw ${MAVEN_ARGS} test -Pend-to-end-tests
