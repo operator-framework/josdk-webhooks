@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.fabric8.kubernetes.api.model.Pod;
 import io.fabric8.kubernetes.api.model.admission.v1.AdmissionReview;
+import io.fabric8.kubernetes.api.model.networking.v1.Ingress;
 import io.javaoperatorsdk.webhook.admission.AdmissionController;
 import io.javaoperatorsdk.webhook.admission.AsyncAdmissionController;
 
@@ -22,17 +22,17 @@ public class AdmissionAdditionalTestEndpoint {
   public static final String ERROR_ASYNC_MUTATE_PATH = "error-async-mutate";
   public static final String ERROR_ASYNC_VALIDATE_PATH = "error-async-validate";
 
-  private final AdmissionController<Pod> errorMutatingController;
-  private final AdmissionController<Pod> errorValidatingController;
-  private final AsyncAdmissionController<Pod> errorAsyncMutatingController;
-  private final AsyncAdmissionController<Pod> errorAsyncValidatingController;
+  private final AdmissionController<Ingress> errorMutatingController;
+  private final AdmissionController<Ingress> errorValidatingController;
+  private final AsyncAdmissionController<Ingress> errorAsyncMutatingController;
+  private final AsyncAdmissionController<Ingress> errorAsyncValidatingController;
 
   @Autowired
   public AdmissionAdditionalTestEndpoint(
-      @Qualifier("errorMutatingController") AdmissionController<Pod> errorMutatingController,
-      @Qualifier("errorValidatingController") AdmissionController<Pod> errorValidatingController,
-      @Qualifier("errorAsyncMutatingController") AsyncAdmissionController<Pod> errorAsyncMutatingController,
-      @Qualifier("errorAsyncValidatingController") AsyncAdmissionController<Pod> errorAsyncValidatingController) {
+      @Qualifier("errorMutatingController") AdmissionController<Ingress> errorMutatingController,
+      @Qualifier("errorValidatingController") AdmissionController<Ingress> errorValidatingController,
+      @Qualifier("errorAsyncMutatingController") AsyncAdmissionController<Ingress> errorAsyncMutatingController,
+      @Qualifier("errorAsyncValidatingController") AsyncAdmissionController<Ingress> errorAsyncValidatingController) {
     this.errorMutatingController = errorMutatingController;
     this.errorValidatingController = errorValidatingController;
     this.errorAsyncMutatingController = errorAsyncMutatingController;

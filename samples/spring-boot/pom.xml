@@ -76,6 +76,12 @@
 			<artifactId>assertj-core</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.awaitility</groupId>
+			<artifactId>awaitility</artifactId>
+			<version>${awaitility.version}</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -89,7 +95,7 @@
 						<image>gcr.io/distroless/java:11</image>
 					</from>
 					<to>
-						<image>spring-boot-sample</image>
+						<image>test/spring-boot-sample:${project.version}</image>
 					</to>
 				</configuration>
 			</plugin>

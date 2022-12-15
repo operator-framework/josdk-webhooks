@@ -1,4 +1,4 @@
-POST http://localhost:8080/mutate HTTP/1.1
+POST http://192.168.49.2:31599/validate HTTP/1.1
 Content-Type: application/json
 
 {
@@ -28,91 +28,37 @@ Content-Type: application/json
       ]
     },
     "object": {
-      "apiVersion": "v1",
-      "kind": "Pod",
+      "apiVersion": "networking.k8s.io/v1",
+      "kind": "Ingress",
       "metadata": {
-        "generateName": "nginx-deployment-6c54bd5869-",
-        "creationTimestamp": null,
-        "labels": {
-          "app": "nginx",
-          "pod-template-hash": "2710681425"
-        },
+        "name": "minimal-ingress",
         "annotations": {
-          "openshift.io/scc": "restricted"
-        },
-        "ownerReferences": [
-          {
-            "apiVersion": "extensions/v1beta1",
-            "kind": "ReplicaSet",
-            "name": "nginx-deployment-6c54bd5869",
-            "uid": "16c2b355-5f5d-11e8-ac91-36e6bb280816",
-            "controller": true,
-            "blockOwnerDeletion": true
-          }
-        ]
+          "nginx.ingress.kubernetes.io/rewrite-target": "/"
+        }
       },
       "spec": {
-        "volumes": [
+        "ingressClassName": "nginx-example",
+        "rules": [
           {
-            "name": "default-token-tq5lq",
-            "secret": {
-              "secretName": "default-token-tq5lq"
+            "http": {
+              "paths": [
+                {
+                  "path": "/testpath",
+                  "pathType": "Prefix",
+                  "backend": {
+                    "service": {
+                      "name": "test",
+                      "port": {
+                        "number": 80
+                      }
+                    }
+                  }
+                }
+              ]
             }
           }
-        ],
-        "containers": [
-          {
-            "name": "nginx",
-            "image": "nginx:1.7.9",
-            "ports": [
-              {
-                "containerPort": 80,
-                "protocol": "TCP"
-              }
-            ],
-            "resources": {},
-            "volumeMounts": [
-              {
-                "name": "default-token-tq5lq",
-                "readOnly": true,
-                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount"
-              }
-            ],
-            "terminationMessagePath": "/dev/termination-log",
-            "terminationMessagePolicy": "File",
-            "imagePullPolicy": "IfNotPresent",
-            "securityContext": {
-              "capabilities": {
-                "drop": [
-                  "KILL",
-                  "MKNOD",
-                  "SETGID",
-                  "SETUID"
-                ]
-              },
-              "runAsUser": 1000080000
-            }
-          }
-        ],
-        "restartPolicy": "Always",
-        "terminationGracePeriodSeconds": 30,
-        "dnsPolicy": "ClusterFirst",
-        "serviceAccountName": "default",
-        "serviceAccount": "default",
-        "securityContext": {
-          "seLinuxOptions": {
-            "level": "s0:c9,c4"
-          },
-          "fsGroup": 1000080000
-        },
-        "imagePullSecrets": [
-          {
-            "name": "default-dockercfg-kksdv"
-          }
-        ],
-        "schedulerName": "default-scheduler"
-      },
-      "status": {}
+        ]
+      }
     },
     "oldObject": null
   }

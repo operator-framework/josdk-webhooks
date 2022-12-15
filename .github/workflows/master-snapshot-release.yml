@@ -27,7 +27,7 @@ jobs:
           cache: 'maven'
       - name: Run unit tests
         run: ./mvnw ${MAVEN_ARGS} -B test --file pom.xml
-      - name: Run integration tests
+      - name: Package
         run: ./mvnw ${MAVEN_ARGS} -B package --file pom.xml
   release-snapshot:
     runs-on: ubuntu-latest

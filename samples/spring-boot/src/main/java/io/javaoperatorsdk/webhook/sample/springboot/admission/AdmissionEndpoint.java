@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.fabric8.kubernetes.api.model.Pod;
 import io.fabric8.kubernetes.api.model.admission.v1.AdmissionReview;
+import io.fabric8.kubernetes.api.model.networking.v1.Ingress;
 import io.javaoperatorsdk.webhook.admission.AdmissionController;
 import io.javaoperatorsdk.webhook.admission.AsyncAdmissionController;
 
@@ -22,17 +22,17 @@ public class AdmissionEndpoint {
   public static final String ASYNC_MUTATE_PATH = "async-mutate";
   public static final String ASYNC_VALIDATE_PATH = "async-validate";
 
-  private final AdmissionController<Pod> mutatingController;
-  private final AdmissionController<Pod> validatingController;
-  private final AsyncAdmissionController<Pod> asyncMutatingController;
-  private final AsyncAdmissionController<Pod> asyncValidatingController;
+  private final AdmissionController<Ingress> mutatingController;
+  private final AdmissionController<Ingress> validatingController;
+  private final AsyncAdmissionController<Ingress> asyncMutatingController;
+  private final AsyncAdmissionController<Ingress> asyncValidatingController;
 
   @Autowired
   public AdmissionEndpoint(
-      @Qualifier("mutatingController") AdmissionController<Pod> mutationController,
-      @Qualifier("validatingController") AdmissionController<Pod> validatingController,
-      @Qualifier("asyncMutatingController") AsyncAdmissionController<Pod> asyncMutatingController,
-      @Qualifier("asyncValidatingController") AsyncAdmissionController<Pod> asyncValidatingController) {
+      @Qualifier("mutatingController") AdmissionController<Ingress> mutationController,
+      @Qualifier("validatingController") AdmissionController<Ingress> validatingController,
+      @Qualifier("asyncMutatingController") AsyncAdmissionController<Ingress> asyncMutatingController,
+      @Qualifier("asyncValidatingController") AsyncAdmissionController<Ingress> asyncValidatingController) {
     this.mutatingController = mutationController;
     this.validatingController = validatingController;
     this.asyncMutatingController = asyncMutatingController;

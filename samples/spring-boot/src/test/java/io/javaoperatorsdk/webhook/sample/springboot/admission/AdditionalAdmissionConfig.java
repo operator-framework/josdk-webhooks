@@ -3,7 +3,7 @@ package io.javaoperatorsdk.webhook.sample.springboot.admission;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import io.fabric8.kubernetes.api.model.Pod;
+import io.fabric8.kubernetes.api.model.networking.v1.Ingress;
 import io.javaoperatorsdk.webhook.admission.AdmissionController;
 import io.javaoperatorsdk.webhook.admission.AsyncAdmissionController;
 import io.javaoperatorsdk.webhook.sample.commons.AdmissionControllers;
@@ -12,22 +12,22 @@ import io.javaoperatorsdk.webhook.sample.commons.AdmissionControllers;
 public class AdditionalAdmissionConfig {
 
   @Bean
-  public AdmissionController<Pod> errorMutatingController() {
+  public AdmissionController<Ingress> errorMutatingController() {
     return AdmissionControllers.errorMutatingController();
   }
 
   @Bean
-  public AdmissionController<Pod> errorValidatingController() {
+  public AdmissionController<Ingress> errorValidatingController() {
     return AdmissionControllers.errorValidatingController();
   }
 
   @Bean
-  public AsyncAdmissionController<Pod> errorAsyncMutatingController() {
+  public AsyncAdmissionController<Ingress> errorAsyncMutatingController() {
     return AdmissionControllers.errorAsyncMutatingController();
   }
 
   @Bean
-  public AsyncAdmissionController<Pod> errorAsyncValidatingController() {
+  public AsyncAdmissionController<Ingress> errorAsyncValidatingController() {
     return AdmissionControllers.errorAsyncValidatingController();
   }
 }

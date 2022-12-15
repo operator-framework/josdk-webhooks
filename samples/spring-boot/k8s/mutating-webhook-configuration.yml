@@ -1,20 +1,20 @@
 apiVersion: admissionregistration.k8s.io/v1
 kind: MutatingWebhookConfiguration
 metadata:
-  name: "pod-mutating.spring-boot.example.com"
+  name: "mutating.spring-boot.example.com"
   annotations:
-    cert-manager.io/inject-ca-from: test/spring-boot-sample
+    cert-manager.io/inject-ca-from: default/spring-boot-sample
 webhooks:
-  - name: "pod-mutating.spring-boot.example.com"
+  - name: "mutating.spring-boot.example.com"
     rules:
-      - apiGroups:   [""]
+      - apiGroups:   ["networking.k8s.io"]
         apiVersions: ["v1"]
-        operations:  ["CREATE"]
-        resources:   ["pods"]
+        operations:  ["*"]
+        resources:   ["ingresses"]
         scope:       "Namespaced"
     clientConfig:
       service:
-        namespace: "test"
+        namespace: "default"
         name: "spring-boot-sample"
         path: "/mutate"
     admissionReviewVersions: ["v1"]
