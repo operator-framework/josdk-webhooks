@@ -42,12 +42,17 @@ class AdmissionControllerE2E {
     var ingressWithLabel = testIngress("normal-add-test");
     addRequiredLabels(ingressWithLabel);
     await().atMost(Duration.ofSeconds(SPIN_UP_GRACE_PERIOD)).untilAsserted(() -> {
-      var res = client.network().v1().ingresses().resource(ingressWithLabel).createOrReplace();
+      Ingress res = null;
+      try {
+        // this can be since coredns in minikube can take some time
+        res = client.network().v1().ingresses().resource(ingressWithLabel).createOrReplace();
+      } catch (KubernetesClientException e) {
+      }
       assertThat(res).isNotNull();
     });
     assertThrows(KubernetesClientException.class,
-        () -> client.network().v1().ingresses().resource(testIngress("validate-test"))
-            .createOrReplace());
+            () -> client.network().v1().ingresses().resource(testIngress("validate-test"))
+                    .createOrReplace());
   }
 
   @Test
@@ -55,9 +60,14 @@ class AdmissionControllerE2E {
     var ingressWithLabel = testIngress("mutation-test");
     addRequiredLabels(ingressWithLabel);
     await().atMost(Duration.ofSeconds(SPIN_UP_GRACE_PERIOD)).untilAsserted(() -> {
-      var res = client.network().v1().ingresses().resource(ingressWithLabel).createOrReplace();
+      Ingress res = null;
+      try {
+        // this can be since coredns in minikube can take some time
+        res = client.network().v1().ingresses().resource(ingressWithLabel).createOrReplace();
+      } catch (KubernetesClientException e) {
+      }
+      assertThat(res).isNotNull();
       assertThat(res.getMetadata().getLabels()).containsKey(MUTATION_TARGET_LABEL);
     });
   }
-
 }

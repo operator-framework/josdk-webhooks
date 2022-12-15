@@ -5,6 +5,8 @@ metadata:
   name: minimal-ingress
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
+  labels:
+    app.kubernetes.io/name: "app"
 spec:
   ingressClassName: nginx-example
   rules:

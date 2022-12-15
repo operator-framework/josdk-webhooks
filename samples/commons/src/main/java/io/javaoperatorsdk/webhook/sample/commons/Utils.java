@@ -13,7 +13,7 @@ import static io.javaoperatorsdk.webhook.sample.commons.AdmissionControllers.VAL
 
 public class Utils {
 
-  public static final int SPIN_UP_GRACE_PERIOD = 10;
+  public static final int SPIN_UP_GRACE_PERIOD = 120;
 
   public static void applyAndWait(KubernetesClient client, String path) {
     try (FileInputStream fileInputStream = new FileInputStream(path)) {
