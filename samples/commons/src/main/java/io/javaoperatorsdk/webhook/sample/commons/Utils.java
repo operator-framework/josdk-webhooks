@@ -26,7 +26,7 @@ public class Utils {
   public static void applyAndWait(KubernetesClient client, InputStream is) {
     var resources = client.load(is).get();
     client.resourceList(resources).createOrReplace();
-    client.resourceList(resources).waitUntilReady(5, TimeUnit.MINUTES);
+    client.resourceList(resources).waitUntilReady(3, TimeUnit.MINUTES);
   }
 
   public static void addRequiredLabels(Ingress ingress) {
