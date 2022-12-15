@@ -24,7 +24,7 @@ class AdmissionControllerE2E {
   private KubernetesClient client = new KubernetesClientBuilder().build();
 
   @BeforeAll
-  static void deployService() throws IOException, InterruptedException {
+  static void deployService() throws IOException {
     try (KubernetesClient client = new KubernetesClientBuilder().build();
         InputStream certManager =
             new URL(
