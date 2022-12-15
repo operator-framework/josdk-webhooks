@@ -1,11 +1,11 @@
 apiVersion: admissionregistration.k8s.io/v1
 kind: ValidatingWebhookConfiguration
 metadata:
-  name: "pod-policy.spring-boot.example.com"
+  name: "validating.spring-boot.example.com"
   annotations:
     cert-manager.io/inject-ca-from: default/spring-boot-sample
 webhooks:
-  - name: "pod-policy.spring-boot.example.com"
+  - name: "validating.spring-boot.example.com"
     rules:
       - apiGroups:   ["networking.k8s.io"]
         apiVersions: ["v1"]

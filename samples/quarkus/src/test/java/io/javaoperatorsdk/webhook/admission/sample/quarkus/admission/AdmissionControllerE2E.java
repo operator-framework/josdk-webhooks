@@ -3,6 +3,7 @@ package io.javaoperatorsdk.webhook.admission.sample.quarkus.admission;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.time.Duration;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -15,6 +16,7 @@ import io.fabric8.kubernetes.client.KubernetesClientException;
 import static io.javaoperatorsdk.webhook.sample.commons.AdmissionControllers.MUTATION_TARGET_LABEL;
 import static io.javaoperatorsdk.webhook.sample.commons.Utils.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.awaitility.Awaitility.await;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class AdmissionControllerE2E {
@@ -39,9 +41,10 @@ class AdmissionControllerE2E {
   void validationHook() {
     var ingressWithLabel = testIngress("normal-add-test");
     addRequiredLabels(ingressWithLabel);
-    var res = client.network().v1().ingresses().resource(ingressWithLabel).createOrReplace();
-    assertThat(res).isNotNull();
-
+    await().atMost(Duration.ofSeconds(SPIN_UP_GRACE_PERIOD)).untilAsserted(() -> {
+      var res = client.network().v1().ingresses().resource(ingressWithLabel).createOrReplace();
+      assertThat(res).isNotNull();
+    });
     assertThrows(KubernetesClientException.class,
         () -> client.network().v1().ingresses().resource(testIngress("validate-test"))
             .createOrReplace());
@@ -51,10 +54,10 @@ class AdmissionControllerE2E {
   void mutationHook() {
     var ingressWithLabel = testIngress("mutation-test");
     addRequiredLabels(ingressWithLabel);
-
-    var res = client.network().v1().ingresses().resource(ingressWithLabel).createOrReplace();
-
-    assertThat(res.getMetadata().getLabels()).containsKey(MUTATION_TARGET_LABEL);
+    await().atMost(Duration.ofSeconds(SPIN_UP_GRACE_PERIOD)).untilAsserted(() -> {
+      var res = client.network().v1().ingresses().resource(ingressWithLabel).createOrReplace();
+      assertThat(res.getMetadata().getLabels()).containsKey(MUTATION_TARGET_LABEL);
+    });
   }
 
 }
