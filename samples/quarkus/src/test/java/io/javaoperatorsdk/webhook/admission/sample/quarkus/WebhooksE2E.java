@@ -1,4 +1,4 @@
-package io.javaoperatorsdk.webhook.admission.sample.quarkus.admission;
+package io.javaoperatorsdk.webhook.admission.sample.quarkus;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.awaitility.Awaitility.await;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class AdmissionControllerE2E {
+class WebhooksE2E {
 
   private KubernetesClient client = new KubernetesClientBuilder().build();
 
