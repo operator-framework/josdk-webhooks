@@ -1,4 +1,4 @@
-package io.javaoperatorsdk.webhook.admission.sample.quarkus.admission;
+package io.javaoperatorsdk.webhook.sample.admission;
 
 import javax.inject.Inject;
 import javax.inject.Named;

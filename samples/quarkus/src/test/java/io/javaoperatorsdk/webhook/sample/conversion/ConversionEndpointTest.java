@@ -1,4 +1,4 @@
-package io.javaoperatorsdk.webhook.admission.sample.quarkus.conversion;
+package io.javaoperatorsdk.webhook.sample.conversion;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,8 +9,8 @@ import org.junit.jupiter.api.Test;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.http.ContentType;
 
-import static io.javaoperatorsdk.webhook.admission.sample.quarkus.conversion.ConversionEndpoint.ASYNC_CONVERSION_PATH;
-import static io.javaoperatorsdk.webhook.admission.sample.quarkus.conversion.ConversionEndpoint.CONVERSION_PATH;
+import static io.javaoperatorsdk.webhook.sample.commons.ConversionControllers.ASYNC_CONVERSION_PATH;
+import static io.javaoperatorsdk.webhook.sample.commons.ConversionControllers.CONVERSION_PATH;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
 

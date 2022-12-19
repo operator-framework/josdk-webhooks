@@ -1,4 +1,4 @@
-package io.javaoperatorsdk.webhook.sample.springboot;
+package io.javaoperatorsdk.webhook.sample;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -8,7 +8,6 @@ import org.junit.jupiter.api.BeforeAll;
 
 import io.fabric8.kubernetes.client.KubernetesClient;
 import io.fabric8.kubernetes.client.KubernetesClientBuilder;
-import io.javaoperatorsdk.webhook.sample.EndToEndTestBase;
 
 import static io.javaoperatorsdk.webhook.sample.commons.Utils.applyAndWait;
 
@@ -22,12 +21,14 @@ class WebhooksE2E extends EndToEndTestBase {
                 "https://github.com/cert-manager/cert-manager/releases/download/v1.10.1/cert-manager.yaml")
                     .openStream()) {
       applyAndWait(client, certManager);
-      applyAndWait(client, "target/classes/META-INF/dekorate/kubernetes.yml");
+      applyAndWait(client, "target/kubernetes/minikube.yml");
       applyAndWait(client, "k8s/validating-webhook-configuration.yml");
       applyAndWait(client, "k8s/mutating-webhook-configuration.yml");
       applyAndWait(client,
           "../commons/target/classes/META-INF/fabric8/multiversioncustomresources.sample.javaoperatorsdk-v1.yml",
-          addConversionHookEndpointToCustomResource("spring-boot-sample"));
+          addConversionHookEndpointToCustomResource("quarkus-sample"));
+      waitForCoreDNS(client);
     }
   }
+
 }

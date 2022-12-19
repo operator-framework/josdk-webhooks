@@ -9,6 +9,9 @@ import io.javaoperatorsdk.webhook.sample.commons.mapper.V2Mapper;
 
 public class ConversionControllers {
 
+  public static final String CONVERSION_PATH = "convert";
+  public static final String ASYNC_CONVERSION_PATH = "async-convert";
+
   public static ConversionController conversionController() {
     var controller = new ConversionController();
     controller.registerMapper(new V1Mapper());

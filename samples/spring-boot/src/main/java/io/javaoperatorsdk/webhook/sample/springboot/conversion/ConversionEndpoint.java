@@ -11,11 +11,11 @@ import io.javaoperatorsdk.webhook.conversion.ConversionController;
 
 import reactor.core.publisher.Mono;
 
+import static io.javaoperatorsdk.webhook.sample.commons.ConversionControllers.ASYNC_CONVERSION_PATH;
+import static io.javaoperatorsdk.webhook.sample.commons.ConversionControllers.CONVERSION_PATH;
+
 @RestController
 public class ConversionEndpoint {
-
-  public static final String CONVERSION_PATH = "convert";
-  public static final String ASYNC_CONVERSION_PATH = "async-convert";
 
   private final ConversionController conversionController;
   private final AsyncConversionController asyncConversionController;
