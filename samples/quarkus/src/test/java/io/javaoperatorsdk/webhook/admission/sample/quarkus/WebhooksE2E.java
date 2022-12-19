@@ -6,6 +6,7 @@ import java.net.URL;
 import java.time.Duration;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import java.util.function.UnaryOperator;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -14,7 +15,6 @@ import org.junit.jupiter.api.Test;
 import io.fabric8.kubernetes.api.model.HasMetadata;
 import io.fabric8.kubernetes.api.model.ObjectMetaBuilder;
 import io.fabric8.kubernetes.api.model.apiextensions.v1.*;
-import io.fabric8.kubernetes.api.model.networking.v1.*;
 import io.fabric8.kubernetes.client.KubernetesClient;
 import io.fabric8.kubernetes.client.KubernetesClientBuilder;
 import io.fabric8.kubernetes.client.KubernetesClientException;
@@ -49,8 +49,14 @@ class WebhooksE2E {
       applyAndWait(client,
           "../commons/target/classes/META-INF/fabric8/multiversioncustomresources.sample.javaoperatorsdk-v1.yml",
           addConversionHookEndpointToCustomResource());
-
+      waitForCoreDNS(client);
     }
+  }
+
+  /** On minikube CoreDNS can take some time to start */
+  private static void waitForCoreDNS(KubernetesClient client) {
+    client.apps().deployments().inNamespace("kube-system").withName("coredns").waitUntilReady(2,
+        TimeUnit.MINUTES);
   }
 
   @Test
@@ -58,12 +64,7 @@ class WebhooksE2E {
     var ingressWithLabel = testIngress("normal-add-test");
     addRequiredLabels(ingressWithLabel);
     await().atMost(Duration.ofSeconds(SPIN_UP_GRACE_PERIOD)).untilAsserted(() -> {
-      Ingress res = null;
-      try {
-        // this can be since coredns in minikube can take some time
-        res = client.network().v1().ingresses().resource(ingressWithLabel).createOrReplace();
-      } catch (KubernetesClientException e) {
-      }
+      var res = client.network().v1().ingresses().resource(ingressWithLabel).createOrReplace();
       assertThat(res).isNotNull();
     });
     assertThrows(KubernetesClientException.class,
@@ -76,12 +77,7 @@ class WebhooksE2E {
     var ingressWithLabel = testIngress("mutation-test");
     addRequiredLabels(ingressWithLabel);
     await().atMost(Duration.ofSeconds(SPIN_UP_GRACE_PERIOD)).untilAsserted(() -> {
-      Ingress res = null;
-      try {
-        // this can be since coredns in minikube can take some time
-        res = client.network().v1().ingresses().resource(ingressWithLabel).createOrReplace();
-      } catch (KubernetesClientException e) {
-      }
+      var res = client.network().v1().ingresses().resource(ingressWithLabel).createOrReplace();
       assertThat(res).isNotNull();
       assertThat(res.getMetadata().getLabels()).containsKey(MUTATION_TARGET_LABEL);
     });
@@ -90,11 +86,7 @@ class WebhooksE2E {
   @Test
   void conversionHook() {
     await().atMost(Duration.ofSeconds(SPIN_UP_GRACE_PERIOD)).untilAsserted(() -> {
-      try {
-        // this can be since coredns in minikube can take some time
-        createV1Resource(TEST_CR_NAME);
-      } catch (KubernetesClientException e) {
-      }
+      createV1Resource(TEST_CR_NAME);
     });
     MultiVersionCustomResourceV2 v2 =
         client.resources(MultiVersionCustomResourceV2.class).withName(TEST_CR_NAME).get();
