@@ -17,8 +17,8 @@ import org.springframework.web.reactive.function.BodyInserters;
 import io.fabric8.kubernetes.api.model.apiextensions.v1.ConversionReview;
 import io.javaoperatorsdk.webhook.sample.commons.customresource.MultiVersionCustomResourceV2;
 
-import static io.javaoperatorsdk.webhook.sample.springboot.conversion.ConversionEndpoint.ASYNC_CONVERSION_PATH;
-import static io.javaoperatorsdk.webhook.sample.springboot.conversion.ConversionEndpoint.CONVERSION_PATH;
+import static io.javaoperatorsdk.webhook.sample.commons.ConversionControllers.ASYNC_CONVERSION_PATH;
+import static io.javaoperatorsdk.webhook.sample.commons.ConversionControllers.CONVERSION_PATH;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Import(ConversionConfig.class)

@@ -1,4 +1,4 @@
-package io.javaoperatorsdk.webhook.admission.sample.quarkus.conversion;
+package io.javaoperatorsdk.webhook.sample.conversion;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -11,11 +11,11 @@ import io.javaoperatorsdk.webhook.conversion.AsyncConversionController;
 import io.javaoperatorsdk.webhook.conversion.ConversionController;
 import io.smallrye.mutiny.Uni;
 
+import static io.javaoperatorsdk.webhook.sample.commons.ConversionControllers.ASYNC_CONVERSION_PATH;
+import static io.javaoperatorsdk.webhook.sample.commons.ConversionControllers.CONVERSION_PATH;
+
 @Path("/")
 public class ConversionEndpoint {
-
-  public static final String CONVERSION_PATH = "convert";
-  public static final String ASYNC_CONVERSION_PATH = "async-convert";
 
   private final ConversionController conversionController;
   private final AsyncConversionController asyncConversionController;

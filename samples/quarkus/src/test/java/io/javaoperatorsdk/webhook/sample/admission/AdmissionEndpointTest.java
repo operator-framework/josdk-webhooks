@@ -1,4 +1,4 @@
-package io.javaoperatorsdk.webhook.admission.sample.quarkus.admission;
+package io.javaoperatorsdk.webhook.sample.admission;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.http.ContentType;
 
-import static io.javaoperatorsdk.webhook.admission.sample.quarkus.admission.AdmissionAdditionalTestEndpoint.*;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
 
@@ -34,12 +33,12 @@ class AdmissionEndpointTest {
 
   @Test
   void errorMutates() {
-    testServerErrorOnPath(ERROR_MUTATE_PATH);
+    testServerErrorOnPath(AdmissionAdditionalTestEndpoint.ERROR_MUTATE_PATH);
   }
 
   @Test
   void errorValidates() {
-    testServerErrorOnPath(ERROR_VALIDATE_PATH);
+    testServerErrorOnPath(AdmissionAdditionalTestEndpoint.ERROR_VALIDATE_PATH);
   }
 
   @Test
@@ -54,12 +53,12 @@ class AdmissionEndpointTest {
 
   @Test
   void errorAsyncValidation() {
-    testServerErrorOnPath(ERROR_ASYNC_VALIDATE_PATH);
+    testServerErrorOnPath(AdmissionAdditionalTestEndpoint.ERROR_ASYNC_VALIDATE_PATH);
   }
 
   @Test
   void errorAsyncMutation() {
-    testServerErrorOnPath(ERROR_ASYNC_MUTATE_PATH);
+    testServerErrorOnPath(AdmissionAdditionalTestEndpoint.ERROR_ASYNC_MUTATE_PATH);
   }
 
   private void testServerErrorOnPath(String path) {

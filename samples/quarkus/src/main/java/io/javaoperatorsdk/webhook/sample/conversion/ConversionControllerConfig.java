@@ -1,4 +1,4 @@
-package io.javaoperatorsdk.webhook.admission.sample.quarkus.conversion;
+package io.javaoperatorsdk.webhook.sample.conversion;
 
 import javax.inject.Singleton;
 
