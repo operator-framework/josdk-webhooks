@@ -98,7 +98,7 @@ class WebhooksE2E {
     });
     MultiVersionCustomResourceV2 v2 =
         client.resources(MultiVersionCustomResourceV2.class).withName(TEST_CR_NAME).get();
-    assertThat(v2.getSpec().getChangedValueName()).isEqualTo("" + CR_SPEC_VALUE);
+    assertThat(v2.getSpec().getAlteredValue()).isEqualTo("" + CR_SPEC_VALUE);
   }
 
   private MultiVersionCustomResource createV1Resource(String name) {
