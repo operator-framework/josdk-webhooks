@@ -13,7 +13,7 @@ public class V2Mapper
   public MultiVersionHub toHub(MultiVersionCustomResourceV2 resource) {
     var hub = new MultiVersionHub();
     hub.setMetadata(resource.getMetadata());
-    hub.setValue(Integer.parseInt(resource.getSpec().getValue()));
+    hub.setValue(Integer.parseInt(resource.getSpec().getAlteredValue()));
     return hub;
   }
 
@@ -23,7 +23,7 @@ public class V2Mapper
     var res = new MultiVersionCustomResourceV2();
     res.setMetadata(hub.getMetadata());
     res.setSpec(new MultiVersionCustomResourceSpecV2());
-    res.getSpec().setValue(Integer.toString(hub.getValue()));
+    res.getSpec().setAlteredValue(Integer.toString(hub.getValue()));
     return res;
   }
 }

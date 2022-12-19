@@ -2,15 +2,14 @@ package io.javaoperatorsdk.webhook.sample.commons.customresource;
 
 public class MultiVersionCustomResourceSpecV2 {
 
-  private String value;
+  private String alteredValue;
 
-
-  public String getValue() {
-    return value;
+  public String getAlteredValue() {
+    return alteredValue;
   }
 
-  public MultiVersionCustomResourceSpecV2 setValue(String value) {
-    this.value = value;
+  public MultiVersionCustomResourceSpecV2 setAlteredValue(String alteredValue) {
+    this.alteredValue = alteredValue;
     return this;
   }
 
