@@ -33,7 +33,7 @@ The goal of the end-to-end tests is to test the framework in a production like e
 executable documentation to guide developers how to deploy and configure the target service.
 
 The [end-to-end tests](https://github.com/java-operator-sdk/admission-controller-framework/blob/main/samples/quarkus/src/test/java/io/javaoperatorsdk/webhook/sample/QuarkusWebhooksE2E.java)
-are based on the samples (See Spring Boot
+are using the [same test cases](https://github.com/java-operator-sdk/admission-controller-framework/blob/de2b0da7f592aa166049ef7ad65bcebf8d45e358/samples/commons/src/test/java/io/javaoperatorsdk/webhook/sample/EndToEndTestBase.java), and are based on the samples (See Spring Boot
 version [here](https://github.com/java-operator-sdk/admission-controller-framework/blob/e2637a90152bebfca2983ba17268c1f7ec7e9602/samples/spring-boot/src/test/java/io/javaoperatorsdk/webhook/sample/springboot/SpringBootWebhooksE2E.java)).
 To see how those tests are executed check
 the [related GitHub Action](https://github.com/java-operator-sdk/admission-controller-framework/blob/main/.github/workflows/pr.yml#L66-L66)
@@ -135,8 +135,7 @@ All changes made to the resource are reflected in the response created by the ad
 respectively [AsyncConversionController](https://github.com/java-operator-sdk/admission-controller-framework/blob/main/core/src/main/java/io/javaoperatorsdk/webhook/conversion/AsyncConversionController.java))
 handles conversion between different versions of custom resources
 using [mappers](https://github.com/java-operator-sdk/admission-controller-framework/blob/main/core/src/main/java/io/javaoperatorsdk/webhook/conversion/Mapper.java)
-(
-respectively [async mappers](https://github.com/java-operator-sdk/admission-controller-framework/blob/main/core/src/main/java/io/javaoperatorsdk/webhook/conversion/AsyncMapper.java)).
+( respectively [async mappers](https://github.com/java-operator-sdk/admission-controller-framework/blob/main/core/src/main/java/io/javaoperatorsdk/webhook/conversion/AsyncMapper.java)).
 
 The mapper interface is simple:
 
