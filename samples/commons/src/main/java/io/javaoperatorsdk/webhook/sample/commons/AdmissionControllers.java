@@ -17,6 +17,7 @@ public class AdmissionControllers {
   public static final String VALIDATION_TARGET_LABEL = "app.kubernetes.io/name";
   public static final String MUTATION_TARGET_LABEL = "app.kubernetes.io/id";
 
+  // adds a label to the target resource
   public static AdmissionController<Ingress> mutatingController() {
     return new AdmissionController<>((resource, operation) -> {
       if (resource.getMetadata().getLabels() == null) {
@@ -27,6 +28,7 @@ public class AdmissionControllers {
     });
   }
 
+  // validates if a resource contains the target label
   public static AdmissionController<Ingress> validatingController() {
     return new AdmissionController<>((resource, operation) -> {
       if (resource.getMetadata().getLabels() == null
