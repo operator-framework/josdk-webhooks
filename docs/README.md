@@ -33,12 +33,12 @@ The goal of the end-to-end tests is to test the framework in a production like e
 executable documentation to guide developers how to deploy and configure the target service.
 
 The [end-to-end tests](https://github.com/java-operator-sdk/admission-controller-framework/blob/main/samples/quarkus/src/test/java/io/javaoperatorsdk/webhook/sample/QuarkusWebhooksE2E.java)
-are using the [same test cases](https://github.com/java-operator-sdk/admission-controller-framework/blob/de2b0da7f592aa166049ef7ad65bcebf8d45e358/samples/commons/src/test/java/io/javaoperatorsdk/webhook/sample/EndToEndTestBase.java), and are based on the samples (See Spring Boot
+are using the [same test cases](https://github.com/java-operator-sdk/admission-controller-framework/blob/de2b0da7f592aa166049ef7ad65bcebf8d45e358/samples/commons/src/test/java/io/javaoperatorsdk/webhook/sample/EndToEndTestBase.java) and are based on the samples (See Spring Boot
 version [here](https://github.com/java-operator-sdk/admission-controller-framework/blob/e2637a90152bebfca2983ba17268c1f7ec7e9602/samples/spring-boot/src/test/java/io/javaoperatorsdk/webhook/sample/springboot/SpringBootWebhooksE2E.java)).
-To see how those tests are executed check
+To see how those tests are executed during a pull request check
 the [related GitHub Action](https://github.com/java-operator-sdk/admission-controller-framework/blob/main/.github/workflows/pr.yml#L66-L66)
 
-The samples are first built, then deployed to a local Kubernetes cluster (in our case minikube is used).
+The samples are first built, then [deployed](https://github.com/java-operator-sdk/admission-controller-framework/blob/6959de06c0de1c8e04fc241ea5f4196219002e53/samples/quarkus/src/test/java/io/javaoperatorsdk/webhook/sample/QuarkusWebhooksE2E.java#L23-L30) to a local Kubernetes cluster (in our case minikube is used).
 For Quarkus most of the deployment artifacts is generated using extensions (works similarly for Spring Boot,
 using [dekorate](https://github.com/java-operator-sdk/admission-controller-framework/blob/main/samples/spring-boot/pom.xml#L52-L63)):
 
@@ -49,8 +49,8 @@ using [dekorate](https://github.com/java-operator-sdk/admission-controller-frame
     <artifactId>quarkus-kubernetes</artifactId>
 </dependency>
 <dependency>
-<groupId>io.quarkiverse.certmanager</groupId>
-<artifactId>quarkus-certmanager</artifactId>
+    <groupId>io.quarkiverse.certmanager</groupId>
+    <artifactId>quarkus-certmanager</artifactId>
 </dependency>
 ```
 
@@ -91,11 +91,11 @@ The conversion hook is configured within the `CustomResourceDefinition`, see
 related [Kubernetes docs](https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definition-versioning/#configure-customresourcedefinition-to-use-conversion-webhooks).
 Since this is [not yet supported](https://github.com/fabric8io/kubernetes-client/issues/4692) by the fabric8 client CRD
 generator, the hook definition is
-[added before applied](https://github.com/java-operator-sdk/admission-controller-framework/blob/e2637a90152bebfca2983ba17268c1f7ec7e9602/samples/commons/src/test/java/io/javaoperatorsdk/webhook/sample/EndToEndTestBase.java#L97-L124).
+[added before](https://github.com/java-operator-sdk/admission-controller-framework/blob/e2637a90152bebfca2983ba17268c1f7ec7e9602/samples/commons/src/test/java/io/javaoperatorsdk/webhook/sample/EndToEndTestBase.java#L97-L124) CRD is applied.
 
 Note
 that [cert manager](https://github.com/java-operator-sdk/admission-controller-framework/blob/e2637a90152bebfca2983ba17268c1f7ec7e9602/samples/quarkus/src/test/java/io/javaoperatorsdk/webhook/sample/QuarkusWebhooksE2E.java#L19-L23)
-is used to generate certificates for the application and to for configuration.
+is used to generate certificates for the application and for configurations.
 
 ## Admission Controllers API
 
