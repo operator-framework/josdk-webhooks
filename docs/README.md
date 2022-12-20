@@ -57,7 +57,7 @@ using [dekorate](https://github.com/java-operator-sdk/admission-controller-frame
 Only additional resources used for admission hooks, are present in
 the [k8s](https://github.com/java-operator-sdk/admission-controller-framework/tree/main/samples/quarkus/k8s)
 directory. These are the configuration files to configure the admission hooks. For example the configuration for
-validation:
+validation look like:
 
 ```yaml
 
@@ -108,7 +108,7 @@ the [async version](https://github.com/java-operator-sdk/admission-controller-fr
 of admission controller implementation.)
 
 ```java
-new AdmissionController<>((resource,operation)->{     
+new AdmissionController<>((resource,operation) -> {     
     if(resource.getMetadata().getLabels() == null || resource.getMetadata().getLabels().get(APP_NAME_LABEL_KEY) == null){
         throw new NotAllowedException("Missing label: "+APP_NAME_LABEL_KEY);
     }
@@ -118,7 +118,7 @@ new AdmissionController<>((resource,operation)->{
 respectively mutates it:
 
 ```java
-new AdmissionController<>((resource,operation)->{
+new AdmissionController<>((resource,operation) -> {
     if(resource.getMetadata().getLabels() == null){
         resource.getMetadata().setLabels(new HashMap<>());
     }
