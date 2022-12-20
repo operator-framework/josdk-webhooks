@@ -30,13 +30,68 @@ Starting from those endpoints, it should be trivial to understand how the underl
 ### End-To-End Tests
 
 The [end-to-end tests](https://github.com/java-operator-sdk/admission-controller-framework/blob/main/samples/quarkus/src/test/java/io/javaoperatorsdk/webhook/sample/QuarkusWebhooksE2E.java)
-are based on the samples. To see how those tests are executed check the [related GitHub Action](https://github.com/java-operator-sdk/admission-controller-framework/blob/main/.github/workflows/pr.yml#L66-L66) 
+are based on the samples (See Spring Boot
+version [here](https://github.com/java-operator-sdk/admission-controller-framework/blob/e2637a90152bebfca2983ba17268c1f7ec7e9602/samples/spring-boot/src/test/java/io/javaoperatorsdk/webhook/sample/springboot/SpringBootWebhooksE2E.java)).
+To see how those tests are executed check
+the [related GitHub Action](https://github.com/java-operator-sdk/admission-controller-framework/blob/main/.github/workflows/pr.yml#L66-L66)
 
-The samples are first built, then are deployed to a local Kubernetes cluster (in our case minikube is used).
-For Quarkus most of the deployment artifact is generated using extensions:
+The samples are first built, then deployed to a local Kubernetes cluster (in our case minikube is used).
+For Quarkus most of the deployment artifact is generated using extensions (works in similar way for Spring Boot,
+using [dekorate](https://github.com/java-operator-sdk/admission-controller-framework/blob/main/samples/spring-boot/pom.xml#L52-L63)):
 
+```xml
 
+<dependency>
+    <groupId>io.quarkus</groupId>
+    <artifactId>quarkus-kubernetes</artifactId>
+</dependency>
+<dependency>
+<groupId>io.quarkiverse.certmanager</groupId>
+<artifactId>quarkus-certmanager</artifactId>
+</dependency>
+```
 
+Only additional resources used for admission hooks, are present in
+the [k8s](https://github.com/java-operator-sdk/admission-controller-framework/tree/main/samples/quarkus/k8s)
+directory. These are the configuration files to configure the admission hooks. For example the configuration for
+validation:
+
+```yaml
+
+apiVersion: admissionregistration.k8s.io/v1
+kind: ValidatingWebhookConfiguration
+metadata:
+  name: "validating.quarkus.example.com"
+  annotations:
+    cert-manager.io/inject-ca-from: default/quarkus-sample
+webhooks:
+  - name: "validating.quarkus.example.com"
+    rules:
+      - apiGroups: [ "networking.k8s.io" ]
+        apiVersions: [ "v1" ]
+        operations: [ "*" ]
+        resources: [ "ingresses" ]
+        scope: "Namespaced"
+    clientConfig:
+      service:
+        namespace: "default"
+        name: "quarkus-sample"
+        path: "/validate"
+        port: 443
+    admissionReviewVersions: [ "v1" ]
+    sideEffects: None
+    timeoutSeconds: 5
+```
+
+The conversion hook is configured within the `CustomResourceDefinition`, see
+related [Kubernetes docs](https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definition-versioning/#configure-customresourcedefinition-to-use-conversion-webhooks).
+Since this is [not yet supported](https://github.com/fabric8io/kubernetes-client/issues/4692) by the fabric8 client CRD
+generator, the hook definition is
+[added before applied](https://github.com/java-operator-sdk/admission-controller-framework/blob/e2637a90152bebfca2983ba17268c1f7ec7e9602/samples/commons/src/test/java/io/javaoperatorsdk/webhook/sample/EndToEndTestBase.java#L97-L124).
+
+Note
+that [cert manager](https://github.com/java-operator-sdk/admission-controller-framework/blob/e2637a90152bebfca2983ba17268c1f7ec7e9602/samples/quarkus/src/test/java/io/javaoperatorsdk/webhook/sample/QuarkusWebhooksE2E.java#L19-L23)
+is used to generate
 
 ## Admission Controllers
 
