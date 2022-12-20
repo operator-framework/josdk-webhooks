@@ -7,7 +7,7 @@ for Kubernetes in Java. Supports both **quarkus** and **spring boot**. Both **sy
 
 ## Documentation
 
-For full documentation check [docs](docs) directory.
+**For a more detailed documentation check the [docs](docs).**
 
 ## Sample Usage
 
