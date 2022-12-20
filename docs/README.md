@@ -29,8 +29,8 @@ Starting from those endpoints, it should be trivial to understand how the underl
 
 ### End-To-End Tests
 
-The goal of the end-to-end tests is to test the framework in a production like environment, but also works as an 
-executable documentation to guide developers how to deploy and configure the target service.  
+The goal of the end-to-end tests is to test the framework in a production like environment, but also works as an
+executable documentation to guide developers how to deploy and configure the target service.
 
 The [end-to-end tests](https://github.com/java-operator-sdk/admission-controller-framework/blob/main/samples/quarkus/src/test/java/io/javaoperatorsdk/webhook/sample/QuarkusWebhooksE2E.java)
 are based on the samples (See Spring Boot
@@ -49,8 +49,8 @@ using [dekorate](https://github.com/java-operator-sdk/admission-controller-frame
     <artifactId>quarkus-kubernetes</artifactId>
 </dependency>
 <dependency>
-    <groupId>io.quarkiverse.certmanager</groupId>
-    <artifactId>quarkus-certmanager</artifactId>
+<groupId>io.quarkiverse.certmanager</groupId>
+<artifactId>quarkus-certmanager</artifactId>
 </dependency>
 ```
 
@@ -66,7 +66,7 @@ kind: ValidatingWebhookConfiguration
 metadata:
   name: "validating.quarkus.example.com"
   annotations:
-#   Cert Manager annotation to inject CA 
+    #   Cert Manager annotation to inject CA 
     cert-manager.io/inject-ca-from: default/quarkus-sample
 webhooks:
   - name: "validating.quarkus.example.com"
@@ -101,27 +101,29 @@ is used to generate certificates for the application and to for configuration.
 
 There are two types of admission controllers: validation and mutation. Both should be extremely simple to use.
 
-To create the related controller simply pass a lambda to the constructor of [AdmissionController](https://github.com/java-operator-sdk/admission-controller-framework/blob/main/core/src/main/java/io/javaoperatorsdk/webhook/admission/AdmissionController.java#L104-L104) that validates the resource:
-
+To create the related controller simply pass a lambda to the constructor
+of [AdmissionController](https://github.com/java-operator-sdk/admission-controller-framework/blob/main/core/src/main/java/io/javaoperatorsdk/webhook/admission/AdmissionController.java#L104-L104)
+that validates the resource. (See also
+the [async version](https://github.com/java-operator-sdk/admission-controller-framework/blob/main/core/src/main/java/io/javaoperatorsdk/webhook/admission/AsyncAdmissionController.java#L104-L104)
+of admission controller implementation.)
 
 ```java
-new AdmissionController<>((resource, operation) -> {
-      if (resource.getMetadata().getLabels() == null
-              || resource.getMetadata().getLabels().get(APP_NAME_LABEL_KEY) == null) {
-        throw new NotAllowedException("Missing label: " + APP_NAME_LABEL_KEY);
-      }
+new AdmissionController<>((resource,operation)->{     
+    if(resource.getMetadata().getLabels() == null || resource.getMetadata().getLabels().get(APP_NAME_LABEL_KEY) == null){
+        throw new NotAllowedException("Missing label: "+APP_NAME_LABEL_KEY);
+    }
 });
 ```
 
 respectively mutates it:
 
 ```java
-new AdmissionController<>((resource, operation) -> {
-      if (resource.getMetadata().getLabels() == null) {
+new AdmissionController<>((resource,operation)->{
+    if(resource.getMetadata().getLabels() == null){
         resource.getMetadata().setLabels(new HashMap<>());
-      }
-      resource.getMetadata().getLabels().putIfAbsent(APP_NAME_LABEL_KEY, "mutation-test");
-      return resource;
+    }
+    resource.getMetadata().getLabels().putIfAbsent(APP_NAME_LABEL_KEY,"mutation-test");
+    return resource;
 });
 ```
 
@@ -129,3 +131,27 @@ All changes made to the resource are reflected in the response created by the ad
 
 ## Conversion Hooks API
 
+[ConversionController](https://github.com/java-operator-sdk/admission-controller-framework/blob/core/src/main/java/io/javaoperatorsdk/webhook/conversion/ConversionController.java) (
+respectively [AsyncConversionController](https://github.com/java-operator-sdk/admission-controller-framework/blob/main/core/src/main/java/io/javaoperatorsdk/webhook/conversion/AsyncConversionController.java))
+handles conversion between different versions of custom resources
+using [mappers](https://github.com/java-operator-sdk/admission-controller-framework/blob/main/core/src/main/java/io/javaoperatorsdk/webhook/conversion/Mapper.java)
+(
+respectively [async mappers](https://github.com/java-operator-sdk/admission-controller-framework/blob/main/core/src/main/java/io/javaoperatorsdk/webhook/conversion/AsyncMapper.java)).
+
+The mapper interface is simple:
+
+```java
+public interface Mapper<R extends HasMetadata, HUB> {
+
+  HUB toHub(R resource);
+
+  R fromHub(HUB hub);
+
+}
+```
+
+It handles mapping to and from a Hub. Hub is an intermediate representation in a conversion. Thus, the conversion 
+steps from v1 to v2 happens in the following way: v1 -> HUB -> v2. Using the provided v1 and v2 mappers implementations.
+Having this approach is useful mainly in case there are more than two version of resources on the cluster, so there is 
+no need for a mapper for every combination. See also related docs in
+[Kubebuilder](https://book.kubebuilder.io/multiversion-tutorial/conversion-concepts.html).
