@@ -29,6 +29,9 @@ Starting from those endpoints, it should be trivial to understand how the underl
 
 ### End-To-End Tests
 
+The goal of the end-to-end tests is to test the framework in a production like environment, but also works as an 
+executable documentation to guide developers how to deploy and configure the target service.  
+
 The [end-to-end tests](https://github.com/java-operator-sdk/admission-controller-framework/blob/main/samples/quarkus/src/test/java/io/javaoperatorsdk/webhook/sample/QuarkusWebhooksE2E.java)
 are based on the samples (See Spring Boot
 version [here](https://github.com/java-operator-sdk/admission-controller-framework/blob/e2637a90152bebfca2983ba17268c1f7ec7e9602/samples/spring-boot/src/test/java/io/javaoperatorsdk/webhook/sample/springboot/SpringBootWebhooksE2E.java)).
@@ -36,7 +39,7 @@ To see how those tests are executed check
 the [related GitHub Action](https://github.com/java-operator-sdk/admission-controller-framework/blob/main/.github/workflows/pr.yml#L66-L66)
 
 The samples are first built, then deployed to a local Kubernetes cluster (in our case minikube is used).
-For Quarkus most of the deployment artifact is generated using extensions (works in similar way for Spring Boot,
+For Quarkus most of the deployment artifacts is generated using extensions (works similarly for Spring Boot,
 using [dekorate](https://github.com/java-operator-sdk/admission-controller-framework/blob/main/samples/spring-boot/pom.xml#L52-L63)):
 
 ```xml
@@ -63,6 +66,7 @@ kind: ValidatingWebhookConfiguration
 metadata:
   name: "validating.quarkus.example.com"
   annotations:
+#   Cert Manager annotation to inject CA 
     cert-manager.io/inject-ca-from: default/quarkus-sample
 webhooks:
   - name: "validating.quarkus.example.com"
@@ -91,19 +95,37 @@ generator, the hook definition is
 
 Note
 that [cert manager](https://github.com/java-operator-sdk/admission-controller-framework/blob/e2637a90152bebfca2983ba17268c1f7ec7e9602/samples/quarkus/src/test/java/io/javaoperatorsdk/webhook/sample/QuarkusWebhooksE2E.java#L19-L23)
-is used to generate
+is used to generate certificates for the application and to for configuration.
 
-## Admission Controllers
+## Admission Controllers API
 
-### API
+There are two types of admission controllers: validation and mutation. Both should be extremely simple to use.
 
-### Deployments
-
-## Conversion Hooks
-
-### API
-
-### Deployments
+To create the related controller simply pass a lambda to the constructor of [AdmissionController](https://github.com/java-operator-sdk/admission-controller-framework/blob/main/core/src/main/java/io/javaoperatorsdk/webhook/admission/AdmissionController.java#L104-L104) that validates the resource:
 
 
+```java
+new AdmissionController<>((resource, operation) -> {
+      if (resource.getMetadata().getLabels() == null
+              || resource.getMetadata().getLabels().get(APP_NAME_LABEL_KEY) == null) {
+        throw new NotAllowedException("Missing label: " + APP_NAME_LABEL_KEY);
+      }
+});
+```
+
+respectively mutates it:
+
+```java
+new AdmissionController<>((resource, operation) -> {
+      if (resource.getMetadata().getLabels() == null) {
+        resource.getMetadata().setLabels(new HashMap<>());
+      }
+      resource.getMetadata().getLabels().putIfAbsent(APP_NAME_LABEL_KEY, "mutation-test");
+      return resource;
+});
+```
+
+All changes made to the resource are reflected in the response created by the admission controller.
+
+## Conversion Hooks API
 
