@@ -46,8 +46,8 @@ using [dekorate](https://github.com/java-operator-sdk/admission-controller-frame
     <artifactId>quarkus-kubernetes</artifactId>
 </dependency>
 <dependency>
-<groupId>io.quarkiverse.certmanager</groupId>
-<artifactId>quarkus-certmanager</artifactId>
+    <groupId>io.quarkiverse.certmanager</groupId>
+    <artifactId>quarkus-certmanager</artifactId>
 </dependency>
 ```
 
