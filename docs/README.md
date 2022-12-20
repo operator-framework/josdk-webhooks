@@ -3,7 +3,7 @@
 ## Intro
 
 Kubernetes Webhooks Framework makes it simple to
-implementing [admission controllers](https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/)
+implement [admission controllers](https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/)
 and [conversion hooks](https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definition-versioning/#webhook-conversion)
 for Kubernetes in Java.
 
@@ -16,10 +16,10 @@ Before you start make sure you understand these concepts in Kubernetes, reading 
 There are samples both
 for [Spring Boot](https://github.com/java-operator-sdk/admission-controller-framework/tree/main/samples/spring-boot)
 and [Quarkus](https://github.com/java-operator-sdk/kubernetes-webooks-framework/tree/main/samples/quarkus), both of them
-implements the same logic. Both sync and async APIs
-are showcased. This documentation describes the Quarkus version, however Spring Boot version is almost identical.
+implement the same logic. Both sync and async APIs
+are showcased. This documentation describes the Quarkus version, however the Spring Boot version is almost identical.
 
-There are two endpoint, one
+There are two endpoints, one
 for [admission controllers](https://github.com/java-operator-sdk/admission-controller-framework/blob/main/samples/quarkus/src/main/java/io/javaoperatorsdk/webhook/sample/admission/AdmissionEndpoint.java)
 (a validating and a mutating) and one for the
 sample [conversion hook](https://github.com/java-operator-sdk/admission-controller-framework/blob/76fd9c4b9fef6738310a7dd97b159c3668ced9f1/samples/quarkus/src/main/java/io/javaoperatorsdk/webhook/sample/conversion/ConversionEndpoint.java)
@@ -29,7 +29,7 @@ Starting from those endpoints, it should be trivial to understand how the underl
 
 ### End-To-End Tests
 
-The goal of the end-to-end tests is to test the framework in a production like environment, but also works as an
+The goal of the end-to-end tests is to test the framework in a production-like environment, but also works as an
 executable documentation to guide developers how to deploy and configure the target service.
 
 The [end-to-end tests](https://github.com/java-operator-sdk/admission-controller-framework/blob/main/samples/quarkus/src/test/java/io/javaoperatorsdk/webhook/sample/QuarkusWebhooksE2E.java)
@@ -54,7 +54,7 @@ using [dekorate](https://github.com/java-operator-sdk/admission-controller-frame
 </dependency>
 ```
 
-Only additional resources used for admission hooks, are present in
+Only additional resources used for admission hooks are present in
 the [k8s](https://github.com/java-operator-sdk/admission-controller-framework/tree/main/samples/quarkus/k8s)
 directory. These are the configuration files to configure the admission hooks. For example the configuration for
 validation look like:
@@ -150,7 +150,7 @@ public interface Mapper<R extends HasMetadata, HUB> {
 ```
 
 It handles mapping to and from a Hub. Hub is an intermediate representation in a conversion. Thus, the conversion 
-steps from v1 to v2 happens in the following way: v1 -> HUB -> v2. Using the provided v1 and v2 mappers implementations.
-Having this approach is useful mainly in case there are more than two version of resources on the cluster, so there is 
+steps from v1 to v2 happen in the following way: v1 -> HUB -> v2. Using the provided v1 and v2 mappers implementations.
+Having this approach is useful mainly in case there are more than two versions of resources on the cluster, so there is 
 no need for a mapper for every combination. See also related docs in
 [Kubebuilder](https://book.kubebuilder.io/multiversion-tutorial/conversion-concepts.html).
