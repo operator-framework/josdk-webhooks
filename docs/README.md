@@ -91,7 +91,7 @@ The conversion hook is configured within the `CustomResourceDefinition`, see
 related [Kubernetes docs](https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definition-versioning/#configure-customresourcedefinition-to-use-conversion-webhooks).
 Since this is [not yet supported](https://github.com/fabric8io/kubernetes-client/issues/4692) by the fabric8 client CRD
 generator, the hook definition is
-[added before](https://github.com/java-operator-sdk/admission-controller-framework/blob/e2637a90152bebfca2983ba17268c1f7ec7e9602/samples/commons/src/test/java/io/javaoperatorsdk/webhook/sample/EndToEndTestBase.java#L97-L124) CRD is applied.
+[added before](https://github.com/java-operator-sdk/admission-controller-framework/blob/57a889ea1c0cb42b5a703a3cc8053f51c3982f74/samples/commons/src/main/java/io/javaoperatorsdk/webhook/sample/commons/Utils.java#L83-L110) CRD is applied.
 
 Note
 that [cert manager](https://github.com/java-operator-sdk/admission-controller-framework/blob/e2637a90152bebfca2983ba17268c1f7ec7e9602/samples/quarkus/src/test/java/io/javaoperatorsdk/webhook/sample/QuarkusWebhooksE2E.java#L19-L23)

@@ -10,6 +10,7 @@ import io.fabric8.kubernetes.client.KubernetesClient;
 import io.fabric8.kubernetes.client.KubernetesClientBuilder;
 import io.javaoperatorsdk.webhook.sample.EndToEndTestBase;
 
+import static io.javaoperatorsdk.webhook.sample.commons.Utils.addConversionHookEndpointToCustomResource;
 import static io.javaoperatorsdk.webhook.sample.commons.Utils.applyAndWait;
 
 class SpringBootWebhooksE2E extends EndToEndTestBase {

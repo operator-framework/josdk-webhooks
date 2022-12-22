@@ -1,15 +1,11 @@
 package io.javaoperatorsdk.webhook.sample;
 
 import java.time.Duration;
-import java.util.List;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
-import java.util.function.UnaryOperator;
 
 import org.junit.jupiter.api.Test;
 
-import io.fabric8.kubernetes.api.model.HasMetadata;
 import io.fabric8.kubernetes.api.model.ObjectMetaBuilder;
 import io.fabric8.kubernetes.api.model.apiextensions.v1.*;
 import io.fabric8.kubernetes.client.KubernetesClient;
@@ -20,7 +16,6 @@ import io.javaoperatorsdk.webhook.sample.commons.customresource.MultiVersionCust
 import io.javaoperatorsdk.webhook.sample.commons.customresource.MultiVersionCustomResourceV2;
 
 import static io.javaoperatorsdk.webhook.sample.commons.AdmissionControllers.MUTATION_TARGET_LABEL;
-import static io.javaoperatorsdk.webhook.sample.commons.ConversionControllers.CONVERSION_PATH;
 import static io.javaoperatorsdk.webhook.sample.commons.Utils.*;
 import static io.javaoperatorsdk.webhook.sample.commons.Utils.SPIN_UP_GRACE_PERIOD;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
@@ -92,34 +87,5 @@ public class EndToEndTestBase {
   public static void waitForCoreDNS(KubernetesClient client) {
     client.apps().deployments().inNamespace("kube-system").withName("coredns").waitUntilReady(2,
         TimeUnit.MINUTES);
-  }
-
-  public static UnaryOperator<HasMetadata> addConversionHookEndpointToCustomResource(
-      String serviceName) {
-    return r -> {
-      if (!(r instanceof CustomResourceDefinition)) {
-        return r;
-      }
-      var crd = (CustomResourceDefinition) r;
-      var crc = new CustomResourceConversion();
-      crd.getMetadata()
-          .setAnnotations(Map.of("cert-manager.io/inject-ca-from", "default/" + serviceName));
-      crd.getSpec().setConversion(crc);
-      crc.setStrategy("Webhook");
-
-      var whc = new WebhookConversionBuilder()
-          .withConversionReviewVersions(List.of("v1"))
-          .withClientConfig(new WebhookClientConfigBuilder()
-              .withService(new ServiceReferenceBuilder()
-                  .withPath("/" + CONVERSION_PATH)
-                  .withName(serviceName)
-                  .withNamespace("default")
-                  .withPort(443)
-                  .build())
-              .build())
-          .build();
-      crc.setWebhook(whc);
-      return crd;
-    };
   }
 }
