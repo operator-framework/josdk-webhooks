@@ -89,7 +89,8 @@ class AdmissionEndpointTest {
   }
 
   private String jsonRequest() {
-    try (InputStream is = this.getClass().getResourceAsStream("/admission-request.json")) {
+    try (InputStream is = Thread.currentThread().getContextClassLoader()
+        .getResourceAsStream("/admission-request.json")) {
       return new String(is.readAllBytes(), StandardCharsets.UTF_8);
     } catch (IOException e) {
       throw new IllegalStateException(e);
