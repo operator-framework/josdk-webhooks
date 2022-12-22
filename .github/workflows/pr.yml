@@ -30,7 +30,7 @@ jobs:
           ./mvnw ${MAVEN_ARGS} formatter:validate -Dconfigfile=$PWD/contributing/eclipse-google-style.xml --file pom.xml
           ./mvnw ${MAVEN_ARGS} impsort:check --file pom.xml
       - name: Run unit tests
-        run: ./mvnw ${MAVEN_ARGS} -B test --file pom.xml -Pnative
+        run: ./mvnw ${MAVEN_ARGS} install test -Pnative --file pom.xml
   spring-boot-e2e-tests:
     runs-on: ubuntu-latest
     needs: build
