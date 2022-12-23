@@ -1,4 +1,4 @@
-POST http://192.168.49.2:31599/validate HTTP/1.1
+POST https://192.168.49.2:31936/mutate HTTP/1.1
 Content-Type: application/json
 
 {
@@ -9,12 +9,12 @@ Content-Type: application/json
     "kind": {
       "group": "",
       "version": "v1",
-      "kind": "Pod"
+      "kind": "Ingress"
     },
     "resource": {
       "group": "",
       "version": "v1",
-      "resource": "pods"
+      "resource": "ingresses"
     },
     "namespace": "dummy",
     "operation": "CREATE",
