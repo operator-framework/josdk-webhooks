@@ -1,7 +1,7 @@
 # kubernetes-webhooks-framework
 
 Framework and tooling to support
-implementing [admission controllers](https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/)
+implementing [dynamic admission controllers](https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/)
 and [conversion hooks](https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definition-versioning/#webhook-conversion)
 for Kubernetes in Java. Supports both **quarkus** and **spring boot**. Both **sync** and **async** programing model.
 
@@ -11,7 +11,7 @@ for Kubernetes in Java. Supports both **quarkus** and **spring boot**. Both **sy
 
 ## Sample Usage
 
-### Admission Controllers
+### Dynamic Admission Controllers
 
 Defining a mutation or validation controller is simple as:
 

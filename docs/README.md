@@ -3,7 +3,7 @@
 ## Intro
 
 Kubernetes Webhooks Framework makes it simple to
-implement [admission controllers](https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/)
+implement [dynamic admission controllers](https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/)
 and [conversion hooks](https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definition-versioning/#webhook-conversion)
 for Kubernetes in Java.
 
@@ -97,7 +97,7 @@ Note
 that [cert manager](https://github.com/java-operator-sdk/admission-controller-framework/blob/e2637a90152bebfca2983ba17268c1f7ec7e9602/samples/quarkus/src/test/java/io/javaoperatorsdk/webhook/sample/QuarkusWebhooksE2E.java#L19-L23)
 is used to generate certificates for the application and for configurations.
 
-## Admission Controllers API
+## Dynamic Admission Controllers API
 
 There are two types of admission controllers: validation and mutation. Both should be extremely simple to use.
 
