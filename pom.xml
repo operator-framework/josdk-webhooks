@@ -47,7 +47,7 @@
         <commons-lang3.version>3.12.0</commons-lang3.version>
         <auto-service.version>1.0.1</auto-service.version>
         <assertj.version>3.21.0</assertj.version>
-        <awaitility.version>4.1.1</awaitility.version>
+        <awaitility.version>4.2.0</awaitility.version>
         <maven-resources-plugin.version>3.2.0</maven-resources-plugin.version>
         <directory-maven-plugin.version>1.0</directory-maven-plugin.version>
         <nexus-staging-maven-plugin.version>1.6.13</nexus-staging-maven-plugin.version>
