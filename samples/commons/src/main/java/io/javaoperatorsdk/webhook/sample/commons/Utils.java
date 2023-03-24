@@ -3,16 +3,19 @@ package io.javaoperatorsdk.webhook.sample.commons;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 
 import io.fabric8.kubernetes.api.model.HasMetadata;
+import io.fabric8.kubernetes.api.model.apiextensions.v1.*;
 import io.fabric8.kubernetes.api.model.networking.v1.*;
 import io.fabric8.kubernetes.client.KubernetesClient;
 
 import static io.javaoperatorsdk.webhook.sample.commons.AdmissionControllers.VALIDATION_TARGET_LABEL;
+import static io.javaoperatorsdk.webhook.sample.commons.ConversionControllers.CONVERSION_PATH;
 
 public class Utils {
 
@@ -75,6 +78,35 @@ public class Utils {
                 .build())
             .build())
         .build();
+  }
+
+  public static UnaryOperator<HasMetadata> addConversionHookEndpointToCustomResource(
+      String serviceName) {
+    return r -> {
+      if (!(r instanceof CustomResourceDefinition)) {
+        return r;
+      }
+      var crd = (CustomResourceDefinition) r;
+      var crc = new CustomResourceConversion();
+      crd.getMetadata()
+          .setAnnotations(Map.of("cert-manager.io/inject-ca-from", "default/" + serviceName));
+      crd.getSpec().setConversion(crc);
+      crc.setStrategy("Webhook");
+
+      var whc = new WebhookConversionBuilder()
+          .withConversionReviewVersions(List.of("v1"))
+          .withClientConfig(new WebhookClientConfigBuilder()
+              .withService(new ServiceReferenceBuilder()
+                  .withPath("/" + CONVERSION_PATH)
+                  .withName(serviceName)
+                  .withNamespace("default")
+                  .withPort(443)
+                  .build())
+              .build())
+          .build();
+      crc.setWebhook(whc);
+      return crd;
+    };
   }
 
 }

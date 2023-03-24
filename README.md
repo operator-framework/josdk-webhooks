@@ -1,13 +1,17 @@
 # kubernetes-webhooks-framework
 
 Framework and tooling to support
-implementing [admission controllers](https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/)
+implementing [dynamic admission controllers](https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/)
 and [conversion hooks](https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definition-versioning/#webhook-conversion)
 for Kubernetes in Java. Supports both **quarkus** and **spring boot**. Both **sync** and **async** programing model.
 
+## Documentation
+
+**For a more detailed documentation check the [docs](docs).**
+
 ## Sample Usage
 
-### Admission Controllers
+### Dynamic Admission Controllers
 
 Defining a mutation or validation controller is simple as:
 
@@ -15,7 +19,7 @@ Defining a mutation or validation controller is simple as:
 
   @Singleton
   @Named(MUTATING_CONTROLLER)
-  public AdmissionController<Pod> mutatingController() {
+  public AdmissionController<Ingress> mutatingController() {
     return new AdmissionController<>((resource, operation) -> {
       if (resource.getMetadata().getLabels() == null) {
         resource.getMetadata().setLabels(new HashMap<>());
@@ -27,7 +31,7 @@ Defining a mutation or validation controller is simple as:
   
   @Singleton
   @Named(VALIDATING_CONTROLLER)
-  public AdmissionController<Pod> validatingController() {
+  public AdmissionController<Ingress> validatingController() {
     return new AdmissionController<>((resource, operation) -> {
       if (resource.getMetadata().getLabels() == null
               || resource.getMetadata().getLabels().get(APP_NAME_LABEL_KEY) == null) {

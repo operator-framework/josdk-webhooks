@@ -10,7 +10,7 @@ To be precise, this example will install two admission webhooks that watch and m
 
 ### Introduction
 
-The admission controllers are installed via either [the ValidatingWebhookConfiguration](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#validatingwebhookconfiguration-v1-admissionregistration-k8s-io) resource for validation admission webhooks or [the MutatingWebhooksConfiguration](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#mutatingwebhookconfiguration-v1-admissionregistration-k8s-io) resource for mutating admission webhooks. For example, the ValidatingWebhookConfiguration resource looks like:
+The dynamic admission controllers are installed via either [the ValidatingWebhookConfiguration](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#validatingwebhookconfiguration-v1-admissionregistration-k8s-io) resource for validation admission webhooks or [the MutatingWebhooksConfiguration](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#mutatingwebhookconfiguration-v1-admissionregistration-k8s-io) resource for mutating admission webhooks. For example, the ValidatingWebhookConfiguration resource looks like:
 
 ```yaml
 apiVersion: admissionregistration.k8s.io/v1
