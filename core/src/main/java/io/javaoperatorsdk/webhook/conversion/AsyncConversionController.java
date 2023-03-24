@@ -18,7 +18,7 @@ import static io.javaoperatorsdk.webhook.conversion.Commons.*;
 
 public class AsyncConversionController implements AsyncConversionRequestHandler {
 
-  private static final Logger log = LoggerFactory.getLogger(ConversionController.class);
+  private static final Logger log = LoggerFactory.getLogger(AsyncConversionController.class);
 
   @SuppressWarnings("rawtypes")
   private final Map<String, AsyncMapper> mappers = new HashMap<>();
@@ -54,7 +54,7 @@ public class AsyncConversionController implements AsyncConversionRequestHandler 
       String targetVersion) {
     CompletableFuture<HasMetadata>[] completableFutures = new CompletableFuture[objects.size()];
     for (int i = 0; i < objects.size(); i++) {
-      completableFutures[i] = mapObject((HasMetadata) objects.get(i), targetVersion);
+      completableFutures[i] = mapObject(objects.get(i), targetVersion);
     }
     return CompletableFuture.allOf(completableFutures).thenApply(r -> {
       List<HasMetadata> result = new ArrayList<>(completableFutures.length);
@@ -79,7 +79,6 @@ public class AsyncConversionController implements AsyncConversionRequestHandler 
     return sourceToHubMapper.toHub(resource)
         .thenApply(r -> hubToTarget.fromHub(r).toCompletableFuture().join())
         .toCompletableFuture();
-
   }
 
 }
