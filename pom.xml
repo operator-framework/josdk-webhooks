@@ -50,10 +50,10 @@
         <awaitility.version>4.1.1</awaitility.version>
         <maven-resources-plugin.version>3.2.0</maven-resources-plugin.version>
         <directory-maven-plugin.version>1.0</directory-maven-plugin.version>
-        <nexus-staging-maven-plugin.version>1.6.8</nexus-staging-maven-plugin.version>
+        <nexus-staging-maven-plugin.version>1.6.13</nexus-staging-maven-plugin.version>
         <maven-surefire-plugin.version>3.0.0</maven-surefire-plugin.version>
         <formatter-maven-plugin.version>2.17.1</formatter-maven-plugin.version>
-        <impsort-maven-plugin.version>1.6.2</impsort-maven-plugin.version>
+        <impsort-maven-plugin.version>1.8.0</impsort-maven-plugin.version>
         <maven-install-plugin.version>2.5.2</maven-install-plugin.version>
         <maven-clean-plugin.version>3.1.0</maven-clean-plugin.version>
         <git-commit-id-maven-plugin.version>5.0.0</git-commit-id-maven-plugin.version>
