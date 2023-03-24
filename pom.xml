@@ -64,7 +64,7 @@
         <maven-gpg-plugin.version>3.0.1</maven-gpg-plugin.version>
         <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
         <spring-boot-dependencies.version>2.7.3</spring-boot-dependencies.version>
-        <dekorate.version>3.1.2</dekorate.version>
+        <dekorate.version>3.5.2</dekorate.version>
     </properties>
 
     <modules>
