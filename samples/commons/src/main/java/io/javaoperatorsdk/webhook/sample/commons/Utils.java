@@ -40,10 +40,10 @@ public class Utils {
   }
 
   public static void applyAndWait(KubernetesClient client, InputStream is,
-      UnaryOperator<HasMetadata> transfor) {
+      UnaryOperator<HasMetadata> transformer) {
     var resources = client.load(is).get();
-    if (transfor != null) {
-      resources = resources.stream().map(transfor).collect(Collectors.toList());
+    if (transformer != null) {
+      resources = resources.stream().map(transformer).collect(Collectors.toList());
     }
     client.resourceList(resources).create();
     client.resourceList(resources).waitUntilReady(3, TimeUnit.MINUTES);
