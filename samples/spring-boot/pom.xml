@@ -49,18 +49,6 @@
 			<artifactId>reactor-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-<!--		<dependency>-->
-<!--			<groupId>io.dekorate</groupId>-->
-<!--			<artifactId>kubernetes-spring-starter</artifactId>-->
-<!--		</dependency>-->
-<!--		<dependency>-->
-<!--			<groupId>io.dekorate</groupId>-->
-<!--			<artifactId>certmanager-annotations</artifactId>-->
-<!--		</dependency>-->
-<!--		<dependency>-->
-<!--			<groupId>io.dekorate</groupId>-->
-<!--			<artifactId>jib-annotations</artifactId>-->
-<!--		</dependency>-->
 		<dependency>
 			<groupId>io.javaoperatorsdk</groupId>
 			<artifactId>kubernetes-webhooks-framework-core</artifactId>

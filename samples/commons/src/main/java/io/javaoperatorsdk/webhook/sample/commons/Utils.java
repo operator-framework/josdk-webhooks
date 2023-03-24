@@ -41,11 +41,11 @@ public class Utils {
 
   public static void applyAndWait(KubernetesClient client, InputStream is,
       UnaryOperator<HasMetadata> transfor) {
-    var resources = client.load(is).items();
+    var resources = client.load(is).get();
     if (transfor != null) {
       resources = resources.stream().map(transfor).collect(Collectors.toList());
     }
-    client.resourceList(resources).createOrReplace();
+    client.resourceList(resources).create();
     client.resourceList(resources).waitUntilReady(3, TimeUnit.MINUTES);
   }
 
