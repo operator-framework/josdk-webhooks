@@ -21,7 +21,7 @@ class SpringBootWebhooksE2E extends EndToEndTestBase {
         InputStream certManager =
             new URL(
                 "https://github.com/cert-manager/cert-manager/releases/download/v1.10.1/cert-manager.yaml")
-                    .openStream()) {
+                .openStream()) {
       applyAndWait(client, certManager);
       applyAndWait(client, "target/classes/META-INF/dekorate/kubernetes.yml");
       applyAndWait(client, "k8s/validating-webhook-configuration.yml");

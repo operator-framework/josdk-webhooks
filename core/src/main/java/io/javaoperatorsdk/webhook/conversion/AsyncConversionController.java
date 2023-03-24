@@ -40,7 +40,7 @@ public class AsyncConversionController implements AsyncConversionRequestHandler 
           conversionReview.getRequest().getObjects().stream()
               .map(HasMetadata.class::cast).collect(Collectors.toList()),
           Utils.versionOfApiVersion(conversionReview.getRequest().getDesiredAPIVersion()))
-              .thenApply(convertedObjects -> createResponse(convertedObjects, conversionReview));
+          .thenApply(convertedObjects -> createResponse(convertedObjects, conversionReview));
     } catch (MissingConversionMapperException e) {
       log.error("Error in conversion hook. UID: {}",
           conversionReview.getRequest().getUid(), e);
