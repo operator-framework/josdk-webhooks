@@ -75,6 +75,18 @@
 			<type>test-jar</type>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>io.dekorate</groupId>
+			<artifactId>kubernetes-spring-starter</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.dekorate</groupId>
+			<artifactId>certmanager-annotations</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.dekorate</groupId>
+			<artifactId>jib-annotations</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
