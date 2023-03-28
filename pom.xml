@@ -50,7 +50,7 @@
         <auto-service.version>1.0.1</auto-service.version>
         <assertj.version>3.21.0</assertj.version>
         <awaitility.version>4.2.0</awaitility.version>
-        <maven-resources-plugin.version>3.2.0</maven-resources-plugin.version>
+        <maven-resources-plugin.version>3.3.1</maven-resources-plugin.version>
         <directory-maven-plugin.version>1.0</directory-maven-plugin.version>
         <nexus-staging-maven-plugin.version>1.6.13</nexus-staging-maven-plugin.version>
         <maven-surefire-plugin.version>3.0.0</maven-surefire-plugin.version>
