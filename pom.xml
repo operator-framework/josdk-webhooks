@@ -40,31 +40,32 @@
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
 
         <junit.version>5.9.2</junit.version>
-        <fabric8-client.version>6.2.0</fabric8-client.version>
+        <fabric8-client.version>6.5.1</fabric8-client.version>
         <slf4j.version>1.7.32</slf4j.version>
-        <log4j.version>2.17.1</log4j.version>
-        <mokito.version>4.1.0</mokito.version>
+        <log4j.version>2.20.0</log4j.version>
+        <mokito.version>5.2.0</mokito.version>
+        <mokito.version>5.2.0</mokito.version>
+        <dekorate.version>3.5.3</dekorate.version>
         <commons-lang3.version>3.12.0</commons-lang3.version>
         <auto-service.version>1.0.1</auto-service.version>
         <assertj.version>3.21.0</assertj.version>
-        <awaitility.version>4.1.1</awaitility.version>
+        <awaitility.version>4.2.0</awaitility.version>
         <maven-resources-plugin.version>3.2.0</maven-resources-plugin.version>
         <directory-maven-plugin.version>1.0</directory-maven-plugin.version>
         <nexus-staging-maven-plugin.version>1.6.13</nexus-staging-maven-plugin.version>
         <maven-surefire-plugin.version>3.0.0</maven-surefire-plugin.version>
         <formatter-maven-plugin.version>2.22.0</formatter-maven-plugin.version>
         <impsort-maven-plugin.version>1.8.0</impsort-maven-plugin.version>
-        <maven-install-plugin.version>2.5.2</maven-install-plugin.version>
+        <maven-install-plugin.version>3.1.1</maven-install-plugin.version>
         <maven-clean-plugin.version>3.1.0</maven-clean-plugin.version>
         <git-commit-id-maven-plugin.version>5.0.0</git-commit-id-maven-plugin.version>
         <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <json-patch.version>1.13</json-patch.version>
-        <maven-javadoc-plugin.version>3.3.1</maven-javadoc-plugin.version>
+        <maven-javadoc-plugin.version>3.5.0</maven-javadoc-plugin.version>
         <maven-gpg-plugin.version>3.0.1</maven-gpg-plugin.version>
         <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
         <spring-boot-dependencies.version>2.7.3</spring-boot-dependencies.version>
-        <dekorate.version>3.1.2</dekorate.version>
     </properties>
 
     <modules>
