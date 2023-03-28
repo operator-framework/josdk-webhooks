@@ -39,14 +39,19 @@ public class Utils {
     applyAndWait(client, is, null);
   }
 
-  public static void applyAndWait(KubernetesClient client, InputStream is,
+  public static void applyAndWait(KubernetesClient client, List<HasMetadata> resources,
       UnaryOperator<HasMetadata> transformer) {
-    var resources = client.load(is).get();
     if (transformer != null) {
       resources = resources.stream().map(transformer).collect(Collectors.toList());
     }
     client.resourceList(resources).create();
     client.resourceList(resources).waitUntilReady(3, TimeUnit.MINUTES);
+  }
+
+  public static void applyAndWait(KubernetesClient client, InputStream is,
+      UnaryOperator<HasMetadata> transformer) {
+    var resources = client.load(is).items();
+    applyAndWait(client, resources, transformer);
   }
 
   public static void addRequiredLabels(Ingress ingress) {
