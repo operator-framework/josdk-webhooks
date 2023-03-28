@@ -34,6 +34,8 @@ class QuarkusWebhooksE2E extends EndToEndTestBase {
     }
   }
 
+  // quarkus support uses an older version, these should be removed if quarkus will support newer
+  // version of fabric8
   private static void applyAndWait(KubernetesClient client, InputStream is) {
     var resources = client.load(is).get();
     Utils.applyAndWait(client, resources, null);
