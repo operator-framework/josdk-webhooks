@@ -170,5 +170,11 @@ See in the [samples](https://github.com/java-operator-sdk/admission-controller-f
 
 Related release not in fabric8 client:
 ```text
-Fix #4579: the implicit registration of resource and list types that happens when using the resource(class) methods has been removed. This makes the behavior of the client more predictable as that was an undocumented side-effect. If you expect to see instances of a custom type from an untyped api call - typically KubernetesClient.load, KubernetesClient.resourceList, KubernetesClient.resource(InputStream|String), then you must either create a META-INF/services/io.fabric8.kubernetes.api.model.KubernetesResource file (see above #3923), or make calls to KubernetesDeserializer.registerCustomKind - however since KubernetesDeserializer is an internal class that mechanism is not preferred.
+Fix #4579: the implicit registration of resource and list types that happens when using the resource(class) methods 
+has been removed. This makes the behavior of the client more predictable as that was an undocumented side-effect. 
+If you expect to see instances of a custom type from an untyped api call - typically KubernetesClient.load, 
+KubernetesClient.resourceList, KubernetesClient.resource(InputStream|String), then you must either create a 
+META-INF/services/io.fabric8.kubernetes.api.model.KubernetesResource file (see above #3923), or make calls to 
+KubernetesDeserializer.registerCustomKind - however since KubernetesDeserializer is an internal class that mechanism
+is not preferred.
 ```
