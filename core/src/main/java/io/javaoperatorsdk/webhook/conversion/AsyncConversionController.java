@@ -29,8 +29,6 @@ public class AsyncConversionController implements AsyncConversionRequestHandler 
       throw new IllegalStateException(MAPPER_ALREADY_REGISTERED_FOR_VERSION_MESSAGE + version);
     }
     mappers.put(version, mapper);
-    Utils.registerCustomKind(
-        Utils.getFirstTypeArgumentFromInterface(mapper.getClass(), AsyncMapper.class));
   }
 
   @Override

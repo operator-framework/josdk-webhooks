@@ -33,12 +33,16 @@ The goal of the end-to-end tests is to test the framework in a production-like e
 executable documentation to guide developers how to deploy and configure the target service.
 
 The [end-to-end tests](https://github.com/java-operator-sdk/admission-controller-framework/blob/main/samples/quarkus/src/test/java/io/javaoperatorsdk/webhook/sample/QuarkusWebhooksE2E.java)
-are using the [same test cases](https://github.com/java-operator-sdk/admission-controller-framework/blob/de2b0da7f592aa166049ef7ad65bcebf8d45e358/samples/commons/src/test/java/io/javaoperatorsdk/webhook/sample/EndToEndTestBase.java) and are based on the samples (See Spring Boot
+are using
+the [same test cases](https://github.com/java-operator-sdk/admission-controller-framework/blob/de2b0da7f592aa166049ef7ad65bcebf8d45e358/samples/commons/src/test/java/io/javaoperatorsdk/webhook/sample/EndToEndTestBase.java)
+and are based on the samples (See Spring Boot
 version [here](https://github.com/java-operator-sdk/admission-controller-framework/blob/e2637a90152bebfca2983ba17268c1f7ec7e9602/samples/spring-boot/src/test/java/io/javaoperatorsdk/webhook/sample/springboot/SpringBootWebhooksE2E.java)).
 To see how those tests are executed during a pull request check
 the [related GitHub Action](https://github.com/java-operator-sdk/admission-controller-framework/blob/main/.github/workflows/pr.yml#L66-L66)
 
-The samples are first built, then [deployed](https://github.com/java-operator-sdk/admission-controller-framework/blob/6959de06c0de1c8e04fc241ea5f4196219002e53/samples/quarkus/src/test/java/io/javaoperatorsdk/webhook/sample/QuarkusWebhooksE2E.java#L23-L30) to a local Kubernetes cluster (in our case minikube is used).
+The samples are first built,
+then [deployed](https://github.com/java-operator-sdk/admission-controller-framework/blob/6959de06c0de1c8e04fc241ea5f4196219002e53/samples/quarkus/src/test/java/io/javaoperatorsdk/webhook/sample/QuarkusWebhooksE2E.java#L23-L30)
+to a local Kubernetes cluster (in our case minikube is used).
 For Quarkus most of the deployment artifacts is generated using extensions (works similarly for Spring Boot,
 using [dekorate](https://github.com/java-operator-sdk/admission-controller-framework/blob/main/samples/spring-boot/pom.xml#L52-L63)):
 
@@ -91,7 +95,8 @@ The conversion hook is configured within the `CustomResourceDefinition`, see
 related [Kubernetes docs](https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definition-versioning/#configure-customresourcedefinition-to-use-conversion-webhooks).
 Since this is [not yet supported](https://github.com/fabric8io/kubernetes-client/issues/4692) by the fabric8 client CRD
 generator, the hook definition is
-[added before](https://github.com/java-operator-sdk/admission-controller-framework/blob/57a889ea1c0cb42b5a703a3cc8053f51c3982f74/samples/commons/src/main/java/io/javaoperatorsdk/webhook/sample/commons/Utils.java#L83-L110) CRD is applied.
+[added before](https://github.com/java-operator-sdk/admission-controller-framework/blob/57a889ea1c0cb42b5a703a3cc8053f51c3982f74/samples/commons/src/main/java/io/javaoperatorsdk/webhook/sample/commons/Utils.java#L83-L110)
+CRD is applied.
 
 Note
 that [cert manager](https://github.com/java-operator-sdk/admission-controller-framework/blob/e2637a90152bebfca2983ba17268c1f7ec7e9602/samples/quarkus/src/test/java/io/javaoperatorsdk/webhook/sample/QuarkusWebhooksE2E.java#L19-L23)
@@ -135,7 +140,8 @@ All changes made to the resource are reflected in the response created by the ad
 respectively [AsyncConversionController](https://github.com/java-operator-sdk/admission-controller-framework/blob/main/core/src/main/java/io/javaoperatorsdk/webhook/conversion/AsyncConversionController.java))
 handles conversion between different versions of custom resources
 using [mappers](https://github.com/java-operator-sdk/admission-controller-framework/blob/main/core/src/main/java/io/javaoperatorsdk/webhook/conversion/Mapper.java)
-( respectively [async mappers](https://github.com/java-operator-sdk/admission-controller-framework/blob/main/core/src/main/java/io/javaoperatorsdk/webhook/conversion/AsyncMapper.java)).
+(
+respectively [async mappers](https://github.com/java-operator-sdk/admission-controller-framework/blob/main/core/src/main/java/io/javaoperatorsdk/webhook/conversion/AsyncMapper.java)).
 
 The mapper interface is simple:
 
@@ -149,8 +155,26 @@ public interface Mapper<R extends HasMetadata, HUB> {
 }
 ```
 
-It handles mapping to and from a Hub. Hub is an intermediate representation in a conversion. Thus, the conversion 
+It handles mapping to and from a Hub. Hub is an intermediate representation in a conversion. Thus, the conversion
 steps from v1 to v2 happen in the following way: v1 -> HUB -> v2. Using the provided v1 and v2 mappers implementations.
-Having this approach is useful mainly in case there are more than two versions of resources on the cluster, so there is 
+Having this approach is useful mainly in case there are more than two versions of resources on the cluster, so there is
 no need for a mapper for every combination. See also related docs in
 [Kubebuilder](https://book.kubebuilder.io/multiversion-tutorial/conversion-concepts.html).
+
+## Using Custom Resources in the API
+
+In order to properly register your own custom types (custom resources) for deserialization it needs to be added to
+`META-INF/services/io.fabric8.kubernetes.api.model.KubernetesResource` file.
+
+See in the [samples](https://github.com/java-operator-sdk/admission-controller-framework/blob/main/samples/commons/src/main/resources/META-INF/services/io.fabric8.kubernetes.api.model.KubernetesResource#L164-L164).
+
+Related release not in fabric8 client:
+```text
+Fix #4579: the implicit registration of resource and list types that happens when using the resource(class) methods 
+has been removed. This makes the behavior of the client more predictable as that was an undocumented side-effect. 
+If you expect to see instances of a custom type from an untyped api call - typically KubernetesClient.load, 
+KubernetesClient.resourceList, KubernetesClient.resource(InputStream|String), then you must either create a 
+META-INF/services/io.fabric8.kubernetes.api.model.KubernetesResource file (see above #3923), or make calls to 
+KubernetesDeserializer.registerCustomKind - however since KubernetesDeserializer is an internal class that mechanism
+is not preferred.
+```
