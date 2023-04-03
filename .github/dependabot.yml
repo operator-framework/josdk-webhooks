@@ -9,7 +9,11 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
-    
+    ignore:
+        # Ignore slf4j-api major version bump because 1.x and 2.x are not compatible
+      - dependency-name: "slf4j-api"
+        update-types: ["version-update:semver-major"]
+
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
