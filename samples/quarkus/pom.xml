@@ -19,6 +19,7 @@
     <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
     <quarkus.platform.version>3.0.1.Final</quarkus.platform.version>
     <surefire-plugin.version>3.0.0</surefire-plugin.version>
+    <slf4j.version>2.0.6</slf4j.version>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -45,6 +46,10 @@
       <artifactId>kubernetes-webhooks-framework-core</artifactId>
       <version>${project.version}</version>
       <exclusions>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-api</artifactId>
+        </exclusion>
         <exclusion>
           <artifactId>kubernetes-client</artifactId>
           <groupId>io.fabric8</groupId>
