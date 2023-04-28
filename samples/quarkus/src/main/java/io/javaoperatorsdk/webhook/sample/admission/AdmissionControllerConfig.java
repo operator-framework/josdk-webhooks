@@ -1,12 +1,12 @@
 package io.javaoperatorsdk.webhook.sample.admission;
 
-import javax.inject.Named;
-import javax.inject.Singleton;
-
 import io.fabric8.kubernetes.api.model.networking.v1.Ingress;
 import io.javaoperatorsdk.webhook.admission.AdmissionController;
 import io.javaoperatorsdk.webhook.admission.AsyncAdmissionController;
 import io.javaoperatorsdk.webhook.sample.commons.AdmissionControllers;
+
+import jakarta.inject.Named;
+import jakarta.inject.Singleton;
 
 public class AdmissionControllerConfig {
 
