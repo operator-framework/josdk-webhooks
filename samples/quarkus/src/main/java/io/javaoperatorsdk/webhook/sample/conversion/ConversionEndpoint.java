@@ -1,15 +1,15 @@
 package io.javaoperatorsdk.webhook.sample.conversion;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-
 import io.fabric8.kubernetes.api.model.apiextensions.v1.ConversionReview;
 import io.javaoperatorsdk.webhook.conversion.AsyncConversionController;
 import io.javaoperatorsdk.webhook.conversion.ConversionController;
 import io.smallrye.mutiny.Uni;
+
+import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.MediaType;
 
 import static io.javaoperatorsdk.webhook.sample.commons.ConversionControllers.ASYNC_CONVERSION_PATH;
 import static io.javaoperatorsdk.webhook.sample.commons.ConversionControllers.CONVERSION_PATH;

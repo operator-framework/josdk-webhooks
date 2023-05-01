@@ -1,15 +1,13 @@
 package io.javaoperatorsdk.webhook.sample;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
-import java.util.function.UnaryOperator;
 
 import org.junit.jupiter.api.BeforeAll;
 
-import io.fabric8.kubernetes.api.model.HasMetadata;
 import io.fabric8.kubernetes.client.KubernetesClient;
 import io.fabric8.kubernetes.client.KubernetesClientBuilder;
-import io.javaoperatorsdk.webhook.sample.commons.Utils;
 
 import static io.javaoperatorsdk.webhook.sample.commons.Utils.addConversionHookEndpointToCustomResource;
 import static io.javaoperatorsdk.webhook.sample.commons.Utils.applyAndWait;
@@ -31,27 +29,6 @@ class QuarkusWebhooksE2E extends EndToEndTestBase {
           "../commons/target/classes/META-INF/fabric8/multiversioncustomresources.sample.javaoperatorsdk-v1.yml",
           addConversionHookEndpointToCustomResource("quarkus-sample"));
       waitForCoreDNS(client);
-    }
-  }
-
-  // quarkus support uses an older version, these should be removed if quarkus will support newer
-  // version of fabric8
-  private static void applyAndWait(KubernetesClient client, InputStream is) {
-    var resources = client.load(is).get();
-    Utils.applyAndWait(client, resources, null);
-  }
-
-  private static void applyAndWait(KubernetesClient client, String file) {
-    applyAndWait(client, file, null);
-  }
-
-  private static void applyAndWait(KubernetesClient client, String file,
-      UnaryOperator<HasMetadata> transformer) {
-    try (var fis = new FileInputStream(file)) {
-      var resources = client.load(fis).get();
-      Utils.applyAndWait(client, resources, transformer);
-    } catch (IOException e) {
-      throw new IllegalStateException(e);
     }
   }
 }
