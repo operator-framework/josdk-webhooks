@@ -102,9 +102,6 @@
 				<artifactId>jib-maven-plugin</artifactId>
 				<version>${jib-maven-plugin.version}</version>
 				<configuration>
-					<from>
-						<image>gcr.io/distroless/java:11</image>
-					</from>
 					<to>
 						<image>test/spring-boot-sample:${project.version}</image>
 					</to>
