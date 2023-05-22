@@ -14,7 +14,7 @@
 	<name>Kubernetes Webhooks Framework - Samples - Spring Boot</name>
 
 	<properties>
-		<java.version>11</java.version>
+		<java.version>17</java.version>
 		<jib-maven-plugin.version>3.3.2</jib-maven-plugin.version>
 	</properties>
 
