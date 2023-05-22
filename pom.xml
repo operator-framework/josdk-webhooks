@@ -33,7 +33,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>11</java.version>
+        <java.version>17</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <sonar.organization>java-operator-sdk</sonar.organization>
@@ -65,7 +65,7 @@
         <maven-javadoc-plugin.version>3.5.0</maven-javadoc-plugin.version>
         <maven-gpg-plugin.version>3.1.0</maven-gpg-plugin.version>
         <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
-        <spring-boot-dependencies.version>2.7.3</spring-boot-dependencies.version>
+        <spring-boot-dependencies.version>3.1.0</spring-boot-dependencies.version>
     </properties>
 
     <modules>
