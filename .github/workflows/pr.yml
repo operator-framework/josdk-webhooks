@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        java: [ 11, 17 ]
+        java: [ 17 ]
         distribution: [ temurin ]
     steps:
       - uses: actions/checkout@v3
@@ -36,7 +36,7 @@ jobs:
     needs: build
     strategy:
       matrix:
-        java: [ 11 ]
+        java: [ 17 ]
         distribution: [ temurin ]
     steps:
       - uses: actions/checkout@v3
@@ -68,7 +68,7 @@ jobs:
     needs: build
     strategy:
       matrix:
-        java: [ 11 ]
+        java: [ 17 ]
         distribution: [ temurin ]
     steps:
       - uses: actions/checkout@v3
