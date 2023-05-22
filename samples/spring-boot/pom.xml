@@ -14,7 +14,7 @@
 	<name>Kubernetes Webhooks Framework - Samples - Spring Boot</name>
 
 	<properties>
-		<java.version>11</java.version>
+		<java.version>17</java.version>
 		<jib-maven-plugin.version>3.3.2</jib-maven-plugin.version>
 	</properties>
 
@@ -34,6 +34,12 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter</artifactId>
+    		<exclusions>
+				<exclusion>
+					<groupId>ch.qos.logback</groupId>
+					<artifactId>logback-classic</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -96,9 +102,6 @@
 				<artifactId>jib-maven-plugin</artifactId>
 				<version>${jib-maven-plugin.version}</version>
 				<configuration>
-					<from>
-						<image>gcr.io/distroless/java:11</image>
-					</from>
 					<to>
 						<image>test/spring-boot-sample:${project.version}</image>
 					</to>
