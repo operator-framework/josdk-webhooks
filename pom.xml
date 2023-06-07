@@ -54,7 +54,7 @@
         <directory-maven-plugin.version>1.0</directory-maven-plugin.version>
         <nexus-staging-maven-plugin.version>1.6.13</nexus-staging-maven-plugin.version>
         <maven-surefire-plugin.version>3.1.2</maven-surefire-plugin.version>
-        <formatter-maven-plugin.version>2.22.0</formatter-maven-plugin.version>
+        <formatter-maven-plugin.version>2.23.0</formatter-maven-plugin.version>
         <impsort-maven-plugin.version>1.9.0</impsort-maven-plugin.version>
         <maven-install-plugin.version>3.1.1</maven-install-plugin.version>
         <maven-clean-plugin.version>3.2.0</maven-clean-plugin.version>
