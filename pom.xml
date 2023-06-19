@@ -43,7 +43,7 @@
         <fabric8-client.version>6.6.2</fabric8-client.version>
         <slf4j.version>1.7.36</slf4j.version>
         <log4j.version>2.20.0</log4j.version>
-        <mokito.version>5.3.1</mokito.version>
+        <mokito.version>5.4.0</mokito.version>
         <mokito.version>5.2.0</mokito.version>
         <dekorate.version>3.6.1</dekorate.version>
         <commons-lang3.version>3.12.0</commons-lang3.version>
