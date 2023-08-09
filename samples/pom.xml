@@ -13,6 +13,7 @@
   <modules>
     <module>commons</module>
     <module>spring-boot</module>
+    <module>quarkus2</module>
     <module>quarkus</module>
   </modules>
 </project>
