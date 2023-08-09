@@ -102,6 +102,10 @@
             <version>${project.version}</version>
             <exclusions>
                 <exclusion>
+                    <artifactId>crd-generator-apt</artifactId>
+                    <groupId>io.fabric8</groupId>
+                </exclusion>
+                <exclusion>
                     <artifactId>kubernetes-client</artifactId>
                     <groupId>io.fabric8</groupId>
                 </exclusion>
@@ -112,6 +116,10 @@
             <artifactId>sample-commons</artifactId>
             <version>${project.version}</version>
             <exclusions>
+                <exclusion>
+                    <artifactId>crd-generator-apt</artifactId>
+                    <groupId>io.fabric8</groupId>
+                </exclusion>
                 <exclusion>
                     <artifactId>kubernetes-client</artifactId>
                     <groupId>io.fabric8</groupId>
