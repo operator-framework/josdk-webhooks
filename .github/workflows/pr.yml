@@ -90,6 +90,6 @@ jobs:
           set -x
           eval $(minikube -p minikube docker-env)
           ./mvnw clean install -DskipTests
-          cd samples/quarkus2
+          cd samples/quarkus
           ./mvnw install -Dquarkus.container-image.build=true -DskipTests
           ./mvnw ${MAVEN_ARGS} test -Pend-to-end-tests
