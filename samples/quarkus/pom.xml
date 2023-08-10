@@ -58,10 +58,6 @@
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-resteasy-reactive-jackson</artifactId>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>org.jboss.resteasy</groupId>-->
-<!--            <artifactId>resteasy-jackson2-provider</artifactId>-->
-<!--        </dependency>-->
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-minikube</artifactId>
@@ -88,8 +84,6 @@
             <version>${awaitility.version}</version>
             <scope>test</scope>
         </dependency>
-
-
         <dependency>
             <groupId>io.javaoperatorsdk</groupId>
             <artifactId>kubernetes-webhooks-framework-core</artifactId>
