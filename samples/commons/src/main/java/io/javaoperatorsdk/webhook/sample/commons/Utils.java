@@ -44,7 +44,7 @@ public class Utils {
     if (transformer != null) {
       resources = resources.stream().map(transformer).collect(Collectors.toList());
     }
-    client.resourceList(resources).create();
+    client.resourceList(resources).createOrReplace();
     client.resourceList(resources).waitUntilReady(3, TimeUnit.MINUTES);
   }
 
