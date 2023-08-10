@@ -7,7 +7,7 @@
         <artifactId>kubernetes-webhooks-framework-samples</artifactId>
         <version>1.1.2-SNAPSHOT</version>
     </parent>
-    <groupId>org.acme</groupId>
+    <groupId>io.javaoperatorsdk.webhook.sample</groupId>
     <artifactId>quarkus-sample</artifactId>
     <properties>
         <compiler-plugin.version>3.11.0</compiler-plugin.version>
