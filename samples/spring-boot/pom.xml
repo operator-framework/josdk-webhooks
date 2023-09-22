@@ -15,7 +15,7 @@
 
 	<properties>
 		<java.version>17</java.version>
-		<jib-maven-plugin.version>3.3.2</jib-maven-plugin.version>
+		<jib-maven-plugin.version>3.4.0</jib-maven-plugin.version>
 	</properties>
 
 	<dependencyManagement>
