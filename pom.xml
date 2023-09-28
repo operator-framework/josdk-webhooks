@@ -45,7 +45,7 @@
         <log4j.version>2.20.0</log4j.version>
         <mokito.version>5.5.0</mokito.version>
         <mokito.version>5.2.0</mokito.version>
-        <dekorate.version>3.7.0</dekorate.version>
+        <dekorate.version>4.0.1</dekorate.version>
         <commons-lang3.version>3.12.0</commons-lang3.version>
         <auto-service.version>1.0.1</auto-service.version>
         <assertj.version>3.24.2</assertj.version>
