@@ -55,7 +55,7 @@
         <formatter-maven-plugin.version>2.23.0</formatter-maven-plugin.version>
         <impsort-maven-plugin.version>1.9.0</impsort-maven-plugin.version>
         <maven-install-plugin.version>3.1.1</maven-install-plugin.version>
-        <maven-clean-plugin.version>3.3.1</maven-clean-plugin.version>
+        <maven-clean-plugin.version>3.3.2</maven-clean-plugin.version>
         <git-commit-id-maven-plugin.version>7.0.0</git-commit-id-maven-plugin.version>
         <maven-jar-plugin.version>3.3.0</maven-jar-plugin.version>
         <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
