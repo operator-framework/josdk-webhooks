@@ -44,7 +44,6 @@
         <slf4j.version>1.7.36</slf4j.version>
         <log4j.version>2.21.0</log4j.version>
         <mokito.version>5.6.0</mokito.version>
-        <dekorate.version>4.1.0</dekorate.version>
         <commons-lang3.version>3.12.0</commons-lang3.version>
         <auto-service.version>1.0.1</auto-service.version>
         <assertj.version>3.24.2</assertj.version>
@@ -118,26 +117,7 @@
                 <artifactId>log4j-core</artifactId>
                 <version>${log4j.version}</version>
             </dependency>
-            <dependency>
-                <groupId>io.dekorate</groupId>
-                <artifactId>kubernetes-spring-starter</artifactId>
-                <version>${dekorate.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.dekorate</groupId>
-                <artifactId>certmanager-annotations</artifactId>
-                <version>${dekorate.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.dekorate</groupId>
-                <artifactId>kubernetes-annotations</artifactId>
-                <version>${dekorate.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.dekorate</groupId>
-                <artifactId>jib-annotations</artifactId>
-                <version>${dekorate.version}</version>
-            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
