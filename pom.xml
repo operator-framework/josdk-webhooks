@@ -40,12 +40,10 @@
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
 
         <junit.version>5.10.0</junit.version>
-        <fabric8-client.version>6.7.2</fabric8-client.version>
+        <fabric8-client.version>6.9.2</fabric8-client.version>
         <slf4j.version>1.7.36</slf4j.version>
         <log4j.version>2.21.0</log4j.version>
         <mokito.version>5.6.0</mokito.version>
-        <mokito.version>5.2.0</mokito.version>
-        <dekorate.version>3.7.0</dekorate.version>
         <commons-lang3.version>3.12.0</commons-lang3.version>
         <auto-service.version>1.0.1</auto-service.version>
         <assertj.version>3.24.2</assertj.version>
@@ -61,11 +59,10 @@
         <git-commit-id-maven-plugin.version>7.0.0</git-commit-id-maven-plugin.version>
         <maven-jar-plugin.version>3.3.0</maven-jar-plugin.version>
         <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
-        <json-patch.version>1.13</json-patch.version>
         <maven-javadoc-plugin.version>3.6.0</maven-javadoc-plugin.version>
         <maven-gpg-plugin.version>3.1.0</maven-gpg-plugin.version>
         <maven-source-plugin.version>3.3.0</maven-source-plugin.version>
-        <spring-boot-dependencies.version>3.1.5</spring-boot-dependencies.version>
+        <spring-boot-dependencies.version>3.2.0</spring-boot-dependencies.version>
     </properties>
 
     <modules>
@@ -120,31 +117,7 @@
                 <artifactId>log4j-core</artifactId>
                 <version>${log4j.version}</version>
             </dependency>
-            <dependency>
-                <groupId>com.github.java-json-tools</groupId>
-                <artifactId>json-patch</artifactId>
-                <version>${json-patch.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.dekorate</groupId>
-                <artifactId>kubernetes-spring-starter</artifactId>
-                <version>${dekorate.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.dekorate</groupId>
-                <artifactId>certmanager-annotations</artifactId>
-                <version>${dekorate.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.dekorate</groupId>
-                <artifactId>kubernetes-annotations</artifactId>
-                <version>${dekorate.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.dekorate</groupId>
-                <artifactId>jib-annotations</artifactId>
-                <version>${dekorate.version}</version>
-            </dependency>
+
         </dependencies>
     </dependencyManagement>
 

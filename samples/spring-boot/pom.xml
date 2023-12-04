@@ -10,12 +10,12 @@
 
 	<groupId>io.javaoperatorsdk.webhook.sample</groupId>
 	<artifactId>spring-boot-sample</artifactId>
-	<version>1.1.3-SNAPSHOT</version>
 	<name>Kubernetes Webhooks Framework - Samples - Spring Boot</name>
 
 	<properties>
 		<java.version>17</java.version>
 		<jib-maven-plugin.version>3.4.0</jib-maven-plugin.version>
+		<dekorate.version>4.1.0</dekorate.version>
 	</properties>
 
 	<dependencyManagement>
@@ -84,14 +84,22 @@
 		<dependency>
 			<groupId>io.dekorate</groupId>
 			<artifactId>kubernetes-spring-starter</artifactId>
+			<version>${dekorate.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>io.dekorate</groupId>
 			<artifactId>certmanager-annotations</artifactId>
+			<version>${dekorate.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.dekorate</groupId>
+			<artifactId>kubernetes-annotations</artifactId>
+			<version>${dekorate.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>io.dekorate</groupId>
 			<artifactId>jib-annotations</artifactId>
+			<version>${dekorate.version}</version>
 		</dependency>
 	</dependencies>
 
