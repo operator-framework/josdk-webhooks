@@ -168,7 +168,7 @@ In order to properly register your own custom types (custom resources) for deser
 
 See in the [samples](https://github.com/java-operator-sdk/admission-controller-framework/blob/main/samples/commons/src/main/resources/META-INF/services/io.fabric8.kubernetes.api.model.KubernetesResource#L164-L164).
 
-Related release not in fabric8 client:
+Related release note in fabric8 client:
 ```text
 Fix #4579: the implicit registration of resource and list types that happens when using the resource(class) methods 
 has been removed. This makes the behavior of the client more predictable as that was an undocumented side-effect. 
