@@ -11,6 +11,8 @@ for Kubernetes in Java. Supports both **quarkus** and **spring boot**. Both **sy
 
 ## Sample Usage
 
+Add dependency to you project:
+
 ```xml
 <dependency>
   <groupId>io.javaoperatorsdk</groupId>
