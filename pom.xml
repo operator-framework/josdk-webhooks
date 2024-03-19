@@ -56,7 +56,7 @@
         <impsort-maven-plugin.version>1.9.0</impsort-maven-plugin.version>
         <maven-install-plugin.version>3.1.1</maven-install-plugin.version>
         <maven-clean-plugin.version>3.3.2</maven-clean-plugin.version>
-        <git-commit-id-maven-plugin.version>8.0.1</git-commit-id-maven-plugin.version>
+        <git-commit-id-maven-plugin.version>8.0.2</git-commit-id-maven-plugin.version>
         <maven-jar-plugin.version>3.3.0</maven-jar-plugin.version>
         <maven-compiler-plugin.version>3.12.1</maven-compiler-plugin.version>
         <maven-javadoc-plugin.version>3.6.3</maven-javadoc-plugin.version>
