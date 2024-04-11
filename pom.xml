@@ -60,7 +60,7 @@
         <maven-jar-plugin.version>3.3.0</maven-jar-plugin.version>
         <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
         <maven-javadoc-plugin.version>3.6.3</maven-javadoc-plugin.version>
-        <maven-gpg-plugin.version>3.2.2</maven-gpg-plugin.version>
+        <maven-gpg-plugin.version>3.2.3</maven-gpg-plugin.version>
         <maven-source-plugin.version>3.3.1</maven-source-plugin.version>
         <spring-boot-dependencies.version>3.2.4</spring-boot-dependencies.version>
     </properties>
