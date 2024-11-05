@@ -15,7 +15,7 @@
 	<properties>
 		<java.version>17</java.version>
 		<jib-maven-plugin.version>3.4.3</jib-maven-plugin.version>
-		<dekorate.version>4.1.3</dekorate.version>
+		<dekorate.version>4.1.4</dekorate.version>
 	</properties>
 
 	<dependencyManagement>
