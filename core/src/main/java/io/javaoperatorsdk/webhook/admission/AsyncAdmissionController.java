@@ -28,11 +28,10 @@ public class AsyncAdmissionController<T extends KubernetesResource> {
   public CompletionStage<AdmissionReview> handle(AdmissionReview admissionReview) {
     return requestHandler.handle(admissionReview.getRequest())
         .thenApply(r -> {
-          AdmissionReview responseAdmissionReview = new AdmissionReview();
+          var responseAdmissionReview = new AdmissionReview();
           responseAdmissionReview.setResponse(r);
           r.setUid(admissionReview.getRequest().getUid());
           return responseAdmissionReview;
         });
   }
-
 }

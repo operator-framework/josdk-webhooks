@@ -3,9 +3,7 @@ package io.javaoperatorsdk.webhook.conversion.crd;
 public class CustomResourceV3Spec {
 
   private String value;
-
   private String additionalValue;
-
   private String thirdValue;
 
   public String getValue() {

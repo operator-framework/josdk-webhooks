@@ -14,8 +14,14 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.web.reactive.function.BodyInserter;
 import org.springframework.web.reactive.function.BodyInserters;
 
-import static io.javaoperatorsdk.webhook.sample.springboot.admission.AdmissionAdditionalTestEndpoint.*;
-import static io.javaoperatorsdk.webhook.sample.springboot.admission.AdmissionEndpoint.*;
+import static io.javaoperatorsdk.webhook.sample.springboot.admission.AdmissionAdditionalTestEndpoint.ERROR_ASYNC_MUTATE_PATH;
+import static io.javaoperatorsdk.webhook.sample.springboot.admission.AdmissionAdditionalTestEndpoint.ERROR_ASYNC_VALIDATE_PATH;
+import static io.javaoperatorsdk.webhook.sample.springboot.admission.AdmissionAdditionalTestEndpoint.ERROR_MUTATE_PATH;
+import static io.javaoperatorsdk.webhook.sample.springboot.admission.AdmissionAdditionalTestEndpoint.ERROR_VALIDATE_PATH;
+import static io.javaoperatorsdk.webhook.sample.springboot.admission.AdmissionEndpoint.ASYNC_MUTATE_PATH;
+import static io.javaoperatorsdk.webhook.sample.springboot.admission.AdmissionEndpoint.ASYNC_VALIDATE_PATH;
+import static io.javaoperatorsdk.webhook.sample.springboot.admission.AdmissionEndpoint.MUTATE_PATH;
+import static io.javaoperatorsdk.webhook.sample.springboot.admission.AdmissionEndpoint.VALIDATE_PATH;
 
 @Import({AdmissionConfig.class, AdditionalAdmissionConfig.class})
 @WebFluxTest({AdmissionEndpoint.class, AdmissionAdditionalTestEndpoint.class})
@@ -71,7 +77,6 @@ class AdmissionEndpointTest {
         .expectStatus().is5xxServerError();
   }
 
-
   public void testMutate(String path) {
     webClient.post().uri("/" + path).contentType(MediaType.APPLICATION_JSON)
         .body(request())
@@ -89,7 +94,7 @@ class AdmissionEndpointTest {
 
   private BodyInserter<String, ReactiveHttpOutputMessage> request() {
     try {
-      ClassPathResource classPathResource = new ClassPathResource("admission-request.json");
+      var classPathResource = new ClassPathResource("admission-request.json");
       return BodyInserters
           .fromValue(new String(FileCopyUtils.copyToByteArray(classPathResource.getInputStream())));
     } catch (IOException e) {

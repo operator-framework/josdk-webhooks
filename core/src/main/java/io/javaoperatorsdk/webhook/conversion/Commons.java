@@ -17,7 +17,7 @@ public class Commons {
 
   public static ConversionReview createResponse(List<HasMetadata> convertedObjects,
       ConversionReview conversionReview) {
-    ConversionReview result = new ConversionReview();
+    var result = new ConversionReview();
     var response = new ConversionResponse();
     response.setResult(new Status());
     response.getResult().setStatus("Success");
@@ -30,7 +30,7 @@ public class Commons {
 
   public static ConversionReview createErrorResponse(Exception e,
       ConversionReview conversionReview) {
-    ConversionReview result = new ConversionReview();
+    var result = new ConversionReview();
     var response = new ConversionResponse();
     response.setUid(conversionReview.getRequest().getUid());
     response.setResult(new Status());
@@ -44,5 +44,4 @@ public class Commons {
     throw new MissingConversionMapperException(
         "Missing mapper from version: " + version);
   }
-
 }

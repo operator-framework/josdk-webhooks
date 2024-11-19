@@ -9,5 +9,4 @@ public interface AsyncMapper<R extends HasMetadata, HUB> {
   CompletionStage<HUB> toHub(R resource);
 
   CompletionStage<R> fromHub(HUB hub);
-
 }

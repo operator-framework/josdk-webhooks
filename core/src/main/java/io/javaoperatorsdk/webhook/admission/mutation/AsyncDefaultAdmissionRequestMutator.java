@@ -33,7 +33,7 @@ public class AsyncDefaultAdmissionRequestMutator<T extends KubernetesResource>
 
   @Override
   public CompletionStage<AdmissionResponse> handle(AdmissionRequest admissionRequest) {
-    Operation operation = Operation.valueOf(admissionRequest.getOperation());
+    var operation = Operation.valueOf(admissionRequest.getOperation());
     var originalResource = (T) getTargetResource(admissionRequest, operation);
     var clonedResource = cloner.clone(originalResource);
     CompletionStage<AdmissionResponse> admissionResponse;
@@ -47,5 +47,4 @@ public class AsyncDefaultAdmissionRequestMutator<T extends KubernetesResource>
     }
     return admissionResponse;
   }
-
 }

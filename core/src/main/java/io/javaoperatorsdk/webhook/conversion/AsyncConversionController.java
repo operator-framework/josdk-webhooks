@@ -14,7 +14,10 @@ import org.slf4j.LoggerFactory;
 import io.fabric8.kubernetes.api.model.HasMetadata;
 import io.fabric8.kubernetes.api.model.apiextensions.v1.ConversionReview;
 
-import static io.javaoperatorsdk.webhook.conversion.Commons.*;
+import static io.javaoperatorsdk.webhook.conversion.Commons.MAPPER_ALREADY_REGISTERED_FOR_VERSION_MESSAGE;
+import static io.javaoperatorsdk.webhook.conversion.Commons.createErrorResponse;
+import static io.javaoperatorsdk.webhook.conversion.Commons.createResponse;
+import static io.javaoperatorsdk.webhook.conversion.Commons.throwMissingMapperForVersion;
 
 public class AsyncConversionController implements AsyncConversionRequestHandler {
 
@@ -24,7 +27,7 @@ public class AsyncConversionController implements AsyncConversionRequestHandler 
   private final Map<String, AsyncMapper> mappers = new HashMap<>();
 
   public void registerMapper(AsyncMapper<?, ?> mapper) {
-    String version = mapper.getClass().getDeclaredAnnotation(TargetVersion.class).value();
+    var version = mapper.getClass().getDeclaredAnnotation(TargetVersion.class).value();
     if (mappers.get(version) != null) {
       throw new IllegalStateException(MAPPER_ALREADY_REGISTERED_FOR_VERSION_MESSAGE + version);
     }
@@ -44,7 +47,6 @@ public class AsyncConversionController implements AsyncConversionRequestHandler 
           conversionReview.getRequest().getUid(), e);
       return CompletableFuture.completedStage(createErrorResponse(e, conversionReview));
     }
-
   }
 
   @SuppressWarnings("unchecked")
@@ -55,8 +57,8 @@ public class AsyncConversionController implements AsyncConversionRequestHandler 
       completableFutures[i] = mapObject(objects.get(i), targetVersion);
     }
     return CompletableFuture.allOf(completableFutures).thenApply(r -> {
-      List<HasMetadata> result = new ArrayList<>(completableFutures.length);
-      for (CompletableFuture<HasMetadata> cf : completableFutures) {
+      var result = new ArrayList<HasMetadata>(completableFutures.length);
+      for (var cf : completableFutures) {
         result.add(cf.join());
       }
       return result;
@@ -65,12 +67,12 @@ public class AsyncConversionController implements AsyncConversionRequestHandler 
 
   @SuppressWarnings({"unchecked", "rawtypes"})
   private CompletableFuture<HasMetadata> mapObject(HasMetadata resource, String targetVersion) {
-    String sourceVersion = Utils.versionOfApiVersion(resource.getApiVersion());
-    AsyncMapper sourceToHubMapper = mappers.get(sourceVersion);
+    var sourceVersion = Utils.versionOfApiVersion(resource.getApiVersion());
+    var sourceToHubMapper = mappers.get(sourceVersion);
     if (sourceToHubMapper == null) {
       throwMissingMapperForVersion(sourceVersion);
     }
-    AsyncMapper hubToTarget = mappers.get(targetVersion);
+    var hubToTarget = mappers.get(targetVersion);
     if (hubToTarget == null) {
       throwMissingMapperForVersion(targetVersion);
     }
@@ -78,5 +80,4 @@ public class AsyncConversionController implements AsyncConversionRequestHandler 
         .thenApply(r -> hubToTarget.fromHub(r).toCompletableFuture().join())
         .toCompletableFuture();
   }
-
 }

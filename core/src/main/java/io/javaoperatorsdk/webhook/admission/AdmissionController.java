@@ -25,10 +25,9 @@ public class AdmissionController<T extends KubernetesResource> {
 
   public AdmissionReview handle(AdmissionReview admissionReview) {
     var response = admissionRequestHandler.handle(admissionReview.getRequest());
-    AdmissionReview responseAdmissionReview = new AdmissionReview();
+    var responseAdmissionReview = new AdmissionReview();
     responseAdmissionReview.setResponse(response);
     response.setUid(admissionReview.getRequest().getUid());
     return responseAdmissionReview;
   }
-
 }

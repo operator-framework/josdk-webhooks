@@ -12,5 +12,4 @@ public class CustomResourceV1Status {
     this.value1 = value1;
     return this;
   }
-
 }

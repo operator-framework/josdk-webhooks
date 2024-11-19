@@ -7,5 +7,4 @@ public interface Mapper<R extends HasMetadata, HUB> {
   HUB toHub(R resource);
 
   R fromHub(HUB hub);
-
 }

@@ -62,5 +62,4 @@ public class AdmissionEndpoint {
   public Mono<AdmissionReview> asyncValidate(@RequestBody AdmissionReview admissionReview) {
     return Mono.fromCompletionStage(asyncValidatingController.handle(admissionReview));
   }
-
 }

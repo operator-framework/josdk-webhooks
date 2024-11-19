@@ -15,5 +15,4 @@ public class CustomResourceV2
     extends
     CustomResource<CustomResourceV2Spec, CustomResourceV2Status>
     implements Namespaced {
-
 }

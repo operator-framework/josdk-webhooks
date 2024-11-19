@@ -17,5 +17,4 @@ public @interface TargetVersion {
    * @return version
    **/
   String value();
-
 }

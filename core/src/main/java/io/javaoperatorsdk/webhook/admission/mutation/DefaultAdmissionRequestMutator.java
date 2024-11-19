@@ -30,7 +30,7 @@ public class DefaultAdmissionRequestMutator<T extends KubernetesResource>
 
   @Override
   public AdmissionResponse handle(AdmissionRequest admissionRequest) {
-    Operation operation = Operation.valueOf(admissionRequest.getOperation());
+    var operation = Operation.valueOf(admissionRequest.getOperation());
     var originalResource = (T) getTargetResource(admissionRequest, operation);
     var clonedResource = cloner.clone(originalResource);
     AdmissionResponse admissionResponse;
@@ -42,5 +42,4 @@ public class DefaultAdmissionRequestMutator<T extends KubernetesResource>
     }
     return admissionResponse;
   }
-
 }

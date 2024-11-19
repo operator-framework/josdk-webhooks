@@ -9,5 +9,4 @@ public interface Cloner<R> {
    * @return a deep copy of the given object if it isn't {@code null}, {@code null} otherwise
    */
   R clone(R object);
-
 }

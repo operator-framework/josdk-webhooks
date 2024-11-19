@@ -62,5 +62,4 @@ public class AdmissionAdditionalTestEndpoint {
   public Mono<AdmissionReview> errorAsyncValidate(@RequestBody AdmissionReview admissionReview) {
     return Mono.fromCompletionStage(errorAsyncValidatingController.handle(admissionReview));
   }
-
 }

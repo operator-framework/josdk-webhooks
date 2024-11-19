@@ -12,5 +12,4 @@ public class MultiVersionCustomResourceSpecV2 {
     this.alteredValue = alteredValue;
     return this;
   }
-
 }

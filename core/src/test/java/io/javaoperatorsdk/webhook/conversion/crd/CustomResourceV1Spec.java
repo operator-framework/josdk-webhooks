@@ -12,5 +12,4 @@ public class CustomResourceV1Spec {
     this.value = value;
     return this;
   }
-
 }
