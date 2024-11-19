@@ -22,6 +22,7 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.awaitility.Awaitility.await;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+@SuppressWarnings("deprecation")
 public class EndToEndTestBase {
 
   protected KubernetesClient client = new KubernetesClientBuilder().build();
@@ -64,6 +65,7 @@ public class EndToEndTestBase {
     assertThat(v2.getSpec().getAlteredValue()).isEqualTo("" + CR_SPEC_VALUE);
   }
 
+  @SuppressWarnings("SameParameterValue")
   private MultiVersionCustomResource createV1Resource(String name) {
     var res = new MultiVersionCustomResource();
     res.setMetadata(new ObjectMetaBuilder()

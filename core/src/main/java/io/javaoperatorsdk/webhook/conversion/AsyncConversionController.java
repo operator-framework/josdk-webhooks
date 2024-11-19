@@ -65,7 +65,7 @@ public class AsyncConversionController implements AsyncConversionRequestHandler 
     });
   }
 
-  @SuppressWarnings({"unchecked", "rawtypes"})
+  @SuppressWarnings("unchecked")
   private CompletableFuture<HasMetadata> mapObject(HasMetadata resource, String targetVersion) {
     var sourceVersion = Utils.versionOfApiVersion(resource.getApiVersion());
     var sourceToHubMapper = mappers.get(sourceVersion);

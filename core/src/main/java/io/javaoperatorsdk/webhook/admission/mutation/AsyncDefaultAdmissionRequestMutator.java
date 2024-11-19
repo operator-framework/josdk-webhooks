@@ -32,6 +32,7 @@ public class AsyncDefaultAdmissionRequestMutator<T extends KubernetesResource>
   }
 
   @Override
+  @SuppressWarnings("unchecked")
   public CompletionStage<AdmissionResponse> handle(AdmissionRequest admissionRequest) {
     var operation = Operation.valueOf(admissionRequest.getOperation());
     var originalResource = (T) getTargetResource(admissionRequest, operation);

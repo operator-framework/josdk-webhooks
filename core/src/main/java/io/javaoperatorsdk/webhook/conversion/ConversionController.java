@@ -45,13 +45,12 @@ public class ConversionController implements ConversionRequestHandler {
     }
   }
 
-  @SuppressWarnings("unchecked")
   private List<HasMetadata> convertObjects(List<HasMetadata> objects, String targetVersion) {
     return objects.stream().map(r -> mapObject(r, targetVersion))
         .collect(Collectors.toList());
   }
 
-  @SuppressWarnings({"unchecked", "rawtypes"})
+  @SuppressWarnings("unchecked")
   private HasMetadata mapObject(HasMetadata resource, String targetVersion) {
     var sourceVersion = Utils.versionOfApiVersion(resource.getApiVersion());
     var sourceToHubMapper = mappers.get(sourceVersion);
