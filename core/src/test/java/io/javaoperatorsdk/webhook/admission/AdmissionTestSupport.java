@@ -5,6 +5,9 @@ import java.util.Base64;
 import java.util.UUID;
 import java.util.function.Function;
 
+import org.assertj.core.api.AbstractThrowableAssert;
+import org.assertj.core.api.Assertions;
+
 import io.fabric8.kubernetes.api.model.admission.v1.AdmissionRequest;
 import io.fabric8.kubernetes.api.model.admission.v1.AdmissionReview;
 import io.fabric8.kubernetes.api.model.apps.Deployment;
@@ -39,20 +42,37 @@ public class AdmissionTestSupport {
 
     assertThat(admissionReview.getResponse().getUid())
         .isEqualTo(inputAdmissionReview.getRequest().getUid());
-    assertThat(admissionReview.getResponse().getStatus().getCode()).isEqualTo(403);
-    assertThat(admissionReview.getResponse().getStatus().getMessage())
-        .isEqualTo(MISSING_REQUIRED_LABEL);
-    assertThat(admissionReview.getResponse().getAllowed()).isFalse();
+    assertThat(admissionReview.getResponse().getAllowed()).isTrue();
+    assertThat(admissionReview.getResponse().getStatus()).isNull();
   }
 
   void mutatesResource(Function<AdmissionReview, AdmissionReview> function) {
     var inputAdmissionReview = createTestAdmissionReview();
     var admissionReview = function.apply(inputAdmissionReview);
 
+    assertThat(admissionReview.getResponse().getUid())
+        .isEqualTo(inputAdmissionReview.getRequest().getUid());
     assertThat(admissionReview.getResponse().getAllowed()).isTrue();
     var patch = new String(Base64.getDecoder().decode(admissionReview.getResponse().getPatch()));
     assertThat(patch).isEqualTo(
         "[{\"op\":\"add\",\"path\":\"/metadata/labels/app.kubernetes.io~1name\",\"value\":\"mutation-test\"}]");
   }
 
+  void notAllowedException(Function<AdmissionReview, AdmissionReview> function) {
+    var inputAdmissionReview = createTestAdmissionReview();
+    var admissionReview = function.apply(inputAdmissionReview);
+
+    assertThat(admissionReview.getResponse().getUid())
+        .isEqualTo(inputAdmissionReview.getRequest().getUid());
+    assertThat(admissionReview.getResponse().getAllowed()).isFalse();
+    assertThat(admissionReview.getResponse().getStatus().getCode()).isEqualTo(403);
+    assertThat(admissionReview.getResponse().getStatus().getMessage()).isEqualTo(
+        MISSING_REQUIRED_LABEL);
+  }
+
+  AbstractThrowableAssert<?, ? extends Throwable> assertThatThrownBy(
+      Function<AdmissionReview, AdmissionReview> function) {
+    var inputAdmissionReview = createTestAdmissionReview();
+    return Assertions.assertThatThrownBy(() -> function.apply(inputAdmissionReview));
+  }
 }
