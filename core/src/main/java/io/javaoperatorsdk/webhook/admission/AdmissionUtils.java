@@ -17,6 +17,12 @@ public class AdmissionUtils {
 
   private AdmissionUtils() {}
 
+  public static AdmissionResponse allowedAdmissionResponse() {
+    var admissionResponse = new AdmissionResponse();
+    admissionResponse.setAllowed(true);
+    return admissionResponse;
+  }
+
   public static AdmissionResponse notAllowedExceptionToAdmissionResponse(
       NotAllowedException notAllowedException) {
     var admissionResponse = new AdmissionResponse();
