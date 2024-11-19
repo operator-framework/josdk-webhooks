@@ -10,7 +10,7 @@ import io.fabric8.kubernetes.client.KubernetesClientBuilder;
 import static io.javaoperatorsdk.webhook.sample.commons.Utils.addConversionHookEndpointToCustomResource;
 import static io.javaoperatorsdk.webhook.sample.commons.Utils.applyAndWait;
 
-class QuarkusWebhooksE2E extends EndToEndTestBase {
+class QuarkusWebhooksE2E extends AbstractEndToEndTest {
 
   @BeforeAll
   static void deployService() throws IOException {

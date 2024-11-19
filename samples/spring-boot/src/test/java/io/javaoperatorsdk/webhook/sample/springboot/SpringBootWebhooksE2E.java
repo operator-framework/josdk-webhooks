@@ -6,11 +6,12 @@ import java.net.URL;
 import org.junit.jupiter.api.BeforeAll;
 
 import io.fabric8.kubernetes.client.KubernetesClientBuilder;
+import io.javaoperatorsdk.webhook.sample.AbstractEndToEndTest;
 
 import static io.javaoperatorsdk.webhook.sample.commons.Utils.addConversionHookEndpointToCustomResource;
 import static io.javaoperatorsdk.webhook.sample.commons.Utils.applyAndWait;
 
-class SpringBootWebhooksE2E extends EndToEndTestBase {
+class SpringBootWebhooksE2E extends AbstractEndToEndTest {
 
   @BeforeAll
   static void deployService() throws IOException {

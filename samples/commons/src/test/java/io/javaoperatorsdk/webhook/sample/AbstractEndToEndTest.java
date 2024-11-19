@@ -23,7 +23,7 @@ import static org.awaitility.Awaitility.await;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SuppressWarnings("deprecation")
-public class EndToEndTestBase {
+public abstract class AbstractEndToEndTest {
 
   protected KubernetesClient client = new KubernetesClientBuilder().build();
 
