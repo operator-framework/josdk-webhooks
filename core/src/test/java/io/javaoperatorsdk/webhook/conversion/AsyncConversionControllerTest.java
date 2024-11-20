@@ -8,7 +8,9 @@ import org.junit.jupiter.api.Test;
 
 import io.fabric8.kubernetes.api.model.apiextensions.v1.ConversionResponse;
 import io.fabric8.kubernetes.api.model.apiextensions.v1.ConversionReview;
-import io.javaoperatorsdk.webhook.conversion.mapper.*;
+import io.javaoperatorsdk.webhook.conversion.mapper.AsyncV1Mapper;
+import io.javaoperatorsdk.webhook.conversion.mapper.AsyncV2Mapper;
+import io.javaoperatorsdk.webhook.conversion.mapper.AsyncV3Mapper;
 
 class AsyncConversionControllerTest {
 
@@ -26,7 +28,6 @@ class AsyncConversionControllerTest {
   void handlesSimpleConversion() {
     conversionTestSupport.handlesSimpleConversion(getConversionReviewConversionResponseFunction());
   }
-
 
   @Test
   void convertsVariousVersionsInSingleRequest() {
@@ -49,5 +50,4 @@ class AsyncConversionControllerTest {
       }
     };
   }
-
 }

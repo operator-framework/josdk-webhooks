@@ -6,6 +6,7 @@ import io.fabric8.kubernetes.api.model.KubernetesResource;
 import io.fabric8.kubernetes.api.model.admission.v1.AdmissionReview;
 import io.javaoperatorsdk.webhook.admission.mutation.AsyncDefaultAdmissionRequestMutator;
 import io.javaoperatorsdk.webhook.admission.mutation.AsyncMutator;
+import io.javaoperatorsdk.webhook.admission.mutation.Mutator;
 import io.javaoperatorsdk.webhook.admission.validation.AsyncDefaultAdmissionRequestValidator;
 import io.javaoperatorsdk.webhook.admission.validation.Validator;
 
@@ -13,8 +14,12 @@ public class AsyncAdmissionController<T extends KubernetesResource> {
 
   private final AsyncAdmissionRequestHandler requestHandler;
 
-  public AsyncAdmissionController(AsyncMutator<T> mutator) {
+  public AsyncAdmissionController(Mutator<T> mutator) {
     this(new AsyncDefaultAdmissionRequestMutator<>(mutator));
+  }
+
+  public AsyncAdmissionController(AsyncMutator<T> asyncMutator) {
+    this(new AsyncDefaultAdmissionRequestMutator<>(asyncMutator));
   }
 
   public AsyncAdmissionController(Validator<T> validator) {
@@ -28,11 +33,10 @@ public class AsyncAdmissionController<T extends KubernetesResource> {
   public CompletionStage<AdmissionReview> handle(AdmissionReview admissionReview) {
     return requestHandler.handle(admissionReview.getRequest())
         .thenApply(r -> {
-          AdmissionReview responseAdmissionReview = new AdmissionReview();
+          var responseAdmissionReview = new AdmissionReview();
           responseAdmissionReview.setResponse(r);
           r.setUid(admissionReview.getRequest().getUid());
           return responseAdmissionReview;
         });
   }
-
 }

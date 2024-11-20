@@ -37,5 +37,4 @@ public class ConversionEndpoint {
   public Mono<ConversionReview> convertAsync(@RequestBody ConversionReview conversionReview) {
     return Mono.fromCompletionStage(asyncConversionController.handle(conversionReview));
   }
-
 }

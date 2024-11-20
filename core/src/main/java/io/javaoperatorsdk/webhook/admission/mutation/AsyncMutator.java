@@ -9,5 +9,4 @@ import io.javaoperatorsdk.webhook.admission.Operation;
 public interface AsyncMutator<T extends KubernetesResource> {
 
   CompletionStage<T> mutate(T resource, Operation operation) throws NotAllowedException;
-
 }

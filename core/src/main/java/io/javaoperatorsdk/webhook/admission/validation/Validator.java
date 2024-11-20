@@ -7,5 +7,4 @@ import io.javaoperatorsdk.webhook.admission.Operation;
 public interface Validator<T extends KubernetesResource> {
 
   void validate(T resource, Operation operation) throws NotAllowedException;
-
 }

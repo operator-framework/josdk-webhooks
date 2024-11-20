@@ -17,9 +17,15 @@ public class AdmissionUtils {
 
   private AdmissionUtils() {}
 
+  public static AdmissionResponse allowedAdmissionResponse() {
+    var admissionResponse = new AdmissionResponse();
+    admissionResponse.setAllowed(true);
+    return admissionResponse;
+  }
+
   public static AdmissionResponse notAllowedExceptionToAdmissionResponse(
       NotAllowedException notAllowedException) {
-    AdmissionResponse admissionResponse = new AdmissionResponse();
+    var admissionResponse = new AdmissionResponse();
     admissionResponse.setAllowed(false);
     admissionResponse.setStatus(notAllowedException.getStatus());
     return admissionResponse;
@@ -33,17 +39,16 @@ public class AdmissionUtils {
 
   public static AdmissionResponse admissionResponseFromMutation(KubernetesResource originalResource,
       KubernetesResource mutatedResource) {
-    AdmissionResponse admissionResponse = new AdmissionResponse();
+    var admissionResponse = new AdmissionResponse();
     admissionResponse.setAllowed(true);
     admissionResponse.setPatchType(JSON_PATCH);
     var originalResNode = mapper.valueToTree(originalResource);
     var mutatedResNode = mapper.valueToTree(mutatedResource);
 
     var diff = JsonDiff.asJson(originalResNode, mutatedResNode);
-    String base64Diff =
+    var base64Diff =
         Base64.getEncoder().encodeToString(diff.toString().getBytes(StandardCharsets.UTF_8));
     admissionResponse.setPatch(base64Diff);
     return admissionResponse;
   }
-
 }

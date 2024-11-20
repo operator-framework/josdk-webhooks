@@ -43,5 +43,4 @@ public class ConversionControllerTest {
   private Function<ConversionReview, ConversionResponse> getConversionReviewConversionResponseFunction() {
     return request -> controller.handle(request).getResponse();
   }
-
 }

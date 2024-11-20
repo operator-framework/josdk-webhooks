@@ -12,5 +12,4 @@ import io.javaoperatorsdk.webhook.admission.Operation;
 public interface Mutator<T extends KubernetesResource> {
 
   T mutate(T resource, Operation operation) throws NotAllowedException;
-
 }

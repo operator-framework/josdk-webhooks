@@ -12,5 +12,4 @@ public class Utils {
     var lastDelimiter = apiVersion.lastIndexOf("/");
     return apiVersion.substring(lastDelimiter + 1);
   }
-
 }

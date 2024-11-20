@@ -12,5 +12,4 @@ import io.fabric8.kubernetes.model.annotation.Version;
 @ShortNames("tcr")
 public class MultiVersionCustomResource
     extends CustomResource<MultiVersionCustomResourceSpec, Void> {
-
 }

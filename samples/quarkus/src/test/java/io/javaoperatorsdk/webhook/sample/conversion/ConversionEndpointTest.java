@@ -1,7 +1,6 @@
 package io.javaoperatorsdk.webhook.sample.conversion;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
 import org.junit.jupiter.api.Test;
@@ -12,6 +11,7 @@ import io.restassured.http.ContentType;
 import static io.javaoperatorsdk.webhook.sample.commons.ConversionControllers.ASYNC_CONVERSION_PATH;
 import static io.javaoperatorsdk.webhook.sample.commons.ConversionControllers.CONVERSION_PATH;
 import static io.restassured.RestAssured.given;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.is;
 
 @QuarkusTest
@@ -66,7 +66,8 @@ class ConversionEndpointTest {
   }
 
   private String request(String path) {
-    try (InputStream is = this.getClass().getResourceAsStream(path)) {
+    try (var is = this.getClass().getResourceAsStream(path)) {
+      assertThat(is).isNotNull();
       return new String(is.readAllBytes(), StandardCharsets.UTF_8);
     } catch (IOException e) {
       throw new IllegalStateException(e);

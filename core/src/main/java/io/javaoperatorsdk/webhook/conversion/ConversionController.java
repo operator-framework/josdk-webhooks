@@ -11,7 +11,10 @@ import org.slf4j.LoggerFactory;
 import io.fabric8.kubernetes.api.model.HasMetadata;
 import io.fabric8.kubernetes.api.model.apiextensions.v1.ConversionReview;
 
-import static io.javaoperatorsdk.webhook.conversion.Commons.*;
+import static io.javaoperatorsdk.webhook.conversion.Commons.MAPPER_ALREADY_REGISTERED_FOR_VERSION_MESSAGE;
+import static io.javaoperatorsdk.webhook.conversion.Commons.createErrorResponse;
+import static io.javaoperatorsdk.webhook.conversion.Commons.createResponse;
+import static io.javaoperatorsdk.webhook.conversion.Commons.throwMissingMapperForVersion;
 
 public class ConversionController implements ConversionRequestHandler {
 
@@ -21,7 +24,7 @@ public class ConversionController implements ConversionRequestHandler {
   private final Map<String, Mapper> mappers = new HashMap<>();
 
   public void registerMapper(Mapper<?, ?> mapper) {
-    String version = mapper.getClass().getDeclaredAnnotation(TargetVersion.class).value();
+    var version = mapper.getClass().getDeclaredAnnotation(TargetVersion.class).value();
     if (mappers.get(version) != null) {
       throw new IllegalStateException(MAPPER_ALREADY_REGISTERED_FOR_VERSION_MESSAGE + version);
     }
@@ -31,7 +34,7 @@ public class ConversionController implements ConversionRequestHandler {
   @Override
   public ConversionReview handle(ConversionReview conversionReview) {
     try {
-      List<HasMetadata> convertedObjects =
+      var convertedObjects =
           convertObjects(conversionReview.getRequest().getObjects().stream()
               .map(HasMetadata.class::cast).collect(Collectors.toList()),
               Utils.versionOfApiVersion(conversionReview.getRequest().getDesiredAPIVersion()));
@@ -42,15 +45,14 @@ public class ConversionController implements ConversionRequestHandler {
     }
   }
 
-  @SuppressWarnings("unchecked")
   private List<HasMetadata> convertObjects(List<HasMetadata> objects, String targetVersion) {
     return objects.stream().map(r -> mapObject(r, targetVersion))
         .collect(Collectors.toList());
   }
 
-  @SuppressWarnings({"unchecked", "rawtypes"})
+  @SuppressWarnings("unchecked")
   private HasMetadata mapObject(HasMetadata resource, String targetVersion) {
-    String sourceVersion = Utils.versionOfApiVersion(resource.getApiVersion());
+    var sourceVersion = Utils.versionOfApiVersion(resource.getApiVersion());
     var sourceToHubMapper = mappers.get(sourceVersion);
     if (sourceToHubMapper == null) {
       throwMissingMapperForVersion(sourceVersion);
@@ -61,5 +63,4 @@ public class ConversionController implements ConversionRequestHandler {
     }
     return hubToTarget.fromHub(sourceToHubMapper.toHub(resource));
   }
-
 }

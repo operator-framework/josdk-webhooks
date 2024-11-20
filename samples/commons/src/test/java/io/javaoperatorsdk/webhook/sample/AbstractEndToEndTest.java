@@ -7,7 +7,6 @@ import java.util.function.Supplier;
 import org.junit.jupiter.api.Test;
 
 import io.fabric8.kubernetes.api.model.ObjectMetaBuilder;
-import io.fabric8.kubernetes.api.model.apiextensions.v1.*;
 import io.fabric8.kubernetes.client.KubernetesClient;
 import io.fabric8.kubernetes.client.KubernetesClientBuilder;
 import io.fabric8.kubernetes.client.KubernetesClientException;
@@ -16,13 +15,15 @@ import io.javaoperatorsdk.webhook.sample.commons.customresource.MultiVersionCust
 import io.javaoperatorsdk.webhook.sample.commons.customresource.MultiVersionCustomResourceV2;
 
 import static io.javaoperatorsdk.webhook.sample.commons.AdmissionControllers.MUTATION_TARGET_LABEL;
-import static io.javaoperatorsdk.webhook.sample.commons.Utils.*;
 import static io.javaoperatorsdk.webhook.sample.commons.Utils.SPIN_UP_GRACE_PERIOD;
+import static io.javaoperatorsdk.webhook.sample.commons.Utils.addRequiredLabels;
+import static io.javaoperatorsdk.webhook.sample.commons.Utils.testIngress;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.awaitility.Awaitility.await;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class EndToEndTestBase {
+@SuppressWarnings("deprecation")
+public abstract class AbstractEndToEndTest {
 
   protected KubernetesClient client = new KubernetesClientBuilder().build();
 
@@ -57,14 +58,14 @@ public class EndToEndTestBase {
 
   @Test
   void conversionHook() {
-    await().atMost(Duration.ofSeconds(SPIN_UP_GRACE_PERIOD)).untilAsserted(() -> {
-      avoidRequestTimeout(() -> createV1Resource(TEST_CR_NAME));
-    });
+    await().atMost(Duration.ofSeconds(SPIN_UP_GRACE_PERIOD))
+        .untilAsserted(() -> avoidRequestTimeout(() -> createV1Resource(TEST_CR_NAME)));
     MultiVersionCustomResourceV2 v2 =
         client.resources(MultiVersionCustomResourceV2.class).withName(TEST_CR_NAME).get();
     assertThat(v2.getSpec().getAlteredValue()).isEqualTo("" + CR_SPEC_VALUE);
   }
 
+  @SuppressWarnings("SameParameterValue")
   private MultiVersionCustomResource createV1Resource(String name) {
     var res = new MultiVersionCustomResource();
     res.setMetadata(new ObjectMetaBuilder()

@@ -19,12 +19,10 @@ public class ConversionControllers {
     return controller;
   }
 
-
   public static AsyncConversionController asyncConversionController() {
     var controller = new AsyncConversionController();
     controller.registerMapper(new AsyncV1Mapper());
     controller.registerMapper(new AsyncV2Mapper());
     return controller;
   }
-
 }

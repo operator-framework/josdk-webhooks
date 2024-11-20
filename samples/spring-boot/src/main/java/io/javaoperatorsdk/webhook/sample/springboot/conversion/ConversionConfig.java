@@ -19,5 +19,4 @@ public class ConversionConfig {
   public AsyncConversionController asyncConversionController() {
     return ConversionControllers.asyncConversionController();
   }
-
 }

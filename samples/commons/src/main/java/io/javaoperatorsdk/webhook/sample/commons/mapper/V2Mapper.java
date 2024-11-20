@@ -6,8 +6,7 @@ import io.javaoperatorsdk.webhook.sample.commons.customresource.MultiVersionCust
 import io.javaoperatorsdk.webhook.sample.commons.customresource.MultiVersionCustomResourceV2;
 
 @TargetVersion("v2")
-public class V2Mapper
-    implements Mapper<MultiVersionCustomResourceV2, MultiVersionHub> {
+public class V2Mapper implements Mapper<MultiVersionCustomResourceV2, MultiVersionHub> {
 
   @Override
   public MultiVersionHub toHub(MultiVersionCustomResourceV2 resource) {
@@ -18,8 +17,7 @@ public class V2Mapper
   }
 
   @Override
-  public MultiVersionCustomResourceV2 fromHub(
-      MultiVersionHub hub) {
+  public MultiVersionCustomResourceV2 fromHub(MultiVersionHub hub) {
     var res = new MultiVersionCustomResourceV2();
     res.setMetadata(hub.getMetadata());
     res.setSpec(new MultiVersionCustomResourceSpecV2());

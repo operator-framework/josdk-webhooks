@@ -8,10 +8,9 @@ import io.javaoperatorsdk.webhook.conversion.TargetVersion;
 import io.javaoperatorsdk.webhook.sample.commons.customresource.MultiVersionCustomResourceV2;
 
 @TargetVersion("v2")
-public class AsyncV2Mapper
-    implements AsyncMapper<MultiVersionCustomResourceV2, MultiVersionHub> {
+public class AsyncV2Mapper implements AsyncMapper<MultiVersionCustomResourceV2, MultiVersionHub> {
 
-  private V2Mapper mapper = new V2Mapper();
+  private final V2Mapper mapper = new V2Mapper();
 
   @Override
   public CompletionStage<MultiVersionHub> toHub(MultiVersionCustomResourceV2 resource) {

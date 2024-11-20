@@ -8,6 +8,7 @@ public class ObjectMapperCloner<T> implements Cloner<T> {
   private final ObjectMapper objectMapper = new ObjectMapper();
 
   @Override
+  @SuppressWarnings("unchecked")
   public T clone(T object) {
     if (object == null) {
       return null;

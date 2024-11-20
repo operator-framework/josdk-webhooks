@@ -61,6 +61,7 @@ class ConversionEndpointTest {
         .exchange()
         .expectStatus().isOk().expectBody(ConversionReview.class).consumeWith(res -> {
           var review = res.getResponseBody();
+          assertThat(review).isNotNull();
           var resource1 =
               ((MultiVersionCustomResourceV2) review.getResponse().getConvertedObjects().get(0));
           assertThat(review.getResponse().getConvertedObjects()).hasSize(2);
@@ -78,7 +79,7 @@ class ConversionEndpointTest {
 
   private BodyInserter<String, ReactiveHttpOutputMessage> requestFromResource(String resource) {
     try {
-      ClassPathResource classPathResource = new ClassPathResource(resource);
+      var classPathResource = new ClassPathResource(resource);
       return BodyInserters
           .fromValue(new String(FileCopyUtils.copyToByteArray(classPathResource.getInputStream())));
     } catch (IOException e) {

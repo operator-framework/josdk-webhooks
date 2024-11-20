@@ -1,12 +1,12 @@
 package io.javaoperatorsdk.webhook.sample.commons;
 
 import java.util.HashMap;
-import java.util.concurrent.CompletableFuture;
 
 import io.fabric8.kubernetes.api.model.networking.v1.Ingress;
 import io.javaoperatorsdk.webhook.admission.AdmissionController;
 import io.javaoperatorsdk.webhook.admission.AsyncAdmissionController;
 import io.javaoperatorsdk.webhook.admission.NotAllowedException;
+import io.javaoperatorsdk.webhook.admission.Operation;
 import io.javaoperatorsdk.webhook.admission.mutation.AsyncMutator;
 import io.javaoperatorsdk.webhook.admission.mutation.Mutator;
 import io.javaoperatorsdk.webhook.admission.validation.Validator;
@@ -19,45 +19,21 @@ public class AdmissionControllers {
 
   // adds a label to the target resource
   public static AdmissionController<Ingress> mutatingController() {
-    return new AdmissionController<>((resource, operation) -> {
-      if (resource.getMetadata().getLabels() == null) {
-        resource.getMetadata().setLabels(new HashMap<>());
-      }
-      resource.getMetadata().getLabels().putIfAbsent(MUTATION_TARGET_LABEL, "mutation-test");
-      return resource;
-    });
+    return new AdmissionController<>(new IngressMutator());
   }
 
   // validates if a resource contains the target label
   public static AdmissionController<Ingress> validatingController() {
-    return new AdmissionController<>((resource, operation) -> {
-      if (resource.getMetadata().getLabels() == null
-          || resource.getMetadata().getLabels().get(VALIDATION_TARGET_LABEL) == null) {
-        throw new NotAllowedException("Missing label: " + VALIDATION_TARGET_LABEL);
-      }
-    });
+    return new AdmissionController<>(new IngressValidator());
   }
 
   public static AsyncAdmissionController<Ingress> asyncMutatingController() {
-    return new AsyncAdmissionController<>(
-        (AsyncMutator<Ingress>) (resource, operation) -> CompletableFuture.supplyAsync(() -> {
-          if (resource.getMetadata().getLabels() == null) {
-            resource.getMetadata().setLabels(new HashMap<>());
-          }
-          resource.getMetadata().getLabels().putIfAbsent(MUTATION_TARGET_LABEL, "mutation-test");
-          return resource;
-        }));
+    return new AsyncAdmissionController<>(new IngressMutator());
   }
 
   public static AsyncAdmissionController<Ingress> asyncValidatingController() {
-    return new AsyncAdmissionController<>((resource, operation) -> {
-      if (resource.getMetadata().getLabels() == null
-          || resource.getMetadata().getLabels().get(VALIDATION_TARGET_LABEL) == null) {
-        throw new NotAllowedException("Missing label: " + VALIDATION_TARGET_LABEL);
-      }
-    });
+    return new AsyncAdmissionController<>(new IngressValidator());
   }
-
 
   public static AdmissionController<Ingress> errorMutatingController() {
     return new AdmissionController<>((Validator<Ingress>) (resource, operation) -> {
@@ -81,5 +57,26 @@ public class AdmissionControllers {
     return new AsyncAdmissionController<>((Validator<Ingress>) (resource, operation) -> {
       throw new IllegalStateException(ERROR_MESSAGE);
     });
+  }
+
+  private static class IngressMutator implements Mutator<Ingress> {
+    @Override
+    public Ingress mutate(Ingress resource, Operation operation) throws NotAllowedException {
+      if (resource.getMetadata().getLabels() == null) {
+        resource.getMetadata().setLabels(new HashMap<>());
+      }
+      resource.getMetadata().getLabels().putIfAbsent(MUTATION_TARGET_LABEL, "mutation-test");
+      return resource;
+    }
+  }
+
+  private static class IngressValidator implements Validator<Ingress> {
+    @Override
+    public void validate(Ingress resource, Operation operation) throws NotAllowedException {
+      if (resource.getMetadata().getLabels() == null
+          || resource.getMetadata().getLabels().get(VALIDATION_TARGET_LABEL) == null) {
+        throw new NotAllowedException("Missing label: " + VALIDATION_TARGET_LABEL);
+      }
+    }
   }
 }
