@@ -49,9 +49,10 @@
     <maven.compiler.target>${java.version}</maven.compiler.target>
     <sonar.organization>java-operator-sdk</sonar.organization>
     <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-
-    <junit.version>5.11.3</junit.version>
+    
     <fabric8-client.version>6.13.2</fabric8-client.version>
+    <junit.version>5.11.3</junit.version>
+    <fabric8-client.version>6.13.4</fabric8-client.version>
     <slf4j.version>1.7.36</slf4j.version>
     <log4j.version>2.23.1</log4j.version>
     <mokito.version>5.14.2</mokito.version>
@@ -73,7 +74,7 @@
     <maven-gpg-plugin.version>3.2.4</maven-gpg-plugin.version>
     <maven-source-plugin.version>3.3.1</maven-source-plugin.version>
     <spotless-maven-plugin.version>2.43.0</spotless-maven-plugin.version>
-    <spring-boot-dependencies.version>3.3.0</spring-boot-dependencies.version>
+    <spring-boot-dependencies.version>3.3.6</spring-boot-dependencies.version>
   </properties>
 
   <dependencyManagement>
