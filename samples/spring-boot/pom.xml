@@ -12,7 +12,6 @@
   <name>Kubernetes Webhooks Framework - Samples - Spring Boot</name>
 
   <properties>
-    <java.version>17</java.version>
     <jib-maven-plugin.version>3.4.4</jib-maven-plugin.version>
     <dekorate.version>4.1.4</dekorate.version>
   </properties>
@@ -80,26 +79,6 @@
       <type>test-jar</type>
       <scope>test</scope>
     </dependency>
-    <dependency>
-      <groupId>io.dekorate</groupId>
-      <artifactId>kubernetes-spring-starter</artifactId>
-      <version>${dekorate.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>io.dekorate</groupId>
-      <artifactId>certmanager-annotations</artifactId>
-      <version>${dekorate.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>io.dekorate</groupId>
-      <artifactId>kubernetes-annotations</artifactId>
-      <version>${dekorate.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>io.dekorate</groupId>
-      <artifactId>jib-annotations</artifactId>
-      <version>${dekorate.version}</version>
-    </dependency>
   </dependencies>
 
   <build>
@@ -109,6 +88,9 @@
         <artifactId>jib-maven-plugin</artifactId>
         <version>${jib-maven-plugin.version}</version>
         <configuration>
+          <from>
+            <image>eclipse-temurin:17-jre</image>
+          </from>
           <to>
             <image>test/spring-boot-sample:${project.version}</image>
           </to>

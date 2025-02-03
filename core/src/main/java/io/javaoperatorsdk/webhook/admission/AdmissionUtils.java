@@ -33,8 +33,8 @@ public class AdmissionUtils {
 
   public static KubernetesResource getTargetResource(AdmissionRequest admissionRequest,
       Operation operation) {
-    return operation == Operation.DELETE ? admissionRequest.getOldObject()
-        : admissionRequest.getObject();
+    return (KubernetesResource) (operation == Operation.DELETE ? admissionRequest.getOldObject()
+        : admissionRequest.getObject());
   }
 
   public static AdmissionResponse admissionResponseFromMutation(KubernetesResource originalResource,

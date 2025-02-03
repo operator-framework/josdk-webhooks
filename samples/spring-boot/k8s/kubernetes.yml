@@ -1,0 +1,131 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    app.dekorate.io/vcs-url: <<unknown>>
+  labels:
+    app.kubernetes.io/name: spring-boot-sample
+    app.kubernetes.io/version: 1.1.7-SNAPSHOT
+  name: spring-boot-sample
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: spring-boot-sample
+      app.kubernetes.io/version: 1.1.7-SNAPSHOT
+  template:
+    metadata:
+      annotations:
+        app.dekorate.io/vcs-url: <<unknown>>
+      labels:
+        app.kubernetes.io/name: spring-boot-sample
+        app.kubernetes.io/version: 1.1.7-SNAPSHOT
+    spec:
+      containers:
+        - env:
+            - name: KUBERNETES_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: SERVER_SSL_KEY_STORE
+              value: /etc/certs/keystore.p12
+            - name: SERVER_SSL_KEY_STORE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: password
+                  name: pkcs12-pass
+          image: test/spring-boot-sample:1.1.7-SNAPSHOT
+          imagePullPolicy: IfNotPresent
+          name: spring-boot-sample
+          ports:
+            - containerPort: 443
+              name: http
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /etc/certs
+              name: volume-certs
+              readOnly: true
+      volumes:
+        - name: volume-certs
+          secret:
+            optional: false
+            secretName: tls-secret
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: pkcs12-pass
+data:
+  password: c3VwZXJzZWNyZXQ=
+type: Opaque
+---
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  annotations:
+    app.dekorate.io/vcs-url: <<unknown>>
+  labels:
+    app.kubernetes.io/name: spring-boot-sample
+    app.kubernetes.io/version: 1.1.7-SNAPSHOT
+  name: spring-boot-sample
+spec:
+  selfSigned: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    app.dekorate.io/vcs-url: <<unknown>>
+  labels:
+    app.kubernetes.io/name: spring-boot-sample
+    app.kubernetes.io/version: 1.1.7-SNAPSHOT
+  name: spring-boot-sample
+spec:
+  ports:
+    - name: http
+      port: 443
+      protocol: TCP
+      targetPort: 443
+  selector:
+    app.kubernetes.io/name: spring-boot-sample
+    app.kubernetes.io/version: 1.1.7-SNAPSHOT
+  type: ClusterIP
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  annotations:
+    app.dekorate.io/vcs-url: <<unknown>>
+  labels:
+    app.kubernetes.io/name: spring-boot-sample
+    app.kubernetes.io/version: 1.1.7-SNAPSHOT
+  name: spring-boot-sample
+spec:
+  dnsNames:
+    - spring-boot-sample.default.svc
+    - localhost
+  duration: 7776000000000000ns
+  encodeUsagesInRequest: false
+  isCA: false
+  issuerRef:
+    name: spring-boot-sample
+  keystores:
+    pkcs12:
+      create: true
+      passwordSecretRef:
+        key: password
+        name: pkcs12-pass
+  privateKey:
+    algorithm: RSA
+    encoding: PKCS8
+    size: 2048
+  renewBefore: 1296000000000000ns
+  secretName: tls-secret
+  subject:
+    organizations:
+      - Dekorate
+      - Community
+  usages:
+    - server auth
+    - client auth
