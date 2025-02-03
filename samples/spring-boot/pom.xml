@@ -12,7 +12,6 @@
   <name>Kubernetes Webhooks Framework - Samples - Spring Boot</name>
 
   <properties>
-    <java.version>17</java.version>
     <jib-maven-plugin.version>3.4.4</jib-maven-plugin.version>
     <dekorate.version>4.1.4</dekorate.version>
   </properties>
@@ -23,13 +22,6 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-dependencies</artifactId>
         <version>${spring-boot-dependencies.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-      <dependency>
-        <groupId>io.fabric8</groupId>
-        <artifactId>kubernetes-client-bom</artifactId>
-        <version>${fabric8-client.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -86,26 +78,6 @@
       <version>${project.version}</version>
       <type>test-jar</type>
       <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>io.dekorate</groupId>
-      <artifactId>kubernetes-spring-starter</artifactId>
-      <version>${dekorate.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>io.dekorate</groupId>
-      <artifactId>certmanager-annotations</artifactId>
-      <version>${dekorate.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>io.dekorate</groupId>
-      <artifactId>kubernetes-annotations</artifactId>
-      <version>${dekorate.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>io.dekorate</groupId>
-      <artifactId>jib-annotations</artifactId>
-      <version>${dekorate.version}</version>
     </dependency>
   </dependencies>
 
