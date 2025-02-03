@@ -88,6 +88,9 @@
         <artifactId>jib-maven-plugin</artifactId>
         <version>${jib-maven-plugin.version}</version>
         <configuration>
+          <from>
+            <image>eclipse-temurin:17-jre</image>
+          </from>
           <to>
             <image>test/spring-boot-sample:${project.version}</image>
           </to>
