@@ -4,6 +4,7 @@ import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 
+import io.fabric8.kubernetes.client.ConfigBuilder;
 import org.junit.jupiter.api.Test;
 
 import io.fabric8.kubernetes.api.model.ObjectMetaBuilder;
@@ -13,6 +14,8 @@ import io.fabric8.kubernetes.client.KubernetesClientException;
 import io.javaoperatorsdk.webhook.sample.commons.customresource.MultiVersionCustomResource;
 import io.javaoperatorsdk.webhook.sample.commons.customresource.MultiVersionCustomResourceSpec;
 import io.javaoperatorsdk.webhook.sample.commons.customresource.MultiVersionCustomResourceV2;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static io.javaoperatorsdk.webhook.sample.commons.AdmissionControllers.MUTATION_TARGET_LABEL;
 import static io.javaoperatorsdk.webhook.sample.commons.Utils.SPIN_UP_GRACE_PERIOD;
@@ -25,7 +28,10 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @SuppressWarnings("deprecation")
 public abstract class AbstractEndToEndTest {
 
-  protected KubernetesClient client = new KubernetesClientBuilder().build();
+  private static final Logger log = LoggerFactory.getLogger(AbstractEndToEndTest.class);
+
+  protected KubernetesClient client = new KubernetesClientBuilder().withConfig(new ConfigBuilder()
+          .withNamespace("default").build()).build();
 
   public static final String TEST_CR_NAME = "test-cr";
   public static final int CR_SPEC_VALUE = 5;
@@ -80,6 +86,7 @@ public abstract class AbstractEndToEndTest {
     try {
       return operator.get();
     } catch (KubernetesClientException e) {
+      log.warn("Applying resource. This might be expected.",e);
       return null;
     }
   }
