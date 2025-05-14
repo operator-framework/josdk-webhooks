@@ -15,15 +15,16 @@ class AdmissionControllerTest {
 
   @Test
   void validatesResource() {
-    var admissionController = new AdmissionController<HasMetadata>((resource, operation) -> {
-    });
+    var admissionController =
+        new AdmissionController<HasMetadata>((resource, oldResource, operation) -> {
+        });
     admissionTestSupport.validatesResource(admissionController::handle);
   }
 
   @Test
   void validatesResource_whenNotAllowedException() {
     var admissionController =
-        new AdmissionController<>((Validator<HasMetadata>) (resource, operation) -> {
+        new AdmissionController<>((Validator<HasMetadata>) (resource, oldResource, operation) -> {
           throw new NotAllowedException(MISSING_REQUIRED_LABEL);
         });
     admissionTestSupport.notAllowedException(admissionController::handle);
@@ -32,7 +33,7 @@ class AdmissionControllerTest {
   @Test
   void validatesResource_whenOtherException() {
     var admissionController =
-        new AdmissionController<>((Validator<HasMetadata>) (resource, operation) -> {
+        new AdmissionController<>((Validator<HasMetadata>) (resource, oldResource, operation) -> {
           throw new IllegalArgumentException("Invalid resource");
         });
 

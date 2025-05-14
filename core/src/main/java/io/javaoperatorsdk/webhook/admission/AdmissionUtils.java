@@ -37,6 +37,12 @@ public class AdmissionUtils {
         : admissionRequest.getObject());
   }
 
+  public static KubernetesResource getOldResource(AdmissionRequest admissionRequest,
+      Operation operation) {
+    return (KubernetesResource) (operation == Operation.UPDATE ? admissionRequest.getOldObject()
+        : getTargetResource(admissionRequest, operation));
+  }
+
   public static AdmissionResponse admissionResponseFromMutation(KubernetesResource originalResource,
       KubernetesResource mutatedResource) {
     var admissionResponse = new AdmissionResponse();

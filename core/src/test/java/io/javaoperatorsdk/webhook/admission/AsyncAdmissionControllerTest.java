@@ -20,8 +20,9 @@ class AsyncAdmissionControllerTest {
 
   @Test
   void validatesResource() {
-    var admissionController = new AsyncAdmissionController<HasMetadata>((resource, operation) -> {
-    });
+    var admissionController =
+        new AsyncAdmissionController<HasMetadata>((resource, oldResource, operation) -> {
+        });
 
     admissionTestSupport
         .validatesResource(res -> admissionController.handle(res).toCompletableFuture().join());
@@ -30,9 +31,10 @@ class AsyncAdmissionControllerTest {
   @Test
   void validatesResource_whenNotAllowedException() {
     var admissionController =
-        new AsyncAdmissionController<>((Validator<HasMetadata>) (resource, operation) -> {
-          throw new NotAllowedException(MISSING_REQUIRED_LABEL);
-        });
+        new AsyncAdmissionController<>(
+            (Validator<HasMetadata>) (resource, oldResource, operation) -> {
+              throw new NotAllowedException(MISSING_REQUIRED_LABEL);
+            });
 
     admissionTestSupport
         .notAllowedException(res -> admissionController.handle(res).toCompletableFuture().join());
@@ -41,9 +43,10 @@ class AsyncAdmissionControllerTest {
   @Test
   void validatesResource_whenOtherException() {
     var admissionController =
-        new AsyncAdmissionController<>((Validator<HasMetadata>) (resource, operation) -> {
-          throw new IllegalArgumentException("Invalid resource");
-        });
+        new AsyncAdmissionController<>(
+            (Validator<HasMetadata>) (resource, oldResource, operation) -> {
+              throw new IllegalArgumentException("Invalid resource");
+            });
 
     admissionTestSupport.assertThatThrownBy(
         res -> admissionController.handle(res).toCompletableFuture()
