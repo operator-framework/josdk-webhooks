@@ -53,7 +53,7 @@ public class Utils {
       client.resourceList(resources).createOrReplace();
       client.resourceList(resources).waitUntilReady(5, TimeUnit.MINUTES);
     } catch (KubernetesClientTimeoutException e) {
-      log.info("Timouted resource list: {}", client.resourceList(resources).get());
+      client.resourceList(resources).get().forEach(r -> log.info("Timeouted resource: {}", r));
       throw e;
     }
   }
