@@ -75,12 +75,16 @@ public class AdmissionControllers {
     @Override
     public void validate(Ingress resource, Ingress oldResource, Operation operation)
         throws NotAllowedException {
+      if (operation.equals(Operation.DELETE)) {
+        return;
+      }
       if (resource.getMetadata().getLabels() == null
           || resource.getMetadata().getLabels().get(VALIDATION_TARGET_LABEL) == null) {
         throw new NotAllowedException("Missing label: " + VALIDATION_TARGET_LABEL);
       }
-      if (!resource.getSpec().getIngressClassName()
-          .equals(oldResource.getSpec().getIngressClassName())) {
+      if (operation.equals(Operation.UPDATE)
+          && !resource.getSpec().getIngressClassName()
+              .equals(oldResource.getSpec().getIngressClassName())) {
         throw new NotAllowedException("IngressClassName cannot be changed");
       }
     }
