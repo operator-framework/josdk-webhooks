@@ -17,6 +17,7 @@ import io.fabric8.kubernetes.api.model.apiextensions.v1.*;
 import io.fabric8.kubernetes.api.model.networking.v1.*;
 import io.fabric8.kubernetes.client.KubernetesClient;
 import io.fabric8.kubernetes.client.KubernetesClientTimeoutException;
+import io.fabric8.kubernetes.client.utils.KubernetesSerialization;
 
 import static io.javaoperatorsdk.webhook.sample.commons.AdmissionControllers.VALIDATION_TARGET_LABEL;
 import static io.javaoperatorsdk.webhook.sample.commons.ConversionControllers.CONVERSION_PATH;
@@ -55,7 +56,8 @@ public class Utils {
     } catch (KubernetesClientTimeoutException e) {
       log.info("Timed out resource list: {}", client.resourceList(resources).get());
       client.resourceList(resources).get()
-          .forEach(r -> log.info("Possible Timeout for resource: {}", r));
+          .forEach(r -> log.info("Possible Timeout for resource:\n {} \n",
+              new KubernetesSerialization().asYaml(r)));
       throw e;
     }
   }
