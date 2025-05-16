@@ -9,18 +9,23 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import io.fabric8.kubernetes.api.model.HasMetadata;
 import io.fabric8.kubernetes.api.model.apiextensions.v1.*;
 import io.fabric8.kubernetes.api.model.networking.v1.*;
 import io.fabric8.kubernetes.client.KubernetesClient;
+import io.fabric8.kubernetes.client.KubernetesClientTimeoutException;
 
 import static io.javaoperatorsdk.webhook.sample.commons.AdmissionControllers.VALIDATION_TARGET_LABEL;
 import static io.javaoperatorsdk.webhook.sample.commons.ConversionControllers.CONVERSION_PATH;
 
 public class Utils {
 
-  public static final int SPIN_UP_GRACE_PERIOD = 120;
+  private static final Logger log = LoggerFactory.getLogger(Utils.class);
 
+  public static final int SPIN_UP_GRACE_PERIOD = 120;
 
   public static void applyAndWait(KubernetesClient client, String path) {
     applyAndWait(client, path, null);
@@ -41,11 +46,16 @@ public class Utils {
 
   public static void applyAndWait(KubernetesClient client, List<HasMetadata> resources,
       UnaryOperator<HasMetadata> transformer) {
-    if (transformer != null) {
-      resources = resources.stream().map(transformer).collect(Collectors.toList());
+    try {
+      if (transformer != null) {
+        resources = resources.stream().map(transformer).collect(Collectors.toList());
+      }
+      client.resourceList(resources).createOrReplace();
+      client.resourceList(resources).waitUntilReady(5, TimeUnit.MINUTES);
+    } catch (KubernetesClientTimeoutException e) {
+      log.info("Timouted resource list: {}", client.resourceList(resources).get());
+      throw e;
     }
-    client.resourceList(resources).createOrReplace();
-    client.resourceList(resources).waitUntilReady(3, TimeUnit.MINUTES);
   }
 
   public static void applyAndWait(KubernetesClient client, InputStream is,
