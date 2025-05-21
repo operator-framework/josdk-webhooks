@@ -12,7 +12,6 @@ import io.javaoperatorsdk.webhook.admission.NotAllowedException;
 import io.javaoperatorsdk.webhook.admission.Operation;
 
 import static io.javaoperatorsdk.webhook.admission.AdmissionUtils.allowedAdmissionResponse;
-import static io.javaoperatorsdk.webhook.admission.AdmissionUtils.getTargetResource;
 import static io.javaoperatorsdk.webhook.admission.AdmissionUtils.notAllowedExceptionToAdmissionResponse;
 
 public class AsyncDefaultAdmissionRequestValidator<T extends KubernetesResource>
@@ -28,9 +27,11 @@ public class AsyncDefaultAdmissionRequestValidator<T extends KubernetesResource>
   @SuppressWarnings("unchecked")
   public CompletionStage<AdmissionResponse> handle(AdmissionRequest admissionRequest) {
     var operation = Operation.valueOf(admissionRequest.getOperation());
-    var originalResource = (T) getTargetResource(admissionRequest, operation);
+    var originalResource = (T) admissionRequest.getObject();
+    var oldResource = (T) admissionRequest.getOldObject();
     var asyncValidate =
-        CompletableFuture.runAsync(() -> validator.validate(originalResource, operation));
+        CompletableFuture
+            .runAsync(() -> validator.validate(originalResource, oldResource, operation));
     return asyncValidate
         .thenApply(v -> allowedAdmissionResponse())
         .exceptionally(e -> {

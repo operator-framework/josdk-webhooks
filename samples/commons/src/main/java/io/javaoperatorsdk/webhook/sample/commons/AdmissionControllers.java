@@ -36,7 +36,7 @@ public class AdmissionControllers {
   }
 
   public static AdmissionController<Ingress> errorMutatingController() {
-    return new AdmissionController<>((Validator<Ingress>) (resource, operation) -> {
+    return new AdmissionController<>((Validator<Ingress>) (resource, oldResource, operation) -> {
       throw new IllegalStateException(ERROR_MESSAGE);
     });
   }
@@ -54,9 +54,10 @@ public class AdmissionControllers {
   }
 
   public static AsyncAdmissionController<Ingress> errorAsyncValidatingController() {
-    return new AsyncAdmissionController<>((Validator<Ingress>) (resource, operation) -> {
-      throw new IllegalStateException(ERROR_MESSAGE);
-    });
+    return new AsyncAdmissionController<>(
+        (Validator<Ingress>) (resource, oldResource, operation) -> {
+          throw new IllegalStateException(ERROR_MESSAGE);
+        });
   }
 
   private static class IngressMutator implements Mutator<Ingress> {
@@ -72,10 +73,19 @@ public class AdmissionControllers {
 
   private static class IngressValidator implements Validator<Ingress> {
     @Override
-    public void validate(Ingress resource, Operation operation) throws NotAllowedException {
+    public void validate(Ingress resource, Ingress oldResource, Operation operation)
+        throws NotAllowedException {
+      if (operation.equals(Operation.DELETE)) {
+        return;
+      }
       if (resource.getMetadata().getLabels() == null
           || resource.getMetadata().getLabels().get(VALIDATION_TARGET_LABEL) == null) {
         throw new NotAllowedException("Missing label: " + VALIDATION_TARGET_LABEL);
+      }
+      if (operation.equals(Operation.UPDATE)
+          && !resource.getSpec().getIngressClassName()
+              .equals(oldResource.getSpec().getIngressClassName())) {
+        throw new NotAllowedException("IngressClassName cannot be changed");
       }
     }
   }

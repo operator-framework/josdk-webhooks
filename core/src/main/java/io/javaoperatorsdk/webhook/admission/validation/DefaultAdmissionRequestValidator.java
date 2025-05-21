@@ -8,7 +8,6 @@ import io.javaoperatorsdk.webhook.admission.NotAllowedException;
 import io.javaoperatorsdk.webhook.admission.Operation;
 
 import static io.javaoperatorsdk.webhook.admission.AdmissionUtils.allowedAdmissionResponse;
-import static io.javaoperatorsdk.webhook.admission.AdmissionUtils.getTargetResource;
 import static io.javaoperatorsdk.webhook.admission.AdmissionUtils.notAllowedExceptionToAdmissionResponse;
 
 public class DefaultAdmissionRequestValidator<T extends KubernetesResource>
@@ -24,9 +23,10 @@ public class DefaultAdmissionRequestValidator<T extends KubernetesResource>
   @SuppressWarnings("unchecked")
   public AdmissionResponse handle(AdmissionRequest admissionRequest) {
     var operation = Operation.valueOf(admissionRequest.getOperation());
-    var originalResource = (T) getTargetResource(admissionRequest, operation);
+    var originalResource = (T) admissionRequest.getObject();
+    var oldResource = (T) admissionRequest.getOldObject();
     try {
-      validator.validate(originalResource, operation);
+      validator.validate(originalResource, oldResource, operation);
       return allowedAdmissionResponse();
     } catch (NotAllowedException e) {
       return notAllowedExceptionToAdmissionResponse(e);
