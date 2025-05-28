@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import io.fabric8.kubernetes.api.model.Event;
 import io.fabric8.kubernetes.api.model.HasMetadata;
 import io.fabric8.kubernetes.api.model.apiextensions.v1.*;
 import io.fabric8.kubernetes.api.model.networking.v1.*;
@@ -55,10 +56,15 @@ public class Utils {
       client.resourceList(resources).waitUntilReady(5, TimeUnit.MINUTES);
     } catch (KubernetesClientTimeoutException e) {
       log.info("Timed out resource list: {}", client.resourceList(resources).get());
-      client.resourceList(resources).get()
-          .stream().filter(r -> r.getKind().equals("Deployment"))
-          .forEach(r -> log.info("Possible Timeout for resource:\n {} \n",
-              new KubernetesSerialization().asYaml(r)));
+      var deployment = client.resourceList(resources).get().stream()
+          .filter(r -> r.getKind().equals("Deployment")).findFirst().orElseThrow();
+      log.info("Deployment:\n {} \n",
+          new KubernetesSerialization().asYaml(deployment));
+
+      client.v1().events().inNamespace(deployment.getMetadata().getNamespace()).list().getItems()
+          .stream()
+          .map(Event::getMessage)
+          .forEach(ev -> log.info("Event: {}", new KubernetesSerialization().asYaml(ev)));
       throw e;
     }
   }
