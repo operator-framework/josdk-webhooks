@@ -26,7 +26,7 @@ public class Utils {
 
   private static final Logger log = LoggerFactory.getLogger(Utils.class);
 
-  public static final int SPIN_UP_GRACE_PERIOD = 120;
+  public static final int SPIN_UP_GRACE_PERIOD = 180;
 
   public static void applyAndWait(KubernetesClient client, String path) {
     applyAndWait(client, path, null);
@@ -56,6 +56,7 @@ public class Utils {
     } catch (KubernetesClientTimeoutException e) {
       log.info("Timed out resource list: {}", client.resourceList(resources).get());
       client.resourceList(resources).get()
+          .stream().filter(r -> r.getKind().equals("Deployment"))
           .forEach(r -> log.info("Possible Timeout for resource:\n {} \n",
               new KubernetesSerialization().asYaml(r)));
       throw e;
