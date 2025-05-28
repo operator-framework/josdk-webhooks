@@ -6,21 +6,21 @@ metadata:
     app.dekorate.io/vcs-url: <<unknown>>
   labels:
     app.kubernetes.io/name: spring-boot-sample
-    app.kubernetes.io/version: 1.1.7-SNAPSHOT
+    app.kubernetes.io/version: 0.1.0
   name: spring-boot-sample
 spec:
   replicas: 1
   selector:
     matchLabels:
       app.kubernetes.io/name: spring-boot-sample
-      app.kubernetes.io/version: 1.1.7-SNAPSHOT
+      app.kubernetes.io/version: 0.1.0
   template:
     metadata:
       annotations:
         app.dekorate.io/vcs-url: <<unknown>>
       labels:
         app.kubernetes.io/name: spring-boot-sample
-        app.kubernetes.io/version: 1.1.7-SNAPSHOT
+        app.kubernetes.io/version: 0.1.0
     spec:
       containers:
         - env:
@@ -35,7 +35,7 @@ spec:
                 secretKeyRef:
                   key: password
                   name: pkcs12-pass
-          image: test/spring-boot-sample:1.1.7-SNAPSHOT
+          image: test/spring-boot-sample:0.1.0
           imagePullPolicy: IfNotPresent
           name: spring-boot-sample
           ports:
@@ -67,7 +67,7 @@ metadata:
     app.dekorate.io/vcs-url: <<unknown>>
   labels:
     app.kubernetes.io/name: spring-boot-sample
-    app.kubernetes.io/version: 1.1.7-SNAPSHOT
+    app.kubernetes.io/version: 0.1.0
   name: spring-boot-sample
 spec:
   selfSigned: {}
@@ -79,7 +79,7 @@ metadata:
     app.dekorate.io/vcs-url: <<unknown>>
   labels:
     app.kubernetes.io/name: spring-boot-sample
-    app.kubernetes.io/version: 1.1.7-SNAPSHOT
+    app.kubernetes.io/version: 0.1.0
   name: spring-boot-sample
 spec:
   ports:
@@ -89,7 +89,7 @@ spec:
       targetPort: 443
   selector:
     app.kubernetes.io/name: spring-boot-sample
-    app.kubernetes.io/version: 1.1.7-SNAPSHOT
+    app.kubernetes.io/version: 0.1.0
   type: ClusterIP
 ---
 apiVersion: cert-manager.io/v1
@@ -99,7 +99,7 @@ metadata:
     app.dekorate.io/vcs-url: <<unknown>>
   labels:
     app.kubernetes.io/name: spring-boot-sample
-    app.kubernetes.io/version: 1.1.7-SNAPSHOT
+    app.kubernetes.io/version: 0.1.0
   name: spring-boot-sample
 spec:
   dnsNames:
