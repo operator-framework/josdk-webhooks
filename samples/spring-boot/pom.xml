@@ -73,6 +73,11 @@
       <artifactId>awaitility</artifactId>
     </dependency>
     <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-simple</artifactId>
+      <version>${slf4j.version}</version>
+    </dependency>
+    <dependency>
       <groupId>io.javaoperatorsdk.admissioncontroller.sample</groupId>
       <artifactId>sample-commons</artifactId>
       <version>${project.version}</version>
@@ -92,7 +97,7 @@
             <image>eclipse-temurin:17-jre</image>
           </from>
           <to>
-            <image>test/spring-boot-sample:${project.version}</image>
+            <image>test/spring-boot-sample:0.1.0</image>
           </to>
         </configuration>
       </plugin>
