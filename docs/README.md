@@ -113,7 +113,7 @@ the [async version](https://github.com/java-operator-sdk/admission-controller-fr
 of admission controller implementation.)
 
 ```java
-new AdmissionController<>((resource,operation) -> {     
+new AdmissionController<>((resource, oldResource, operation) -> {     
     if(resource.getMetadata().getLabels() == null || resource.getMetadata().getLabels().get(APP_NAME_LABEL_KEY) == null){
         throw new NotAllowedException("Missing label: "+APP_NAME_LABEL_KEY);
     }

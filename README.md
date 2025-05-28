@@ -42,7 +42,7 @@ Defining a mutation or validation controller is as simple as:
   @Singleton
   @Named(VALIDATING_CONTROLLER)
   public AdmissionController<Ingress> validatingController() {
-    return new AdmissionController<>((resource, operation) -> {
+    return new AdmissionController<>((resource, oldResource, operation) -> {
       if (resource.getMetadata().getLabels() == null
               || resource.getMetadata().getLabels().get(APP_NAME_LABEL_KEY) == null) {
         throw new NotAllowedException("Missing label: " + APP_NAME_LABEL_KEY);
