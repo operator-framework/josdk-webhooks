@@ -4,7 +4,7 @@
 
   <groupId>io.javaoperatorsdk</groupId>
   <artifactId>kubernetes-webhooks-framework</artifactId>
-  <version>3.0.1-SNAPSHOT</version>
+  <version>3.0.2-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>Kubernetes Webhooks Framework</name>
   <description>Framework to Implement Admission Controllers and Conversion Hooks in Java</description>
