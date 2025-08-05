@@ -12,7 +12,7 @@
   <name>Kubernetes Webhooks Framework - Samples - Spring Boot</name>
 
   <properties>
-    <jib-maven-plugin.version>3.4.4</jib-maven-plugin.version>
+    <jib-maven-plugin.version>3.4.6</jib-maven-plugin.version>
     <dekorate.version>4.1.4</dekorate.version>
   </properties>
 
