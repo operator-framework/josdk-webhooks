@@ -4,18 +4,19 @@
   <parent>
     <groupId>io.javaoperatorsdk</groupId>
     <artifactId>kubernetes-webhooks-framework-samples</artifactId>
-    <version>3.0.1-SNAPSHOT</version>
+    <version>3.0.3-SNAPSHOT</version>
   </parent>
   <groupId>io.javaoperatorsdk.webhook.sample</groupId>
   <artifactId>quarkus-sample</artifactId>
+  <name>quarkus-sample</name>
   <properties>
-    <compiler-plugin.version>3.13.0</compiler-plugin.version>
+    <compiler-plugin.version>3.14.0</compiler-plugin.version>
     <maven.compiler.release>17</maven.compiler.release>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
     <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
-    <quarkus.platform.version>3.24.5</quarkus.platform.version>
+    <quarkus.platform.version>3.25.3</quarkus.platform.version>
     <skipITs>true</skipITs>
     <surefire-plugin.version>3.5.3</surefire-plugin.version>
   </properties>

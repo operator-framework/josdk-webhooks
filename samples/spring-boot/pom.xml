@@ -4,7 +4,7 @@
   <parent>
     <groupId>io.javaoperatorsdk</groupId>
     <artifactId>kubernetes-webhooks-framework-samples</artifactId>
-    <version>3.0.1-SNAPSHOT</version>
+    <version>3.0.3-SNAPSHOT</version>
   </parent>
 
   <groupId>io.javaoperatorsdk.webhook.sample</groupId>
@@ -12,7 +12,7 @@
   <name>Kubernetes Webhooks Framework - Samples - Spring Boot</name>
 
   <properties>
-    <jib-maven-plugin.version>3.4.4</jib-maven-plugin.version>
+    <jib-maven-plugin.version>3.4.6</jib-maven-plugin.version>
     <dekorate.version>4.1.4</dekorate.version>
   </properties>
 

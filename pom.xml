@@ -4,7 +4,7 @@
 
   <groupId>io.javaoperatorsdk</groupId>
   <artifactId>kubernetes-webhooks-framework</artifactId>
-  <version>3.0.1-SNAPSHOT</version>
+  <version>3.0.3-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>Kubernetes Webhooks Framework</name>
   <description>Framework to Implement Admission Controllers and Conversion Hooks in Java</description>
@@ -42,30 +42,29 @@
     <maven.compiler.target>${java.version}</maven.compiler.target>
     <sonar.organization>java-operator-sdk</sonar.organization>
     <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-
-    <junit.version>5.12.2</junit.version>
-    <fabric8-client.version>7.1.0</fabric8-client.version>
+    <junit.version>6.0.0</junit.version>
+    <fabric8-client.version>7.7.0</fabric8-client.version>
     <slf4j.version>2.0.17</slf4j.version>
-    <log4j.version>2.25.1</log4j.version>
-    <mokito.version>5.15.2</mokito.version>
+    <log4j.version>2.25.4</log4j.version>
+    <mokito.version>5.20.0</mokito.version>
     <commons-lang3.version>3.12.0</commons-lang3.version>
     <auto-service.version>1.0.1</auto-service.version>
-    <assertj.version>3.27.3</assertj.version>
-    <awaitility.version>4.2.2</awaitility.version>
+    <assertj.version>3.27.7</assertj.version>
+    <awaitility.version>4.3.0</awaitility.version>
     <maven-resources-plugin.version>3.3.1</maven-resources-plugin.version>
     <directory-maven-plugin.version>1.0</directory-maven-plugin.version>
     <nexus-staging-maven-plugin.version>1.7.0</nexus-staging-maven-plugin.version>
-    <maven-surefire-plugin.version>3.5.2</maven-surefire-plugin.version>
+    <maven-surefire-plugin.version>3.5.3</maven-surefire-plugin.version>
     <impsort-maven-plugin.version>1.10.0</impsort-maven-plugin.version>
     <maven-install-plugin.version>3.1.4</maven-install-plugin.version>
     <maven-clean-plugin.version>3.5.0</maven-clean-plugin.version>
     <git-commit-id-maven-plugin.version>9.0.2</git-commit-id-maven-plugin.version>
     <maven-jar-plugin.version>3.4.2</maven-jar-plugin.version>
-    <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
+    <maven-compiler-plugin.version>3.14.0</maven-compiler-plugin.version>
     <maven-javadoc-plugin.version>3.11.2</maven-javadoc-plugin.version>
-    <maven-gpg-plugin.version>3.2.7</maven-gpg-plugin.version>
+    <maven-gpg-plugin.version>3.2.8</maven-gpg-plugin.version>
     <maven-source-plugin.version>3.3.1</maven-source-plugin.version>
-    <spotless-maven-plugin.version>2.45.0</spotless-maven-plugin.version>
+    <spotless-maven-plugin.version>2.46.1</spotless-maven-plugin.version>
     <spring-boot-dependencies.version>3.5.4</spring-boot-dependencies.version>
     <central-publishing-maven-plugin.version>0.8.0</central-publishing-maven-plugin.version>
   </properties>
