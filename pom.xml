@@ -56,7 +56,7 @@
     <nexus-staging-maven-plugin.version>1.7.0</nexus-staging-maven-plugin.version>
     <maven-surefire-plugin.version>3.5.6</maven-surefire-plugin.version>
     <impsort-maven-plugin.version>1.10.0</impsort-maven-plugin.version>
-    <maven-install-plugin.version>3.1.4</maven-install-plugin.version>
+    <maven-install-plugin.version>3.2.0</maven-install-plugin.version>
     <maven-clean-plugin.version>3.5.0</maven-clean-plugin.version>
     <git-commit-id-maven-plugin.version>9.0.2</git-commit-id-maven-plugin.version>
     <maven-jar-plugin.version>3.5.0</maven-jar-plugin.version>
