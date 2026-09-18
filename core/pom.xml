@@ -4,7 +4,7 @@
   <parent>
     <groupId>io.javaoperatorsdk</groupId>
     <artifactId>kubernetes-webhooks-framework</artifactId>
-    <version>3.0.4-SNAPSHOT</version>
+    <version>3.0.5-SNAPSHOT</version>
   </parent>
 
   <artifactId>kubernetes-webhooks-framework-core</artifactId>
@@ -81,7 +81,7 @@
         <version>${git-commit-id-maven-plugin.version}</version>
         <configuration>
           <generateGitPropertiesFile>true</generateGitPropertiesFile>
-          <generateGitPropertiesFilename>${project.build.outputDirectory}/version.properties</generateGitPropertiesFilename>
+          <generateGitPropertiesFilename>${project.build.outputDirectory}/kubernetes-webhooks-framework-version.properties</generateGitPropertiesFilename>
           <includeOnlyProperties>
             <includeOnlyProperty>^git.build.(time|version)$</includeOnlyProperty>
             <includeOnlyProperty>^git.commit.id.(abbrev|full)$</includeOnlyProperty>
