@@ -9,11 +9,14 @@ import io.fabric8.kubernetes.api.model.admission.v1.AdmissionResponse;
 import io.fabric8.zjsonpatch.JsonDiff;
 
 import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.json.JsonMapper;
 
 public class AdmissionUtils {
 
   public static final String JSON_PATCH = "JSONPatch";
-  private static final ObjectMapper mapper = new ObjectMapper();
+  // Jackson 2 defaults (as used by the fabric8 client) keep the patch in the same wire format,
+  // e.g. enums are written by name instead of toString().
+  private static final ObjectMapper mapper = JsonMapper.builderWithJackson2Defaults().build();
 
   private AdmissionUtils() {}
 

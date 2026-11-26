@@ -18,7 +18,7 @@ jobs:
     if: ${{ ( github.event_name == 'push' ) || ( github.event_name == 'pull_request' && github.event.pull_request.head.repo.owner.login == 'kubernetes-webhooks-framework' ) }}
     strategy:
       matrix:
-        java: [ 17 ]
+        java: [ 21 ]
         distribution: [ temurin ]
     steps:
       - uses: actions/checkout@v7

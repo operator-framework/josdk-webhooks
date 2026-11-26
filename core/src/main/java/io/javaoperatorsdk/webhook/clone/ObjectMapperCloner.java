@@ -1,10 +1,12 @@
 package io.javaoperatorsdk.webhook.clone;
 
 import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.json.JsonMapper;
 
 public class ObjectMapperCloner<T> implements Cloner<T> {
 
-  private final ObjectMapper objectMapper = new ObjectMapper();
+  // Jackson 2 defaults (as used by the fabric8 client), e.g. getter-only collections are populated.
+  private final ObjectMapper objectMapper = JsonMapper.builderWithJackson2Defaults().build();
 
   @Override
   @SuppressWarnings("unchecked")

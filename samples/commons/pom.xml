@@ -11,10 +11,6 @@
   <artifactId>sample-commons</artifactId>
   <name>Kubernetes Webhooks Framework - Samples - Commons</name>
 
-  <properties>
-    <java.version>11</java.version>
-  </properties>
-
   <dependencies>
     <dependency>
       <groupId>io.fabric8</groupId>
