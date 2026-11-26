@@ -1,7 +1,6 @@
 package io.javaoperatorsdk.webhook.clone;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.ObjectMapper;
 
 public class ObjectMapperCloner<T> implements Cloner<T> {
 
@@ -13,11 +12,6 @@ public class ObjectMapperCloner<T> implements Cloner<T> {
     if (object == null) {
       return null;
     }
-    try {
-      return (T) objectMapper.readValue(objectMapper.writeValueAsString(object),
-          object.getClass());
-    } catch (JsonProcessingException e) {
-      throw new IllegalStateException(e);
-    }
+    return (T) objectMapper.readValue(objectMapper.writeValueAsString(object), object.getClass());
   }
 }
