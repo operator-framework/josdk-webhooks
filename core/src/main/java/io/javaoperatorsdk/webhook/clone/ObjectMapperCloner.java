@@ -1,11 +1,12 @@
 package io.javaoperatorsdk.webhook.clone;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.json.JsonMapper;
 
 public class ObjectMapperCloner<T> implements Cloner<T> {
 
-  private final ObjectMapper objectMapper = new ObjectMapper();
+  // Jackson 2 defaults (as used by the fabric8 client), e.g. getter-only collections are populated.
+  private final ObjectMapper objectMapper = JsonMapper.builderWithJackson2Defaults().build();
 
   @Override
   @SuppressWarnings("unchecked")
@@ -13,11 +14,6 @@ public class ObjectMapperCloner<T> implements Cloner<T> {
     if (object == null) {
       return null;
     }
-    try {
-      return (T) objectMapper.readValue(objectMapper.writeValueAsString(object),
-          object.getClass());
-    } catch (JsonProcessingException e) {
-      throw new IllegalStateException(e);
-    }
+    return (T) objectMapper.readValue(objectMapper.writeValueAsString(object), object.getClass());
   }
 }

@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        java: [ 17 ]
+        java: [ 21 ]
         distribution: [ temurin ]
     steps:
       - uses: actions/checkout@v7
@@ -37,7 +37,7 @@ jobs:
       - name: Set up Java and Maven
         uses: actions/setup-java@v6
         with:
-          java-version: 17
+          java-version: 21
           distribution: temurin
           cache: 'maven'
           server-id: central

@@ -37,13 +37,11 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <java.version>17</java.version>
-    <maven.compiler.source>${java.version}</maven.compiler.source>
-    <maven.compiler.target>${java.version}</maven.compiler.target>
+    <maven.compiler.release>17</maven.compiler.release>
     <sonar.organization>java-operator-sdk</sonar.organization>
     <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     <junit.version>6.1.1</junit.version>
-    <fabric8-client.version>7.8.0</fabric8-client.version>
+    <fabric8-client.version>8.0.0</fabric8-client.version>
     <slf4j.version>2.0.18</slf4j.version>
     <log4j.version>2.26.1</log4j.version>
     <mokito.version>5.23.0</mokito.version>
@@ -65,7 +63,7 @@
     <maven-gpg-plugin.version>3.2.8</maven-gpg-plugin.version>
     <maven-source-plugin.version>3.3.1</maven-source-plugin.version>
     <spotless-maven-plugin.version>3.6.0</spotless-maven-plugin.version>
-    <spring-boot-dependencies.version>3.5.4</spring-boot-dependencies.version>
+    <spring-boot-dependencies.version>4.2.0</spring-boot-dependencies.version>
     <central-publishing-maven-plugin.version>0.11.0</central-publishing-maven-plugin.version>
   </properties>
 
@@ -121,6 +119,11 @@
   <build>
     <pluginManagement>
       <plugins>
+        <plugin>
+          <groupId>io.fabric8</groupId>
+          <artifactId>crd-generator-maven-plugin</artifactId>
+          <version>${fabric8-client.version}</version>
+        </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-compiler-plugin</artifactId>
@@ -202,8 +205,6 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>${maven-compiler-plugin.version}</version>
         <configuration>
-          <source>${java.version}</source>
-          <target>${java.version}</target>
           <showDeprecation>true</showDeprecation>
           <showWarnings>true</showWarnings>
         </configuration>

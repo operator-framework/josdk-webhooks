@@ -11,10 +11,6 @@
   <artifactId>sample-commons</artifactId>
   <name>Kubernetes Webhooks Framework - Samples - Commons</name>
 
-  <properties>
-    <java.version>11</java.version>
-  </properties>
-
   <dependencies>
     <dependency>
       <groupId>io.fabric8</groupId>
@@ -24,10 +20,6 @@
       <groupId>io.javaoperatorsdk</groupId>
       <artifactId>kubernetes-webhooks-framework-core</artifactId>
       <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>io.fabric8</groupId>
-      <artifactId>crd-generator-apt</artifactId>
     </dependency>
     <dependency>
       <groupId>org.assertj</groupId>
@@ -53,6 +45,17 @@
 
   <build>
     <plugins>
+      <plugin>
+        <groupId>io.fabric8</groupId>
+        <artifactId>crd-generator-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
